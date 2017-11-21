@@ -1,0 +1,236 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pers_scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/pers_layout_nombre"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_margin="15dp">
+
+            <Button
+                android:id="@+id/pers_nombre_details"
+                android:layout_width="40dp"
+                android:layout_height="0dp"
+                android:background="@color/light_grey"
+                android:text="@string/arrow_next"
+                android:textColor="@color/white"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/pers_nombre_titre"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/very_light_grey"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/pers_nombre_details"
+                app:layout_constraintLeft_toLeftOf="parent"
+                tools:layout_constraintRight_creator="1"
+                tools:layout_constraintLeft_creator="1"
+                android:textAlignment="center"
+                android:text="@string/informations_maj"
+                android:textColor="@color/yellow"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:padding="5dp"/>
+
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/very_light_grey"
+                android:padding="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/pers_nombre_titre"
+                app:layout_constraintRight_toLeftOf="@+id/pers_nombre_details"
+                app:layout_constraintLeft_toLeftOf="parent"
+                tools:layout_constraintRight_creator="1"
+                tools:layout_constraintLeft_creator="1">
+
+                <TextView
+                    android:id="@+id/pers_nombre_nbReel_lib"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="@string/nbPersReel" />
+
+                <TextView
+                    android:id="@+id/pers_nombre_nbReel_res"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:text="@string/inconnu" />
+
+                <TextView
+                    android:id="@+id/pers_nombre_nbPrevu_lib"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/pers_nombre_nbReel_lib"
+                    android:text="@string/nbPersPrevu" />
+
+                <TextView
+                    android:id="@+id/pers_nombre_nbPrevu_res"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/pers_nombre_nbReel_res"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:text="@string/inconnu" />
+
+                <TextView
+                    android:id="@+id/pers_nombre_nbVendu_lib"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/pers_nombre_nbPrevu_lib"
+                    android:text="@string/nbPersVendu" />
+
+                <TextView
+                    android:id="@+id/pers_nombre_nbVendu_res"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/pers_nombre_nbPrevu_res"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:text="@string/inconnu" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/pers_layout_prod"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/pers_layout_nombre"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_margin="15dp">
+
+            <TextView
+                android:id="@+id/pers_prod_titre"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/very_light_grey"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                tools:layout_constraintRight_creator="1"
+                tools:layout_constraintLeft_creator="1"
+                android:textAlignment="center"
+                android:text="@string/production_maj"
+                android:textColor="@color/yellow"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:padding="5dp"/>
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/very_light_grey"
+                android:paddingBottom="15dp"
+                app:layout_constraintTop_toBottomOf="@+id/pers_prod_titre"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                tools:layout_constraintRight_creator="1"
+                tools:layout_constraintLeft_creator="1">
+
+                <Button
+                    android:id="@+id/pers_prod_boutonPers"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="15dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:text="@string/par_personne_maj"
+                    android:textColor="@color/red_dark"/>
+
+                <Button
+                    android:id="@+id/pers_prod_boutonMachine"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="15dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/pers_prod_boutonPers"
+                    android:text="@string/par_machine_maj"
+                    android:textColor="@color/red_dark"/>
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/pers_layout_matrice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/pers_layout_prod"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_margin="15dp">
+
+            <Button
+                android:id="@+id/pers_matrice_details"
+                android:layout_width="40dp"
+                android:layout_height="0dp"
+                android:background="@color/light_grey"
+                android:text="@string/arrow_next"
+                android:textColor="@color/white"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/pers_matrice_titre"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/very_light_grey"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/pers_matrice_details"
+                app:layout_constraintLeft_toLeftOf="parent"
+                tools:layout_constraintRight_creator="1"
+                tools:layout_constraintLeft_creator="1"
+                android:textAlignment="center"
+                android:text="@string/matrice_polyvalence_maj"
+                android:textColor="@color/yellow"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:padding="5dp"/>
+
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/very_light_grey"
+                android:padding="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/pers_matrice_titre"
+                app:layout_constraintRight_toLeftOf="@+id/pers_matrice_details"
+                app:layout_constraintLeft_toLeftOf="parent"
+                tools:layout_constraintRight_creator="1"
+                tools:layout_constraintLeft_creator="1">
+
+                <TextView
+                    android:id="@+id/pers_matrice_coming"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="@string/coming" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>
