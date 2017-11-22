@@ -1,21 +1,28 @@
 <resources>
     <string name="app_name">Projet</string>
-    <string name="activite">Production</string>
-    <string name="personnel">Personnel</string>
+    <string name="app_desc">Description Application</string>
+    <string name="production">Production</string>
+    <string name="staff">Personnel</string>
     <string name="planning">Planning</string>
     <string name="technique">Technique</string>
-    <string name="qualite">Qualité</string>
+    <string name="quality">Qualité</string>
     <string name="coming">À venir</string>
     <string name="details"><![CDATA[Détails ->]]></string>
     <string name="arrow_next"><![CDATA[>]]></string>
-    <string name="titre_maj">TITRE</string>
-    <string name="nbPersVendu">Nombre de personne vendu</string>
-    <string name="nbPersPrevu">Nombre de personne prévu</string>
-    <string name="nbPersReel">Nombre de personne réel</string>
-    <string name="inconnu">Inconnu</string>
+    <string name="title_maj">TITRE</string>
+    <string name="nbPersSells">Nombre de personne vendu</string>
+    <string name="nbPersPlanned">Nombre de personne prévu</string>
+    <string name="nbPersReal">Nombre de personne réel</string>
+    <string name="unknown">Inconnu</string>
     <string name="informations_maj">INFORMATIONS</string>
     <string name="production_maj">PRODUCTION</string>
-    <string name="par_personne_maj">PAR PERSONNE</string>
-    <string name="par_machine_maj">PAR MACHINE</string>
+    <string name="per_personne_maj">PAR PERSONNE</string>
+    <string name="per_machine_maj">PAR MACHINE</string>
     <string name="matrice_polyvalence_maj">MATRICE DE POLYVALENCE</string>
+    <string name="title_activity_menu">MenuActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>

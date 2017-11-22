@@ -23,10 +23,10 @@ public class MainViewPager extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         String page = b.getString("page");
 
-        if (Objects.equals(page, getString(R.string.activite))) {
+        if (Objects.equals(page, getString(R.string.production))) {
             viewPager.setCurrentItem(0);
 
-        }else if (Objects.equals(page, getString(R.string.personnel))) {
+        }else if (Objects.equals(page, getString(R.string.staff))) {
             viewPager.setCurrentItem(1);
 
         }else if (Objects.equals(page, getString(R.string.planning))) {

@@ -42,15 +42,15 @@ class PagerAdapterMain extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return mContext.getString(R.string.activite);
+                return mContext.getString(R.string.production);
             case 1:
-                return mContext.getString(R.string.personnel);
+                return mContext.getString(R.string.staff);
             case 2:
                 return mContext.getString(R.string.planning);
             case 3:
                 return mContext.getString(R.string.technique);
             case 4:
-                return mContext.getString(R.string.qualite);
+                return mContext.getString(R.string.quality);
             default:
                 return null;
         }
