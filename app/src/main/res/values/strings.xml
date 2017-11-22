@@ -2,7 +2,7 @@
     <string name="app_name">Projet</string>
     <string name="app_desc">Description Application</string>
     <string name="production">Production</string>
-    <string name="staff">Personnel</string>
+    <string name="productivity">Productivité</string>
     <string name="planning">Planning</string>
     <string name="technique">Technique</string>
     <string name="quality">Qualité</string>
@@ -25,4 +25,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="machine">Machine</string>
+    <string name="site">Site</string>
+    <string name="article">Article</string>
+    <string name="volume_by">Volume par :</string>
 </resources>

@@ -1,49 +1,34 @@
-package com.florian.projet.ViewModel;
+package com.florian.projet.viewModel;
 
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.florian.projet.R;
-
-/**
- * Created by Florian on 21/11/2017.
- */
+import com.florian.projet.view.PlanningFragment;
+import com.florian.projet.view.ProductionFragment;
+import com.florian.projet.view.QualityFragment;
+import com.florian.projet.view.ProductivityFragment;
+import com.florian.projet.view.TechniqueFragment;
 
 public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedListener {
-    AppCompatActivity activity;
+    private AppCompatActivity activity;
+    private FragmentManager fragmentManager;
 
     public MyDrawerMenu(AppCompatActivity context) {
         this.activity = context;
+        this.fragmentManager = activity.getSupportFragmentManager();
 
         initMenu();
     }
 
-    public void initMenu() {
-        Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar);
-        activity.setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) activity.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        DrawerLayout drawer = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(activity, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+    private void initMenu() {
 
         NavigationView navigationView = (NavigationView) activity.findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -74,20 +59,37 @@ public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedList
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Fragment fragment = new Fragment();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_production) {
+            fragment = new ProductionFragment();
+            activity.setTitle(R.string.production);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_productivity) {
+            fragment = new ProductivityFragment();
+            activity.setTitle(R.string.productivity);
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_planning) {
+            fragment = new PlanningFragment();
+            activity.setTitle(R.string.planning);
+
+        } else if (id == R.id.nav_technique) {
+            fragment = new TechniqueFragment();
+            activity.setTitle(R.string.technique);
+
+        } else if (id == R.id.nav_quality) {
+            fragment = new QualityFragment();
+            activity.setTitle(R.string.quality);
 
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
 
         }
+
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.main_fragment_container, fragment);
+        fragmentTransaction.commit();
 
         DrawerLayout drawer = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

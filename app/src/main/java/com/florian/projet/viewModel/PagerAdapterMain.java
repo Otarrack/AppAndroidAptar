@@ -1,4 +1,4 @@
-package com.florian.projet;
+package com.florian.projet.viewModel;
 
 
 import android.content.Context;
@@ -6,11 +6,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-class PagerAdapterMain extends FragmentPagerAdapter {
+import com.florian.projet.view.ProductivityFragment;
+import com.florian.projet.view.PlanningFragment;
+import com.florian.projet.view.ProductionFragment;
+import com.florian.projet.view.QualityFragment;
+import com.florian.projet.R;
+import com.florian.projet.view.TechniqueFragment;
+
+public class PagerAdapterMain extends FragmentPagerAdapter {
     private Context mContext;
     private final static int PAGE_COUNT = 5;
 
-    PagerAdapterMain(FragmentManager fm, Context context) {
+    public PagerAdapterMain(FragmentManager fm, Context context) {
         super(fm);
         this.mContext = context;
     }
@@ -21,11 +28,11 @@ class PagerAdapterMain extends FragmentPagerAdapter {
             case 0:
                 return new ProductionFragment();
             case 1:
-                return new PersonnelFragment();
+                return new ProductivityFragment();
             case 2:
                 return new PlanningFragment();
             case 3:
-                return new MaintenanceFragment();
+                return new TechniqueFragment();
             case 4:
                 return new QualityFragment();
             default:
@@ -44,7 +51,7 @@ class PagerAdapterMain extends FragmentPagerAdapter {
             case 0:
                 return mContext.getString(R.string.production);
             case 1:
-                return mContext.getString(R.string.staff);
+                return mContext.getString(R.string.productivity);
             case 2:
                 return mContext.getString(R.string.planning);
             case 3:

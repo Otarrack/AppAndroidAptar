@@ -1,4 +1,4 @@
-package com.florian.projet;
+package com.florian.projet.view;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -6,9 +6,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.florian.projet.R;
+import com.florian.projet.viewModel.PagerAdapterMain;
+
 import java.util.Objects;
 
-public class MainViewPager extends AppCompatActivity {
+public class ViewPagerActivity extends AppCompatActivity {
     Toolbar toolbar;
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -26,7 +29,7 @@ public class MainViewPager extends AppCompatActivity {
         if (Objects.equals(page, getString(R.string.production))) {
             viewPager.setCurrentItem(0);
 
-        }else if (Objects.equals(page, getString(R.string.staff))) {
+        }else if (Objects.equals(page, getString(R.string.productivity))) {
             viewPager.setCurrentItem(1);
 
         }else if (Objects.equals(page, getString(R.string.planning))) {

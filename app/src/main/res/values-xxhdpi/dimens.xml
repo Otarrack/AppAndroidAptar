@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <dimen name="home_button">140dp</dimen>
     <dimen name="home_button_text">20sp</dimen>
+
+    <dimen name="production_image_button">90dp</dimen>
 
 </resources>

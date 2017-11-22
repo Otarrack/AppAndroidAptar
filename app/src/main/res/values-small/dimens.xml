@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <dimen name="home_button">60dp</dimen>
-    <dimen name="home_button_text">6sp</dimen>
-</resources>
