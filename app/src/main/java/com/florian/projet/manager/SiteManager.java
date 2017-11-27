@@ -9,7 +9,7 @@ public class SiteManager {
     private static SiteManager instance;
     private List<Site> listSite;
 
-    public SiteManager() {
+    private SiteManager() {
         setListSite();
     }
 
@@ -27,8 +27,8 @@ public class SiteManager {
     private void setListSite() {
         listSite = new ArrayList<>();
         Site site;
-        for (int i = 1; i < 25; i++) {
-            site = new Site(i,i * 103,i,i + 13 * i);
+        for (int i = 1; i < 10; i++) {
+            site = new Site(i,"Oyo" + i,i * 103,i,i + 13 * i);
             listSite.add(site);
             //TODO: Récupèration des données à partir du manager qui récupère du serveur
         }

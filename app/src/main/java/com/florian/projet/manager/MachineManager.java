@@ -9,7 +9,7 @@ public class MachineManager {
     private static MachineManager instance;
     private List<Machine> listMachine;
 
-    public MachineManager() {
+    private MachineManager() {
         setListMachine();
     }
 
@@ -26,10 +26,10 @@ public class MachineManager {
 
     private void setListMachine() {
         listMachine = new ArrayList<>();
-        Machine site;
+        Machine machine;
         for (int i = 1; i < 5; i++) {
-            site = new Machine(i,i * 103,i,i + 13*i);
-            listMachine.add(site);
+            machine = new Machine(i,i * 103,i,i + 13*i);
+            listMachine.add(machine);
             //TODO: Récupèration des données à partir du manager qui récupère du serveur
         }
     }

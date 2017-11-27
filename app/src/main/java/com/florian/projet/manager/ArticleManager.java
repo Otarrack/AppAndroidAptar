@@ -9,7 +9,7 @@ public class ArticleManager {
     private static ArticleManager instance;
     private List<Article> listArticle;
 
-    public ArticleManager() {
+    private ArticleManager() {
         setListArticle();
     }
 
@@ -24,7 +24,7 @@ public class ArticleManager {
         return listArticle;
     }
 
-    public void setListArticle() {
+    private void setListArticle() {
         listArticle = new ArrayList<>();
         Article site;
         for (int i = 1; i < 5; i++) {
