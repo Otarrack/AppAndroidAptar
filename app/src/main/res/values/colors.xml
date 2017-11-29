@@ -11,4 +11,7 @@
     <color name="red">#ff0000</color>
     <color name="red_dark">#c90000</color>
     <color name="green">#00a400</color>
+    <color name="aptar_bh_primary">#6e2a8d</color>
+    <color name="aptar_bh_secondary">#808183</color>
+    <color name="aptar_bh_light_blue">#c2e1f0</color>
 </resources>

@@ -20,4 +20,12 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="Aptar" parent="AppTheme" >
+        <item name="colorPrimary">@color/aptar_bh_primary</item>
+        <item name="colorPrimaryDark">@color/aptar_bh_primary</item>
+        <item name="colorAccent">@color/aptar_bh_light_blue</item>
+        <item name="android:navigationBarColor">@color/aptar_bh_light_blue</item>
+        <item name="android:statusBarColor">@color/aptar_bh_primary</item>
+    </style>
+
 </resources>

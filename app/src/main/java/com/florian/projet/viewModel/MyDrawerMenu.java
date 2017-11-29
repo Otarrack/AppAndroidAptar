@@ -32,6 +32,7 @@ public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedList
 
         NavigationView navigationView = (NavigationView) activity.findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_production));
 
     }
 
@@ -47,11 +48,7 @@ public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedList
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return false;
+        return (id == R.id.action_settings);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
