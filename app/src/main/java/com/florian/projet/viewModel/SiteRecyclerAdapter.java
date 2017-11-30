@@ -1,6 +1,8 @@
 package com.florian.projet.viewModel;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +16,28 @@ import java.util.List;
 public class SiteRecyclerAdapter extends RecyclerView.Adapter<MyHolder> {
     private List<Site> listSite;
 
-    public SiteRecyclerAdapter(ArrayList<Site> data) {
+    private CustomItemClickListener listener;
+
+    public SiteRecyclerAdapter(ArrayList<Site> data, CustomItemClickListener listener) {
         this.listSite = data;
+        this.listener = listener;
     }
 
     @Override
     public MyHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         // create a new view
-        View view = LayoutInflater.from(viewGroup.getContext())
+        final View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.recycle_item, viewGroup, false);
 
-        return new MyHolder(view);
+        final MyHolder myHolder = new MyHolder(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(v, myHolder.getLayoutPosition());
+            }
+        });
+
+        return myHolder;
     }
 
     @Override

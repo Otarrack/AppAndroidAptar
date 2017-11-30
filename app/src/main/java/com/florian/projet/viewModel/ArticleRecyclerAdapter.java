@@ -14,8 +14,11 @@ import java.util.List;
 public class ArticleRecyclerAdapter extends RecyclerView.Adapter<MyHolder> {
     private List<Article> listArticle;
 
-    public ArticleRecyclerAdapter(ArrayList<Article> data) {
+    private CustomItemClickListener listener;
+
+    public ArticleRecyclerAdapter(ArrayList<Article> data, CustomItemClickListener listener) {
         this.listArticle = data;
+        this.listener = listener;
     }
 
     @Override
@@ -24,7 +27,15 @@ public class ArticleRecyclerAdapter extends RecyclerView.Adapter<MyHolder> {
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.recycle_item, viewGroup, false);
 
-        return new MyHolder(view);
+        final MyHolder myHolder = new MyHolder(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(v, myHolder.getLayoutPosition());
+            }
+        });
+
+        return myHolder;
     }
 
     @Override

@@ -14,8 +14,11 @@ import java.util.List;
 public class MachineRecyclerAdapter extends RecyclerView.Adapter<MyHolder> {
     private List<Machine> listMachine;
 
-    public MachineRecyclerAdapter(ArrayList<Machine> data) {
+    private CustomItemClickListener listener;
+
+    public MachineRecyclerAdapter(ArrayList<Machine> data, CustomItemClickListener listener) {
         this.listMachine = data;
+        this.listener = listener;
     }
 
     @Override
@@ -24,7 +27,15 @@ public class MachineRecyclerAdapter extends RecyclerView.Adapter<MyHolder> {
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.recycle_item, viewGroup, false);
 
-        return new MyHolder(view);
+        final MyHolder myHolder = new MyHolder(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(v, myHolder.getLayoutPosition());
+            }
+        });
+
+        return myHolder;
     }
 
     @Override

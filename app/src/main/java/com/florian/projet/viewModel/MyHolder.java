@@ -16,5 +16,4 @@ class MyHolder extends RecyclerView.ViewHolder {
         titleTextView = itemView.findViewById(R.id.recycle_item_title);
         progressBar = itemView.findViewById(R.id.recycle_item_progress);
     }
-
 }
