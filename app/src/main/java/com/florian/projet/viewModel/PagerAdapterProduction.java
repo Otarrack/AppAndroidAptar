@@ -9,15 +9,13 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.florian.projet.view.ProductivityFragment;
 import com.florian.projet.view.PlanningFragment;
 import com.florian.projet.view.ProductionFragment;
-import com.florian.projet.view.QualityFragment;
 import com.florian.projet.R;
-import com.florian.projet.view.TechniqueFragment;
 
-public class PagerAdapterMain extends FragmentPagerAdapter {
+public class PagerAdapterProduction extends FragmentPagerAdapter {
     private Context mContext;
-    private final static int PAGE_COUNT = 5;
+    private final static int PAGE_COUNT = 3;
 
-    public PagerAdapterMain(FragmentManager fm, Context context) {
+    public PagerAdapterProduction(FragmentManager fm, Context context) {
         super(fm);
         this.mContext = context;
     }
@@ -31,10 +29,6 @@ public class PagerAdapterMain extends FragmentPagerAdapter {
                 return new ProductivityFragment();
             case 2:
                 return new PlanningFragment();
-            case 3:
-                return new TechniqueFragment();
-            case 4:
-                return new QualityFragment();
             default:
                 return new Fragment();
         }
@@ -49,15 +43,11 @@ public class PagerAdapterMain extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return mContext.getString(R.string.production);
+                return mContext.getString(R.string.volume);
             case 1:
-                return mContext.getString(R.string.productivity);
+                return mContext.getString(R.string.waste_percent);
             case 2:
-                return mContext.getString(R.string.planning);
-            case 3:
-                return mContext.getString(R.string.technique);
-            case 4:
-                return mContext.getString(R.string.quality);
+                return mContext.getString(R.string.waste_quantity);
             default:
                 return null;
         }

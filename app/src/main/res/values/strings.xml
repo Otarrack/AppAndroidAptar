@@ -29,4 +29,7 @@
     <string name="site">Site</string>
     <string name="article">Article</string>
     <string name="volume_by">Volume par :</string>
+    <string name="volume">Volume</string>
+    <string name="waste_percent">Rebut (%)</string>
+    <string name="waste_quantity">Rebut (Qt)</string>
 </resources>
