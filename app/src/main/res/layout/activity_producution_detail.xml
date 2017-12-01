@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         app:titleTextColor="@color/white"
         app:subtitleTextColor="@color/white"
-        android:background="@color/red_dark"
+        android:background="@color/aptar_bh_primary"
         android:minHeight="?attr/actionBarSize"/>
 
     <android.support.design.widget.TabLayout

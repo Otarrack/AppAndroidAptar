@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.florian.projet.view.ProductionMachineFragment;
+import com.florian.projet.view.ProductionSiteFragment;
 import com.florian.projet.view.ProductivityFragment;
 import com.florian.projet.view.PlanningFragment;
 import com.florian.projet.view.ProductionFragment;
@@ -24,9 +26,9 @@ public class PagerAdapterProduction extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new ProductionFragment();
+                return ProductionSiteFragment.newInstance(1);
             case 1:
-                return new ProductivityFragment();
+                return ProductionMachineFragment.newInstance(1);
             case 2:
                 return new PlanningFragment();
             default:

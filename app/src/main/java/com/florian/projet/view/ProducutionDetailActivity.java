@@ -7,11 +7,15 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.florian.projet.R;
+import com.florian.projet.model.Machine;
+import com.florian.projet.model.Site;
 import com.florian.projet.viewModel.PagerAdapterProduction;
 
 import java.util.Objects;
 
-public class ProducutionDetailActivity extends AppCompatActivity {
+public class ProducutionDetailActivity extends AppCompatActivity implements
+        ProductionSiteFragment.OnListFragmentInteractionListener,
+        ProductionMachineFragment.OnListFragmentInteractionListener {
     Toolbar toolbar;
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -55,5 +59,15 @@ public class ProducutionDetailActivity extends AppCompatActivity {
 
             tabLayout.setupWithViewPager(viewPager);
         }
+    }
+
+    @Override
+    public void onListSiteFragmentInteraction(Site site) {
+
+    }
+
+    @Override
+    public void onListMachineFragmentInteraction(Machine machine) {
+
     }
 }

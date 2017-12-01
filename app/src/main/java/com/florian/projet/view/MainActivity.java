@@ -15,7 +15,6 @@ import com.florian.projet.viewModel.MyDrawerMenu;
 
 public class MainActivity extends AppCompatActivity {
     MyDrawerMenu myDrawerMenu;
-    MainAsyncTask mainAsyncTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +22,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initDrawerMenu();
-
-        mainAsyncTask = new MainAsyncTask();
-        mainAsyncTask.execute();
-        mainAsyncTask.isThreadRunnning.set(true);
     }
 
     private void initDrawerMenu() {
@@ -62,21 +57,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        mainAsyncTask.isThreadRunnning.set(false);
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onPause() {
-        mainAsyncTask.isThreadPausing.set(true);
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        mainAsyncTask.isThreadPausing.set(false);
-        super.onResume();
-    }
 }

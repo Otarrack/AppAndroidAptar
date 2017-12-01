@@ -2,11 +2,14 @@ package com.florian.projet;
 
 import android.app.Application;
 
+import com.florian.projet.viewModel.MainAsyncTask;
+
 
 public class MyApplication extends Application {
     private static MyApplication instance;
+    private static MainAsyncTask mainAsyncTask;
 
-    public static MyApplication getInstance(){
+    public static MyApplication getInstance() {
         return instance;
     }
 
@@ -14,6 +17,13 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+
+        mainAsyncTask = new MainAsyncTask();
+        mainAsyncTask.execute();
+        mainAsyncTask.isThreadRunnning.set(true);
     }
 
+    public static MainAsyncTask getMainAsyncTask() {
+        return mainAsyncTask;
+    }
 }
