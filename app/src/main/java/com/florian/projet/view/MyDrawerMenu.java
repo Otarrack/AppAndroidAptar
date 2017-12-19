@@ -1,4 +1,4 @@
-package com.florian.projet.viewModel;
+package com.florian.projet.view;
 
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -11,11 +11,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.florian.projet.R;
-import com.florian.projet.view.PlanningFragment;
-import com.florian.projet.view.ProductionFragment;
-import com.florian.projet.view.QualityFragment;
-import com.florian.projet.view.ProductivityFragment;
-import com.florian.projet.view.TechniqueFragment;
+import com.florian.projet.view.fragment.PlanningFragment;
+import com.florian.projet.view.fragment.ProductionFragment;
+import com.florian.projet.view.fragment.QualityFragment;
+import com.florian.projet.view.fragment.ProductivityFragment;
+import com.florian.projet.view.fragment.TechniqueFragment;
 
 public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedListener {
     private AppCompatActivity activity;

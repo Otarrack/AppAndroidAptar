@@ -1,4 +1,4 @@
-package com.florian.projet.view;
+package com.florian.projet.view.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

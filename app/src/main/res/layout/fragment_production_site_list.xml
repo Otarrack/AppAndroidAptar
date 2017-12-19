@@ -9,5 +9,5 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context="com.florian.projet.view.ProductionSiteFragment"
+    tools:context="com.florian.projet.view.fragment.ProductionSiteFragment"
     tools:listitem="@layout/fragment_production_site_item" />

@@ -1,4 +1,4 @@
-package com.florian.projet.viewModel;
+package com.florian.projet.view.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,18 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.florian.projet.R;
-import com.florian.projet.model.Article;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.florian.projet.tools.CustomItemClickListener;
+import com.florian.projet.view.MyHolder;
+import com.florian.projet.viewModel.ProductionViewModel;
 
 public class ArticleRecyclerAdapter extends RecyclerView.Adapter<MyHolder> {
-    private List<Article> listArticle;
+    private ProductionViewModel productionViewModel;
 
     private CustomItemClickListener listener;
 
-    public ArticleRecyclerAdapter(ArrayList<Article> data, CustomItemClickListener listener) {
-        this.listArticle = data;
+    public ArticleRecyclerAdapter(ProductionViewModel productionViewModel, CustomItemClickListener listener) {
+        this.productionViewModel = productionViewModel;
         this.listener = listener;
     }
 
@@ -40,13 +39,15 @@ public class ArticleRecyclerAdapter extends RecyclerView.Adapter<MyHolder> {
 
     @Override
     public void onBindViewHolder(MyHolder holder, int position) {
-        holder.titleTextView.setText(listArticle.get(position).toString());
-        holder.progressBar.setProgress(position);
+        holder.titleTextView.setText(String.valueOf(productionViewModel.getArticle(position).getId()));
+        holder.volumeTextView.setText(String.valueOf(productionViewModel.getArticle(position).getVolume()));
+        holder.wasteQuantityTextView.setText(String.valueOf(productionViewModel.getArticle(position).getWasteInQuantity()));
+        holder.wastePercentTextView.setText(String.valueOf(productionViewModel.getArticle(position).getWasteInPercent()));
     }
 
     @Override
     public int getItemCount() {
-        return listArticle.size();
+        return productionViewModel.getArticleList().size();
     }
 
 }

@@ -25,7 +25,7 @@ public class CategoryType {
         this.volume = volume;
     }
 
-    public int getRebutInPercent() {
+    public int getWasteInPercent() {
         return rebutInPercent;
     }
 
@@ -33,7 +33,7 @@ public class CategoryType {
         this.rebutInPercent = rebutInPercent;
     }
 
-    public double getRebutInQuantity() {
+    public double getWasteInQuantity() {
         return rebutInQuantity;
     }
 

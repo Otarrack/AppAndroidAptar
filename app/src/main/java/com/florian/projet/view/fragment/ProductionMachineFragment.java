@@ -1,4 +1,4 @@
-package com.florian.projet.view;
+package com.florian.projet.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.florian.projet.R;
 import com.florian.projet.model.Machine;
+import com.florian.projet.view.adapter.ProductionMachineRecyclerViewAdapter;
 
 
 public class ProductionMachineFragment extends Fragment {

@@ -1,4 +1,4 @@
-package com.florian.projet.viewModel;
+package com.florian.projet.view.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,18 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.florian.projet.R;
-import com.florian.projet.model.Machine;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.florian.projet.tools.CustomItemClickListener;
+import com.florian.projet.view.MyHolder;
+import com.florian.projet.viewModel.ProductionViewModel;
 
 public class MachineRecyclerAdapter extends RecyclerView.Adapter<MyHolder> {
-    private List<Machine> listMachine;
+    private ProductionViewModel productionViewModel;
 
     private CustomItemClickListener listener;
 
-    public MachineRecyclerAdapter(ArrayList<Machine> data, CustomItemClickListener listener) {
-        this.listMachine = data;
+    public MachineRecyclerAdapter(ProductionViewModel productionViewModel, CustomItemClickListener listener) {
+        this.productionViewModel = productionViewModel;
         this.listener = listener;
     }
 
@@ -40,13 +39,15 @@ public class MachineRecyclerAdapter extends RecyclerView.Adapter<MyHolder> {
 
     @Override
     public void onBindViewHolder(MyHolder holder, int position) {
-        holder.titleTextView.setText("re");
-        holder.progressBar.setProgress(position);
+        holder.titleTextView.setText(String.valueOf(productionViewModel.getMachine(position).getId()));
+        holder.volumeTextView.setText(String.valueOf(productionViewModel.getMachine(position).getVolume()));
+        holder.wasteQuantityTextView.setText(String.valueOf(productionViewModel.getMachine(position).getWasteInQuantity()));
+        holder.wastePercentTextView.setText(String.valueOf(productionViewModel.getMachine(position).getWasteInPercent()));
     }
 
     @Override
     public int getItemCount() {
-        return listMachine.size();
+        return productionViewModel.getMachineList().size();
     }
 
 }

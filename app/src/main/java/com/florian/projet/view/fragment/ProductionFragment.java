@@ -1,4 +1,4 @@
-package com.florian.projet.view;
+package com.florian.projet.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.florian.projet.R;
 import com.florian.projet.manager.ArticleManager;
@@ -19,10 +18,12 @@ import com.florian.projet.manager.SiteManager;
 import com.florian.projet.model.Article;
 import com.florian.projet.model.Machine;
 import com.florian.projet.model.Site;
-import com.florian.projet.viewModel.ArticleRecyclerAdapter;
-import com.florian.projet.viewModel.CustomItemClickListener;
-import com.florian.projet.viewModel.MachineRecyclerAdapter;
-import com.florian.projet.viewModel.SiteRecyclerAdapter;
+import com.florian.projet.view.activity.ProducutionDetailActivity;
+import com.florian.projet.view.adapter.ArticleRecyclerAdapter;
+import com.florian.projet.tools.CustomItemClickListener;
+import com.florian.projet.view.adapter.MachineRecyclerAdapter;
+import com.florian.projet.view.adapter.SiteRecyclerAdapter;
+import com.florian.projet.viewModel.ProductionViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,17 +32,13 @@ public class ProductionFragment extends Fragment {
     RecyclerView recyclerViewSite;
     RecyclerView recyclerViewMachine;
     RecyclerView recyclerViewArticle;
-    List<Site> siteList;
-    List<Machine> machineList;
-    List<Article> articleList;
+    ProductionViewModel productionViewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        siteList = SiteManager.getInstance().getListSite();
-        machineList = MachineManager.getInstance().getListMachine();
-        articleList = ArticleManager.getInstance().getListArticle();
+        productionViewModel = ProductionViewModel.getInstance();
     }
 
     @Override
@@ -61,10 +58,8 @@ public class ProductionFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
 
-        ArrayList<Site> arrayListSite = new ArrayList<>(siteList);
-
-        if (arrayListSite.size() > 0 & recyclerViewSite != null) {
-            SiteRecyclerAdapter siteRecyclerAdapter = new SiteRecyclerAdapter(arrayListSite, new CustomItemClickListener() {
+        if (productionViewModel.getSiteList().size() > 0) {
+            SiteRecyclerAdapter siteRecyclerAdapter = new SiteRecyclerAdapter(productionViewModel, new CustomItemClickListener() {
                 @Override
                 public void onItemClick(View v, int position) {
                     TextView title = v.findViewById(R.id.recycle_item_title);
@@ -89,10 +84,8 @@ public class ProductionFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
 
-        ArrayList<Machine> arrayListMachine = new ArrayList<>(machineList);
-
-        if (arrayListMachine.size() > 0 & recyclerViewMachine != null) {
-            MachineRecyclerAdapter machineRecyclerAdapter = new MachineRecyclerAdapter(arrayListMachine, new CustomItemClickListener() {
+        if (productionViewModel.getMachineList().size() > 0) {
+            MachineRecyclerAdapter machineRecyclerAdapter = new MachineRecyclerAdapter(productionViewModel, new CustomItemClickListener() {
                 @Override
                 public void onItemClick(View v, int position) {
                     TextView title = v.findViewById(R.id.recycle_item_title);
@@ -117,10 +110,8 @@ public class ProductionFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
 
-        ArrayList<Article> arrayListArticle = new ArrayList<>(articleList);
-
-        if (arrayListArticle.size() > 0 & recyclerViewArticle != null) {
-            ArticleRecyclerAdapter articleRecyclerAdapter = new ArticleRecyclerAdapter(arrayListArticle, new CustomItemClickListener() {
+        if (productionViewModel.getArticleList().size() > 0) {
+            ArticleRecyclerAdapter articleRecyclerAdapter = new ArticleRecyclerAdapter(productionViewModel, new CustomItemClickListener() {
                 @Override
                 public void onItemClick(View v, int position) {
                     TextView title = v.findViewById(R.id.recycle_item_title);

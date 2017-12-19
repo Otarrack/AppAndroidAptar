@@ -1,4 +1,4 @@
-package com.florian.projet.viewModel;
+package com.florian.projet.view.adapter;
 
 
 import android.content.Context;
@@ -6,18 +6,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.florian.projet.view.ProductionMachineFragment;
-import com.florian.projet.view.ProductionSiteFragment;
-import com.florian.projet.view.ProductivityFragment;
-import com.florian.projet.view.PlanningFragment;
-import com.florian.projet.view.ProductionFragment;
+import com.florian.projet.view.fragment.ProductionMachineFragment;
+import com.florian.projet.view.fragment.ProductionSiteFragment;
+import com.florian.projet.view.fragment.PlanningFragment;
 import com.florian.projet.R;
 
-public class PagerAdapterProduction extends FragmentPagerAdapter {
+public class ProductionPagerAdapter extends FragmentPagerAdapter {
     private Context mContext;
     private final static int PAGE_COUNT = 3;
 
-    public PagerAdapterProduction(FragmentManager fm, Context context) {
+    public ProductionPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.mContext = context;
     }

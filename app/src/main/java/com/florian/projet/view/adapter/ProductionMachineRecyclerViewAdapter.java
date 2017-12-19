@@ -1,4 +1,4 @@
-package com.florian.projet.view;
+package com.florian.projet.view.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.florian.projet.R;
 import com.florian.projet.manager.MachineManager;
 import com.florian.projet.model.Machine;
-import com.florian.projet.view.ProductionMachineFragment.OnListFragmentInteractionListener;
+import com.florian.projet.view.fragment.ProductionMachineFragment.OnListFragmentInteractionListener;
 
 import java.util.List;
 

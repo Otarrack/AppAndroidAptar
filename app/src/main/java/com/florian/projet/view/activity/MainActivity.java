@@ -1,4 +1,4 @@
-package com.florian.projet.view;
+package com.florian.projet.view.activity;
 
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
@@ -10,8 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.florian.projet.R;
-import com.florian.projet.viewModel.MainAsyncTask;
-import com.florian.projet.viewModel.MyDrawerMenu;
+import com.florian.projet.view.MyDrawerMenu;
 
 public class MainActivity extends AppCompatActivity {
     MyDrawerMenu myDrawerMenu;
