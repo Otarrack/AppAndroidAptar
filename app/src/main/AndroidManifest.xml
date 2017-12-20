@@ -17,7 +17,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.ProducutionDetailActivity" />
+        <activity android:name=".view.activity.ProductionDetailActivity" />
+        <activity android:name=".view.activity.ProductionActivity" />
+        <activity android:name=".view.activity.ProductivityActivity" />
+        <activity android:name=".view.activity.QualityActivity" />
+        <activity android:name=".view.activity.TechniqueActivity" />
+        <activity android:name=".view.activity.SupplyActivity"></activity>
     </application>
 
 </manifest>

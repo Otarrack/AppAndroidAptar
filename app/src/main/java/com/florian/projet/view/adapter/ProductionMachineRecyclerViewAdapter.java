@@ -26,7 +26,7 @@ public class ProductionMachineRecyclerViewAdapter extends RecyclerView.Adapter<P
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_production_machine_item, parent, false);
+                .inflate(R.layout.production_machine_item, parent, false);
         return new ViewHolder(view);
     }
 

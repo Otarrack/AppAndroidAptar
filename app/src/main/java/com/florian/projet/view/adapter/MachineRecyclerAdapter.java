@@ -24,7 +24,7 @@ public class MachineRecyclerAdapter extends RecyclerView.Adapter<MyHolder> {
     public MyHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         // create a new view
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.recycle_item, viewGroup, false);
+                .inflate(R.layout.production_recycle_item, viewGroup, false);
 
         final MyHolder myHolder = new MyHolder(view);
         view.setOnClickListener(new View.OnClickListener() {

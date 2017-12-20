@@ -15,7 +15,7 @@ import com.florian.projet.view.adapter.ProductionPagerAdapter;
 
 import java.util.Objects;
 
-public class ProducutionDetailActivity extends AppCompatActivity implements
+public class ProductionDetailActivity extends AppCompatActivity implements
         ProductionSiteFragment.OnListFragmentInteractionListener,
         ProductionMachineFragment.OnListFragmentInteractionListener {
     Toolbar toolbar;

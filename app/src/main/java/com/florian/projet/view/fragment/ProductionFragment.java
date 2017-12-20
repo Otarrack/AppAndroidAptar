@@ -12,21 +12,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.florian.projet.R;
-import com.florian.projet.manager.ArticleManager;
-import com.florian.projet.manager.MachineManager;
-import com.florian.projet.manager.SiteManager;
-import com.florian.projet.model.Article;
-import com.florian.projet.model.Machine;
-import com.florian.projet.model.Site;
-import com.florian.projet.view.activity.ProducutionDetailActivity;
+import com.florian.projet.view.activity.ProductionDetailActivity;
 import com.florian.projet.view.adapter.ArticleRecyclerAdapter;
 import com.florian.projet.tools.CustomItemClickListener;
 import com.florian.projet.view.adapter.MachineRecyclerAdapter;
 import com.florian.projet.view.adapter.SiteRecyclerAdapter;
 import com.florian.projet.viewModel.ProductionViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ProductionFragment extends Fragment {
     RecyclerView recyclerViewSite;
@@ -64,14 +55,13 @@ public class ProductionFragment extends Fragment {
                 public void onItemClick(View v, int position) {
                     TextView title = v.findViewById(R.id.recycle_item_title);
 
-                    Intent intent = new Intent(getContext(),ProducutionDetailActivity.class);
+                    Intent intent = new Intent(getContext(),ProductionDetailActivity.class);
                     intent.putExtra("page",getString(R.string.site));
                     intent.putExtra("title",title.getText());
 
                     startActivity(intent);
                 }
             });
-
 
             recyclerViewSite.setAdapter(siteRecyclerAdapter);
         }
@@ -90,14 +80,13 @@ public class ProductionFragment extends Fragment {
                 public void onItemClick(View v, int position) {
                     TextView title = v.findViewById(R.id.recycle_item_title);
 
-                    Intent intent = new Intent(getContext(),ProducutionDetailActivity.class);
+                    Intent intent = new Intent(getContext(),ProductionDetailActivity.class);
                     intent.putExtra("page",getString(R.string.machine));
                     intent.putExtra("title",title.getText());
 
                     startActivity(intent);
                 }
             });
-
 
             recyclerViewMachine.setAdapter(machineRecyclerAdapter);
         }
@@ -116,14 +105,13 @@ public class ProductionFragment extends Fragment {
                 public void onItemClick(View v, int position) {
                     TextView title = v.findViewById(R.id.recycle_item_title);
 
-                    Intent intent = new Intent(getContext(),ProducutionDetailActivity.class);
+                    Intent intent = new Intent(getContext(),ProductionDetailActivity.class);
                     intent.putExtra("page",getString(R.string.article));
                     intent.putExtra("title",title.getText());
 
                     startActivity(intent);
                 }
             });
-
 
             recyclerViewArticle.setAdapter(articleRecyclerAdapter);
         }
