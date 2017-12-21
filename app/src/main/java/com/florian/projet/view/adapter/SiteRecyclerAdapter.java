@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 
 import com.florian.projet.R;
 import com.florian.projet.tools.CustomItemClickListener;
-import com.florian.projet.view.MyHolder;
+import com.florian.projet.view.ProductionHolder;
 import com.florian.projet.viewModel.ProductionViewModel;
 
-public class SiteRecyclerAdapter extends RecyclerView.Adapter<MyHolder> {
+public class SiteRecyclerAdapter extends RecyclerView.Adapter<ProductionHolder> {
     private ProductionViewModel productionViewModel;
 
     private CustomItemClickListener listener;
@@ -21,24 +21,24 @@ public class SiteRecyclerAdapter extends RecyclerView.Adapter<MyHolder> {
     }
 
     @Override
-    public MyHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public ProductionHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         // create a new view
-        final View view = LayoutInflater.from(viewGroup.getContext())
+        View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.production_recycle_item, viewGroup, false);
 
-        final MyHolder myHolder = new MyHolder(view);
+        final ProductionHolder holder = new ProductionHolder(view);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onItemClick(v, myHolder.getLayoutPosition());
+                listener.onItemClick(v, holder.getLayoutPosition());
             }
         });
 
-        return myHolder;
+        return holder;
     }
 
     @Override
-    public void onBindViewHolder(MyHolder holder, int position) {
+    public void onBindViewHolder(ProductionHolder holder, int position) {
         holder.titleTextView.setText(productionViewModel.getSite(position).getName());
         holder.volumeTextView.setText(String.valueOf(productionViewModel.getSite(position).getVolume()));
         holder.wasteQuantityTextView.setText(String.valueOf(productionViewModel.getSite(position).getWasteInQuantity()));

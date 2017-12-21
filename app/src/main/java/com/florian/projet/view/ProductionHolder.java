@@ -7,13 +7,13 @@ import android.widget.TextView;
 
 import com.florian.projet.R;
 
-public class MyHolder extends RecyclerView.ViewHolder {
+public class ProductionHolder extends RecyclerView.ViewHolder {
     public TextView titleTextView;
     public TextView volumeTextView;
     public TextView wasteQuantityTextView;
     public TextView wastePercentTextView;
 
-    public MyHolder(View itemView) {
+    public ProductionHolder(View itemView) {
         super(itemView);
         titleTextView = itemView.findViewById(R.id.recycle_item_title);
         volumeTextView = itemView.findViewById(R.id.recycle_item_volume_res);

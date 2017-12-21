@@ -15,9 +15,7 @@ import com.florian.projet.view.adapter.ProductionPagerAdapter;
 
 import java.util.Objects;
 
-public class ProductionDetailActivity extends AppCompatActivity implements
-        ProductionSiteFragment.OnListFragmentInteractionListener,
-        ProductionMachineFragment.OnListFragmentInteractionListener {
+public class ProductionDetailActivity extends AppCompatActivity {
     Toolbar toolbar;
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -64,15 +62,5 @@ public class ProductionDetailActivity extends AppCompatActivity implements
 
             tabLayout.setupWithViewPager(viewPager);
         }
-    }
-
-    @Override
-    public void onListSiteFragmentInteraction(Site site) {
-
-    }
-
-    @Override
-    public void onListMachineFragmentInteraction(Machine machine) {
-
     }
 }

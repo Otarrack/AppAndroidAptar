@@ -3,7 +3,6 @@ package com.florian.projet.view;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -12,11 +11,10 @@ import android.view.MenuItem;
 
 import com.florian.projet.R;
 import com.florian.projet.view.activity.ProductionActivity;
-import com.florian.projet.view.activity.ProductionDetailActivity;
-import com.florian.projet.view.fragment.PlanningFragment;
-import com.florian.projet.view.fragment.QualityFragment;
-import com.florian.projet.view.fragment.ProductivityFragment;
-import com.florian.projet.view.fragment.TechniqueFragment;
+import com.florian.projet.view.activity.ProductivityActivity;
+import com.florian.projet.view.activity.QualityActivity;
+import com.florian.projet.view.activity.SupplyActivity;
+import com.florian.projet.view.activity.TechniqueActivity;
 
 public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedListener {
     private AppCompatActivity activity;
@@ -72,7 +70,7 @@ public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedList
             intent = new Intent(activity.getBaseContext(),ProductionActivity.class);
             activity.startActivity(intent);
 
-        } else if (id == R.id.nav_planning) {
+        } else if (id == R.id.nav_supply) {
             intent = new Intent(activity.getBaseContext(),ProductionActivity.class);
             activity.startActivity(intent);
 
@@ -100,16 +98,16 @@ public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedList
                 return ProductionActivity.class;
 
             case R.id.nav_productivity:
-                return ProductionActivity.class;
+                return ProductivityActivity.class;
 
-            case R.id.nav_planning:
-                return ProductionActivity.class;
+            case R.id.nav_supply:
+                return SupplyActivity.class;
 
             case R.id.nav_technique:
-                return ProductionActivity.class;
+                return TechniqueActivity.class;
 
             case R.id.nav_quality:
-                return ProductionActivity.class;
+                return QualityActivity.class;
 
             default:
                 return null;

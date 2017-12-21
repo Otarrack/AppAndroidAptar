@@ -27,7 +27,7 @@ public class ArticleManager {
     private void setListArticle() {
         listArticle = new ArrayList<>();
         Article site;
-        for (int i = 1; i < 5; i++) {
+        for (int i = 1; i < 15; i++) {
             site = new Article(i,i * 103,i,i + 13*i);
             listArticle.add(site);
             //TODO: Récupèration des données à partir du manager qui récupère du serveur

@@ -13,15 +13,15 @@ import android.view.ViewGroup;
 import com.florian.projet.R;
 import com.florian.projet.tools.CustomItemClickListener;
 import com.florian.projet.view.activity.ProductionDetailActivity;
-import com.florian.projet.view.adapter.SiteRecyclerAdapter;
+import com.florian.projet.view.adapter.ArticleRecyclerAdapter;
 import com.florian.projet.viewModel.ProductionViewModel;
 
-public class ProductionSiteFragment extends Fragment {
-    RecyclerView recyclerViewSite;
+public class ProductionArticleFragment extends Fragment {
+    RecyclerView recyclerViewArticle;
     ProductionViewModel productionViewModel;
 
-    public static ProductionSiteFragment newInstance() {
-        ProductionSiteFragment fragment = new ProductionSiteFragment();
+    public static ProductionArticleFragment newInstance() {
+        ProductionArticleFragment fragment = new ProductionArticleFragment();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
@@ -37,21 +37,21 @@ public class ProductionSiteFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_production_site, container, false);
+        View view = inflater.inflate(R.layout.fragment_production_article, container, false);
 
-        setRecyclerViewSite(view);
+        setRecyclerViewArticle(view);
 
         return view;
     }
 
-    private void setRecyclerViewSite(View view) {
-        recyclerViewSite = view.findViewById(R.id.production_site_recycler);
-        recyclerViewSite.setHasFixedSize(true);
-        recyclerViewSite.setNestedScrollingEnabled(false);
+    private void setRecyclerViewArticle(View view) {
+        recyclerViewArticle = view.findViewById(R.id.production_article_recycler);
+        recyclerViewArticle.setHasFixedSize(true);
+        recyclerViewArticle.setNestedScrollingEnabled(false);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
 
-        if (productionViewModel.getSiteList().size() > 0) {
-            SiteRecyclerAdapter siteRecyclerAdapter = new SiteRecyclerAdapter(productionViewModel, new CustomItemClickListener() {
+        if (productionViewModel.getArticleList().size() > 0) {
+            ArticleRecyclerAdapter articleRecyclerAdapter = new ArticleRecyclerAdapter(productionViewModel, new CustomItemClickListener() {
                 @Override
                 public void onItemClick(View v, int position) {
                     Intent intent = new Intent(getContext(),ProductionDetailActivity.class);
@@ -60,9 +60,9 @@ public class ProductionSiteFragment extends Fragment {
                 }
             });
 
-            recyclerViewSite.setAdapter(siteRecyclerAdapter);
+            recyclerViewArticle.setAdapter(articleRecyclerAdapter);
         }
-        recyclerViewSite.setLayoutManager(layoutManager);
+        recyclerViewArticle.setLayoutManager(layoutManager);
     }
 
 }

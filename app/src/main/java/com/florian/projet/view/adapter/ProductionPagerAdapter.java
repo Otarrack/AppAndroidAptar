@@ -1,15 +1,14 @@
 package com.florian.projet.view.adapter;
 
-
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.florian.projet.R;
+import com.florian.projet.view.fragment.ProductionArticleFragment;
 import com.florian.projet.view.fragment.ProductionMachineFragment;
 import com.florian.projet.view.fragment.ProductionSiteFragment;
-import com.florian.projet.view.fragment.PlanningFragment;
-import com.florian.projet.R;
 
 public class ProductionPagerAdapter extends FragmentPagerAdapter {
     private Context mContext;
@@ -24,11 +23,11 @@ public class ProductionPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return ProductionSiteFragment.newInstance(1);
+                return ProductionSiteFragment.newInstance();
             case 1:
-                return ProductionMachineFragment.newInstance(1);
+                return ProductionMachineFragment.newInstance();
             case 2:
-                return new PlanningFragment();
+                return ProductionArticleFragment.newInstance();
             default:
                 return new Fragment();
         }

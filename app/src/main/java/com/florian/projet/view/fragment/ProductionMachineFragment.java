@@ -1,86 +1,68 @@
 package com.florian.projet.view.fragment;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.florian.projet.R;
-import com.florian.projet.model.Machine;
-import com.florian.projet.view.adapter.ProductionMachineRecyclerViewAdapter;
-
+import com.florian.projet.tools.CustomItemClickListener;
+import com.florian.projet.view.activity.ProductionDetailActivity;
+import com.florian.projet.view.adapter.MachineRecyclerAdapter;
+import com.florian.projet.viewModel.ProductionViewModel;
 
 public class ProductionMachineFragment extends Fragment {
+    RecyclerView recyclerViewMachine;
+    ProductionViewModel productionViewModel;
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
-    private OnListFragmentInteractionListener listener;
-
-    public ProductionMachineFragment() {
-    }
-
-    public static ProductionMachineFragment newInstance(int columnCount) {
+    public static ProductionMachineFragment newInstance() {
         ProductionMachineFragment fragment = new ProductionMachineFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
+
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
+        productionViewModel = ProductionViewModel.getInstance();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.production_machine_list, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_production_machine, container, false);
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new ProductionMachineRecyclerViewAdapter(listener));
-        }
+        setRecyclerViewMachine(view);
+
         return view;
     }
 
+    private void setRecyclerViewMachine(View view) {
+        recyclerViewMachine = view.findViewById(R.id.production_machine_recycler);
+        recyclerViewMachine.setHasFixedSize(true);
+        recyclerViewMachine.setNestedScrollingEnabled(false);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            listener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
+        if (productionViewModel.getMachineList().size() > 0) {
+            MachineRecyclerAdapter machineRecyclerAdapter = new MachineRecyclerAdapter(productionViewModel, new CustomItemClickListener() {
+                @Override
+                public void onItemClick(View v, int position) {
+                    Intent intent = new Intent(getContext(),ProductionDetailActivity.class);
+
+                    startActivity(intent);
+                }
+            });
+
+            recyclerViewMachine.setAdapter(machineRecyclerAdapter);
         }
+        recyclerViewMachine.setLayoutManager(layoutManager);
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        listener = null;
-    }
-
-    public interface OnListFragmentInteractionListener {
-        void onListMachineFragmentInteraction(Machine machine);
-    }
 }

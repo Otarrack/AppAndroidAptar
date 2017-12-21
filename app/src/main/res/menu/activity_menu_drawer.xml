@@ -11,7 +11,7 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/productivity" />
         <item
-            android:id="@+id/nav_planning"
+            android:id="@+id/nav_supply"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/planning" />
         <item
