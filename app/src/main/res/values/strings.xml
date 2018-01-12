@@ -32,4 +32,7 @@
     <string name="volume">Volume</string>
     <string name="waste_percent">Rebut (%)</string>
     <string name="waste_quantity">Rebut (Qt)</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

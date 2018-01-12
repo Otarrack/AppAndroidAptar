@@ -11,6 +11,25 @@ import com.florian.projet.R;
 
 public class PlanningFragment extends Fragment {
 
+    public PlanningFragment() {
+
+    }
+
+    public static PlanningFragment newInstance() {
+        PlanningFragment fragment = new PlanningFragment();
+        Bundle args = new Bundle();
+
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

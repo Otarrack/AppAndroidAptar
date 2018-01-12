@@ -3,25 +3,17 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_production"
+            android:id="@+id/nav_site"
             android:icon="@drawable/ic_menu_camera"
-            android:title="@string/production" />
+            android:title="@string/site" />
         <item
-            android:id="@+id/nav_productivity"
+            android:id="@+id/nav_machine"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/productivity" />
+            android:title="@string/machine" />
         <item
-            android:id="@+id/nav_supply"
+            android:id="@+id/nav_article"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/planning" />
-        <item
-            android:id="@+id/nav_technique"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/technique" />
-        <item
-            android:id="@+id/nav_quality"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/quality" />
+            android:title="@string/article" />
     </group>
 
     <item android:title="@string/app_name">

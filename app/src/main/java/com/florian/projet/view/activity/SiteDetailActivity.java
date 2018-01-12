@@ -7,9 +7,9 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.florian.projet.R;
-import com.florian.projet.view.adapter.ProductionPagerAdapter;
+import com.florian.projet.view.adapter.SectionPagerAdapter;
 
-public class ProductionActivity extends AppCompatActivity {
+public class SiteDetailActivity extends AppCompatActivity {
     Toolbar toolbar;
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -17,23 +17,23 @@ public class ProductionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_production);
+        setContentView(R.layout.activity_site_detail);
 
         initializeViewPager();
     }
 
     private void initializeViewPager() {
 
-        this.toolbar = (Toolbar) findViewById(R.id.production_toolbar);
+        this.toolbar = (Toolbar) findViewById(R.id.site_detail_toolbar);
         setSupportActionBar(toolbar);
 
-        tabLayout = (TabLayout) findViewById(R.id.production_tabLayout);
+        tabLayout = (TabLayout) findViewById(R.id.site_detail_tabLayout);
         if (tabLayout != null) {
             tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
             tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
-            viewPager = (ViewPager) findViewById(R.id.production_viewPager);
-            viewPager.setAdapter(new ProductionPagerAdapter(getSupportFragmentManager(),this));
+            viewPager = (ViewPager) findViewById(R.id.site_detail_viewPager);
+            viewPager.setAdapter(new SectionPagerAdapter(getSupportFragmentManager(),this));
             viewPager.setClipToPadding(false);
             viewPager.setPageMargin(12);
 

@@ -6,7 +6,7 @@ public class CategoryType {
     private int rebutInPercent;
     private double rebutInQuantity;
 
-    public CategoryType(int id, double volume, int rebutInPercent, double rebutInQuantity) {
+    CategoryType(int id, double volume, int rebutInPercent, double rebutInQuantity) {
         this.id = id;
         this.volume = volume;
         this.rebutInPercent = rebutInPercent;
@@ -33,7 +33,7 @@ public class CategoryType {
         this.rebutInPercent = rebutInPercent;
     }
 
-    public double getWasteInQuantity() {
+    public double getWasteInQuantity()  {
         return rebutInQuantity;
     }
 

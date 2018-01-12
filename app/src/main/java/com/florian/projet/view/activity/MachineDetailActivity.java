@@ -7,15 +7,11 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.florian.projet.R;
-import com.florian.projet.model.Machine;
-import com.florian.projet.model.Site;
-import com.florian.projet.view.fragment.ProductionMachineFragment;
-import com.florian.projet.view.fragment.ProductionSiteFragment;
-import com.florian.projet.view.adapter.ProductionPagerAdapter;
+import com.florian.projet.view.adapter.SectionPagerAdapter;
 
 import java.util.Objects;
 
-public class ProductionDetailActivity extends AppCompatActivity {
+public class MachineDetailActivity extends AppCompatActivity {
     Toolbar toolbar;
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -23,7 +19,7 @@ public class ProductionDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_producution_detail);
+        setContentView(R.layout.activity_machine_detail);
 
         initializeViewPager();
 
@@ -56,7 +52,7 @@ public class ProductionDetailActivity extends AppCompatActivity {
             tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
             viewPager = (ViewPager) findViewById(R.id.production_detail_viewPager);
-            viewPager.setAdapter(new ProductionPagerAdapter(getSupportFragmentManager(),this));
+            viewPager.setAdapter(new SectionPagerAdapter(getSupportFragmentManager(),this));
             viewPager.setClipToPadding(false);
             viewPager.setPageMargin(12);
 

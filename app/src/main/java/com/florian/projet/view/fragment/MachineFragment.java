@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,16 +13,16 @@ import android.view.ViewGroup;
 
 import com.florian.projet.R;
 import com.florian.projet.tools.CustomItemClickListener;
-import com.florian.projet.view.activity.ProductionDetailActivity;
+import com.florian.projet.view.activity.MachineDetailActivity;
 import com.florian.projet.view.adapter.MachineRecyclerAdapter;
 import com.florian.projet.viewModel.ProductionViewModel;
 
-public class ProductionMachineFragment extends Fragment {
+public class MachineFragment extends Fragment {
     RecyclerView recyclerViewMachine;
     ProductionViewModel productionViewModel;
 
-    public static ProductionMachineFragment newInstance() {
-        ProductionMachineFragment fragment = new ProductionMachineFragment();
+    public static MachineFragment newInstance() {
+        MachineFragment fragment = new MachineFragment();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
@@ -46,15 +47,14 @@ public class ProductionMachineFragment extends Fragment {
 
     private void setRecyclerViewMachine(View view) {
         recyclerViewMachine = view.findViewById(R.id.production_machine_recycler);
-        recyclerViewMachine.setHasFixedSize(true);
         recyclerViewMachine.setNestedScrollingEnabled(false);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
         if (productionViewModel.getMachineList().size() > 0) {
             MachineRecyclerAdapter machineRecyclerAdapter = new MachineRecyclerAdapter(productionViewModel, new CustomItemClickListener() {
                 @Override
                 public void onItemClick(View v, int position) {
-                    Intent intent = new Intent(getContext(),ProductionDetailActivity.class);
+                    Intent intent = new Intent(getContext(),MachineDetailActivity.class);
 
                     startActivity(intent);
                 }
