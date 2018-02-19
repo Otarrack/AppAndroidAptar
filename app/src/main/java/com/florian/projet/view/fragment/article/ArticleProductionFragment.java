@@ -1,4 +1,4 @@
-package com.florian.projet.view.fragment;
+package com.florian.projet.view.fragment.article;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,15 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.florian.projet.R;
+import com.florian.projet.manager.ArticleManager;
+import com.florian.projet.viewModel.ArticleViewModel;
 
-public class ProductionFragment extends Fragment {
+public class ArticleProductionFragment extends Fragment {
+    ArticleViewModel articleViewModel;
 
-    public ProductionFragment() {
+    public ArticleProductionFragment() {
 
     }
 
-    public static ProductionFragment newInstance() {
-        ProductionFragment fragment = new ProductionFragment();
+    public static ArticleProductionFragment newInstance() {
+        ArticleProductionFragment fragment = new ArticleProductionFragment();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
@@ -25,16 +28,15 @@ public class ProductionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
 
-        }
+        articleViewModel = ArticleViewModel.getInstance();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_production, container, false);
+        return inflater.inflate(R.layout.fragment_article_production, container, false);
     }
 
 }

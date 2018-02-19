@@ -1,4 +1,4 @@
-package com.florian.projet.view.fragment;
+package com.florian.projet.view.fragment.article;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,15 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.florian.projet.R;
+import com.florian.projet.viewModel.ArticleViewModel;
 
-public class TechniqueFragment extends Fragment {
+public class ArticleOperatorPerfFragment extends Fragment {
+    ArticleViewModel articleViewModel;
 
-    public TechniqueFragment() {
+    public ArticleOperatorPerfFragment() {
 
     }
 
-    public static TechniqueFragment newInstance() {
-        TechniqueFragment fragment = new TechniqueFragment();
+    public static ArticleOperatorPerfFragment newInstance() {
+        ArticleOperatorPerfFragment fragment = new ArticleOperatorPerfFragment();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
@@ -25,13 +27,13 @@ public class TechniqueFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
 
-        }
+        articleViewModel = ArticleViewModel.getInstance();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_maintenance, container, false);
+
+        return inflater.inflate(R.layout.fragment_article_operator_performance, container, false);
     }
 }

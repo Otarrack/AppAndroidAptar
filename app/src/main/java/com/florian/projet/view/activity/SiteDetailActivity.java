@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.florian.projet.R;
-import com.florian.projet.view.adapter.SectionPagerAdapter;
+import com.florian.projet.view.adapter.ArticlePagerAdapter;
 
 public class SiteDetailActivity extends AppCompatActivity {
     Toolbar toolbar;
@@ -33,7 +33,7 @@ public class SiteDetailActivity extends AppCompatActivity {
             tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
             viewPager = (ViewPager) findViewById(R.id.site_detail_viewPager);
-            viewPager.setAdapter(new SectionPagerAdapter(getSupportFragmentManager(),this));
+            viewPager.setAdapter(new ArticlePagerAdapter(getSupportFragmentManager(),this));
             viewPager.setClipToPadding(false);
             viewPager.setPageMargin(12);
 

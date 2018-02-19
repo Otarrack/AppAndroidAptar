@@ -20,17 +20,27 @@ public class ArticleManager {
         return instance;
     }
 
-    public List<Article> getListArticle() {
+    public List<Article> getAllArticle() {
         return listArticle;
     }
 
     private void setListArticle() {
         listArticle = new ArrayList<>();
-        Article site;
+        Article article;
         for (int i = 1; i < 15; i++) {
-            site = new Article(i,i * 103,i,i + 13*i);
-            listArticle.add(site);
-            //TODO: Récupèration des données à partir du manager qui récupère du serveur
+            article = new Article(i,i * 103,i,i + 13*i);
+            listArticle.add(article);
+            //TODO: Récupèration des données à partir du manager qui récupère du fichier
         }
     }
+
+    public Article getArticleAt(int position) {
+        if (position < listArticle.size()) {
+            return listArticle.get(position);
+        } else {
+            return null;
+        }
+    }
+
+
 }

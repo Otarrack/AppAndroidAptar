@@ -39,7 +39,7 @@ public class PersonManager {
             person = new Person();
 
             for (; j < j + 3; j++) {
-                machine = new Machine(j,18.1,1 + j,12.12);
+                machine = new Machine(j + "",18.1,1 + j,12.12);
                 machineList.add(machine);
 
                 personMachine = new PersonMachine(machine,person,123.12,8);

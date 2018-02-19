@@ -11,13 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.florian.projet.R;
-import com.florian.projet.view.fragment.ArticleFragment;
-import com.florian.projet.view.fragment.MachineFragment;
-import com.florian.projet.view.fragment.PlanningFragment;
-import com.florian.projet.view.fragment.SiteFragment;
-import com.florian.projet.view.fragment.ProductivityFragment;
-import com.florian.projet.view.fragment.QualityFragment;
-import com.florian.projet.view.fragment.TechniqueFragment;
+import com.florian.projet.view.fragment.menu.ArticleFragment;
+import com.florian.projet.view.fragment.menu.MachineFragment;
+import com.florian.projet.view.fragment.menu.SiteFragment;
 
 public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedListener {
     private AppCompatActivity activity;
@@ -39,8 +35,8 @@ public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedList
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        activity.getMenuInflater().inflate(R.menu.menu, menu);
+        // Inflate the main_menu; this adds items to the action bar if it is present.
+        activity.getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
@@ -63,16 +59,16 @@ public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedList
 
 
         if (id == R.id.nav_site) {
-            fragment = new SiteFragment();
-            activity.setTitle(R.string.site);
+            fragment = SiteFragment.newInstance();
+            activity.setTitle(R.string.menu_site_title);
 
         } else if (id == R.id.nav_machine) {
-            fragment = new MachineFragment();
-            activity.setTitle(R.string.machine);
+            fragment = MachineFragment.newInstance();
+            activity.setTitle(R.string.menu_machine_title);
 
         } else if (id == R.id.nav_article) {
-            fragment = new ArticleFragment();
-            activity.setTitle(R.string.article);
+            fragment = ArticleFragment.newInstance();
+            activity.setTitle(R.string.menu_article_title);
 
         } else if (id == R.id.nav_share) {
 

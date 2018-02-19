@@ -19,7 +19,8 @@
         </activity>
         <activity android:name=".view.activity.MachineDetailActivity" />
         <activity android:name=".view.activity.ArticleDetailActivity" />
-        <activity android:name=".view.activity.SiteDetailActivity"></activity>
+        <activity android:name=".view.activity.SiteDetailActivity" />
+        <activity android:name=".view.activity.PeriodActivity"></activity>
     </application>
 
 </manifest>

@@ -1,10 +1,9 @@
-package com.florian.projet.view.fragment;
+package com.florian.projet.view.fragment.menu;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,18 +11,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.florian.projet.R;
+import com.florian.projet.model.Article;
 import com.florian.projet.tools.CustomItemClickListener;
+import com.florian.projet.view.activity.ArticleDetailActivity;
 import com.florian.projet.view.activity.MachineDetailActivity;
-import com.florian.projet.view.activity.SiteDetailActivity;
-import com.florian.projet.view.adapter.SiteRecyclerAdapter;
+import com.florian.projet.view.adapter.ArticleRecyclerAdapter;
 import com.florian.projet.viewModel.ProductionViewModel;
 
-public class SiteFragment extends Fragment {
-    RecyclerView recyclerViewSite;
+public class ArticleFragment extends Fragment {
+    RecyclerView recyclerViewArticle;
     ProductionViewModel productionViewModel;
 
-    public static SiteFragment newInstance() {
-        SiteFragment fragment = new SiteFragment();
+    public ArticleFragment() {
+    }
+
+    public static ArticleFragment newInstance() {
+        ArticleFragment fragment = new ArticleFragment();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
@@ -39,32 +42,32 @@ public class SiteFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_production_site, container, false);
+        View view = inflater.inflate(R.layout.fragment_menu_article, container, false);
 
-        setRecyclerViewSite(view);
+        setRecyclerViewArticle(view);
 
         return view;
     }
 
-    private void setRecyclerViewSite(View view) {
-        recyclerViewSite = view.findViewById(R.id.production_site_recycler);
-        recyclerViewSite.setHasFixedSize(true);
-        recyclerViewSite.setNestedScrollingEnabled(false);
+    private void setRecyclerViewArticle(View view) {
+        recyclerViewArticle = view.findViewById(R.id.production_article_recycler);
+        recyclerViewArticle.setNestedScrollingEnabled(false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
-        if (productionViewModel.getSiteList().size() > 0) {
-            SiteRecyclerAdapter siteRecyclerAdapter = new SiteRecyclerAdapter(productionViewModel, new CustomItemClickListener() {
+        if (productionViewModel.getArticleList().size() > 0) {
+            ArticleRecyclerAdapter articleRecyclerAdapter = new ArticleRecyclerAdapter(productionViewModel, new CustomItemClickListener() {
                 @Override
                 public void onItemClick(View v, int position) {
-                    Intent intent = new Intent(getContext(),SiteDetailActivity.class);
+                    Intent intent = new Intent(getContext(),ArticleDetailActivity.class);
+                    intent.putExtra(getString(R.string.key_position), position);
 
                     startActivity(intent);
                 }
             });
 
-            recyclerViewSite.setAdapter(siteRecyclerAdapter);
+            recyclerViewArticle.setAdapter(articleRecyclerAdapter);
         }
-        recyclerViewSite.setLayoutManager(layoutManager);
+        recyclerViewArticle.setLayoutManager(layoutManager);
     }
 
 }

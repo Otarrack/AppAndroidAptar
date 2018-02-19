@@ -10,9 +10,9 @@ import com.florian.projet.model.Site;
 import java.util.ArrayList;
 
 public class ProductionViewModel {
-    private ArrayList<Site> siteList;
-    private ArrayList<Article> articleList;
-    private ArrayList<Machine> machineList;
+    private ArticleManager articleManager;
+    private MachineManager machineManager;
+    private SiteManager siteManager;
     private static ProductionViewModel instance;
 
     public static ProductionViewModel getInstance() {
@@ -23,33 +23,33 @@ public class ProductionViewModel {
     }
 
     private ProductionViewModel() {
-        siteList = new ArrayList<>(SiteManager.getInstance().getListSite());
-        machineList = new ArrayList<>(MachineManager.getInstance().getListMachine());
-        articleList = new ArrayList<>(ArticleManager.getInstance().getListArticle());
+        siteManager = SiteManager.getInstance();
+        machineManager = MachineManager.getInstance();
+        articleManager = ArticleManager.getInstance();
     }
 
     public ArrayList<Site> getSiteList() {
-        return siteList;
+        return new ArrayList<>(siteManager.getAllSite());
     }
 
     public ArrayList<Article> getArticleList() {
-        return articleList;
+        return new ArrayList<>(articleManager.getAllArticle());
     }
 
     public ArrayList<Machine> getMachineList() {
-        return machineList;
+        return new ArrayList<>(machineManager.getAllMachine());
     }
 
     public Site getSite(int position) {
-        return siteList.get(position);
+        return siteManager.getSiteAt(position);
     }
 
     public Article getArticle(int position) {
-        return articleList.get(position);
+        return articleManager.getArticleAt(position);
     }
 
     public Machine getMachine(int position) {
-        return machineList.get(position);
+        return machineManager.getMachineAt(position);
     }
 
 }

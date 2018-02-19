@@ -20,7 +20,7 @@ public class SiteManager {
         return instance;
     }
 
-    public List<Site> getListSite() {
+    public List<Site> getAllSite() {
         return listSite;
     }
 
@@ -28,9 +28,17 @@ public class SiteManager {
         listSite = new ArrayList<>();
         Site site;
         for (int i = 1; i < 10; i++) {
-            site = new Site(i,"Oyo" + i,i * 103,i,i + 13 * i);
+            site = new Site("Oyo" + i,i * 103,i,i + 13 * i);
             listSite.add(site);
             //TODO: Récupèration des données à partir du manager qui récupère du serveur
+        }
+    }
+
+    public Site getSiteAt(int position) {
+        if (position < listSite.size()) {
+            return listSite.get(position);
+        } else {
+            return null;
         }
     }
 

@@ -1,4 +1,4 @@
-package com.florian.projet.view.fragment;
+package com.florian.projet.view.fragment.article;
 
 
 import android.os.Bundle;
@@ -8,15 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.florian.projet.R;
+import com.florian.projet.viewModel.ArticleViewModel;
 
-public class ProductivityFragment extends Fragment {
+public class ArticlePlanningFragment extends Fragment {
+    ArticleViewModel articleViewModel;
 
-    public ProductivityFragment() {
+    public ArticlePlanningFragment() {
 
     }
 
-    public static ProductivityFragment newInstance() {
-        ProductivityFragment fragment = new ProductivityFragment();
+    public static ArticlePlanningFragment newInstance() {
+        ArticlePlanningFragment fragment = new ArticlePlanningFragment();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
@@ -26,14 +28,13 @@ public class ProductivityFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
 
-        }
+        articleViewModel = ArticleViewModel.getInstance();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_productivity, container, false);
+        return inflater.inflate(R.layout.fragment_article_planning, container, false);
     }
 
 }

@@ -13,91 +13,73 @@
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/recycle_item_title"
+            android:id="@+id/main_recycle_item_title"
             android:layout_width="wrap_content"
             android:layout_height="24dp"
             android:layout_margin="5dp"
-            android:text="edezfze"
             android:textSize="18sp"
             android:textStyle="bold"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent" />
+            card_view:layout_constraintTop_toTopOf="parent"/>
 
-        <ImageButton
-            android:id="@+id/recycle_item_icon_liste"
+        <TextView
+            android:id="@+id/main_recycle_item_volume_lib"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:contentDescription="Modifier dans la liste"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent" />
-
-        <ProgressBar
-            android:id="@+id/recycle_item_progress"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_margin="5dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/main_recycler_item_volume"
+            android:textStyle="bold"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@id/recycle_item_title" />
+            card_view:layout_constraintTop_toBottomOf="@id/main_recycle_item_title" />
 
         <TextView
-            android:id="@+id/recycle_item_volume_lib"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:text="@string/volume"
-            android:textStyle="bold"
-            card_view:layout_constraintStart_toEndOf="@id/recycle_item_progress"
-            card_view:layout_constraintTop_toBottomOf="@id/recycle_item_title" />
-
-        <TextView
-            android:id="@+id/recycle_item_volume_res"
+            android:id="@+id/main_recycle_item_volume_res"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_marginEnd="5dp"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintTop_toTopOf="@id/recycle_item_volume_lib" />
+            card_view:layout_constraintTop_toTopOf="@id/main_recycle_item_volume_lib" />
 
         <TextView
-            android:id="@+id/recycle_item_waste_quantity_lib"
+            android:id="@+id/main_recycle_item_waste_lib"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="10dp"
-            android:text="@string/waste_quantity"
+            android:text="@string/main_recycler_item_waste"
             android:textStyle="bold"
-            card_view:layout_constraintStart_toEndOf="@id/recycle_item_progress"
-            card_view:layout_constraintTop_toBottomOf="@id/recycle_item_volume_lib" />
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@id/main_recycle_item_volume_lib" />
 
         <TextView
-            android:id="@+id/recycle_item_waste_quantity_res"
+            android:id="@+id/main_recycle_item_waste_res"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_marginEnd="5dp"
             android:textSize="14sp"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintTop_toTopOf="@id/recycle_item_waste_quantity_lib" />
+            card_view:layout_constraintTop_toTopOf="@id/main_recycle_item_waste_lib" />
 
         <TextView
-            android:id="@+id/recycle_item_waste_percent_lib"
+            android:id="@+id/main_recycle_item_theoretical_pace_lib"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="10dp"
-            android:text="@string/waste_percent"
+            android:text="@string/main_recycler_item_theoretical_pace"
             android:textStyle="bold"
-            card_view:layout_constraintStart_toEndOf="@id/recycle_item_progress"
-            card_view:layout_constraintTop_toBottomOf="@id/recycle_item_waste_quantity_lib" />
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@id/main_recycle_item_waste_lib" />
 
         <TextView
-            android:id="@+id/recycle_item_waste_percent_res"
+            android:id="@+id/main_recycle_item_theoretical_pace_res"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_marginEnd="5dp"
             android:textSize="14sp"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintTop_toTopOf="@id/recycle_item_waste_percent_lib" />
+            card_view:layout_constraintTop_toTopOf="@id/main_recycle_item_theoretical_pace_lib" />
 
 
     </android.support.constraint.ConstraintLayout>

@@ -7,9 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.florian.projet.R;
-import com.florian.projet.view.adapter.SectionPagerAdapter;
-
-import java.util.Objects;
+import com.florian.projet.view.adapter.ArticlePagerAdapter;
 
 public class MachineDetailActivity extends AppCompatActivity {
     Toolbar toolbar;
@@ -22,37 +20,20 @@ public class MachineDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_machine_detail);
 
         initializeViewPager();
-
-        Bundle b = getIntent().getExtras();
-        String page = null;
-        if (b != null) {
-            page = b.getString("page");
-        }
-
-        if (Objects.equals(page, getString(R.string.site))) {
-            viewPager.setCurrentItem(0);
-
-        } else if (Objects.equals(page, getString(R.string.machine))) {
-            viewPager.setCurrentItem(1);
-
-        } else if (Objects.equals(page, getString(R.string.article))) {
-            viewPager.setCurrentItem(2);
-
-        }
     }
 
     private void initializeViewPager() {
 
-        this.toolbar = (Toolbar) findViewById(R.id.production_detail_toolbar);
+        this.toolbar = (Toolbar) findViewById(R.id.machine_detail_toolbar);
         setSupportActionBar(toolbar);
 
-        tabLayout = (TabLayout) findViewById(R.id.production_detail_tabLayout);
+        tabLayout = (TabLayout) findViewById(R.id.machine_detail_tabLayout);
         if (tabLayout != null) {
             tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
-            tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+            tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
-            viewPager = (ViewPager) findViewById(R.id.production_detail_viewPager);
-            viewPager.setAdapter(new SectionPagerAdapter(getSupportFragmentManager(),this));
+            viewPager = (ViewPager) findViewById(R.id.machine_detail_viewPager);
+            viewPager.setAdapter(new ArticlePagerAdapter(getSupportFragmentManager(),this));
             viewPager.setClipToPadding(false);
             viewPager.setPageMargin(12);
 

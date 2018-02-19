@@ -1,38 +1,55 @@
 <resources>
+    /* Globals Strings */
     <string name="app_name">Projet</string>
     <string name="app_desc">Description Application</string>
-    <string name="production">Production</string>
-    <string name="productivity">Productivité</string>
-    <string name="planning">Planning</string>
-    <string name="technique">Technique</string>
-    <string name="quality">Qualité</string>
-    <string name="coming">À venir</string>
-    <string name="details"><![CDATA[Détails ->]]></string>
-    <string name="arrow_next"><![CDATA[>]]></string>
-    <string name="title_maj">TITRE</string>
-    <string name="nbPersSells">Nombre de personne vendu</string>
-    <string name="nbPersPlanned">Nombre de personne prévu</string>
-    <string name="nbPersReal">Nombre de personne réel</string>
-    <string name="unknown">Inconnu</string>
-    <string name="informations_maj">INFORMATIONS</string>
-    <string name="production_maj">PRODUCTION</string>
-    <string name="per_personne_maj">PAR PERSONNE</string>
-    <string name="per_machine_maj">PAR MACHINE</string>
-    <string name="matrice_polyvalence_maj">MATRICE DE POLYVALENCE</string>
-    <string name="title_activity_menu">MenuActivity</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
-    <string name="machine">Machine</string>
-    <string name="site">Site</string>
-    <string name="article">Article</string>
-    <string name="volume_by">Volume par :</string>
-    <string name="volume">Volume</string>
-    <string name="waste_percent">Rebut (%)</string>
-    <string name="waste_quantity">Rebut (Qt)</string>
+    /* Key Strings */
+    <string name="key_position">position</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    /* Strings for MainActivity */
+    <string name="main_action_settings">Settings</string>
+
+    /* Strings for PeriodActivity */
+    <string name="period_text_start">Période du * :</string>
+    <string name="period_text_end">Au :</string>
+    <string name="period_text_title">Période sélectionnée pour les calculs</string>
+    <string name="period_text_asterisk">* Si seul la première date est renseignée, la période prendra en compte toute la journée, de 0h00 à 0h00. Sinon, la période commencera à 0h00 de la première date, jusqu\'à 0h00 de la deuxième date</string>
+
+    /* Strings for ArticleFrangment */
+    <string name="menu_article_title">Article</string>
+
+    /* Strings for MachineFragment */
+    <string name="menu_machine_title">Machine</string>
+
+    /* Strings for SiteFragment */
+    <string name="menu_site_title">Site</string>
+
+    <string name="main_recycler_item_volume">Volume</string>
+    <string name="main_recycler_item_waste">Rebuts déclarés</string>
+    <string name="main_recycler_item_theoretical_pace">Cadence théorique</string>
+    <string name="section_pager_production">Production</string>
+    <string name="section_pager_productivity">Productivité</string>
+    <string name="section_pager_operator_performance">Performance Opérateur</string>
+    <string name="section_pager_planning">Planning</string>
+    <string name="article_detail_activity_loading_fail">L\'article n\'a pas pu être chargé.</string>
+    <string name="period_toast_unvailable_date">La date saisie n\'est pas valide</string>
+    <string name="action_settings">Options</string>
+    <string name="action_period">Période</string>
+
+    /* Strings for ArticleDetailActivity */
+
+    /* Strings for MachineDetailActivity */
+
+    /* Strings for SiteDetailActivity */
+
+    /* Strings for ArticleOperatorPerfFragment */
+
+    /* Strings for ArticlePlanningFragment */
+
+    /* Strings for ArticleProductionFragment */
+
+    /* Strings for ArticleProductivityFragment */
+
 </resources>

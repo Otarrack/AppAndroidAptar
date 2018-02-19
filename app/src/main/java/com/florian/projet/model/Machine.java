@@ -29,19 +29,19 @@ public class Machine {
         this.volume = volume;
     }
 
-    public int getRebutInPercent() {
+    public int getWasteInPercent() {
         return rebutInPercent;
     }
 
-    public void setRebutInPercent(int rebutInPercent) {
+    public void setWasteInPercent(int rebutInPercent) {
         this.rebutInPercent = rebutInPercent;
     }
 
-    public double getRebutInQuantity() {
+    public double getWasteInQuantity() {
         return rebutInQuantity;
     }
 
-    public void setRebutInQuantity(double rebutInQuantity) {
+    public void setWasteInQuantity(double rebutInQuantity) {
         this.rebutInQuantity = rebutInQuantity;
     }
 }

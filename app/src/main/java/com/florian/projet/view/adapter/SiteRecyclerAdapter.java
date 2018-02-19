@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 
 import com.florian.projet.R;
 import com.florian.projet.tools.CustomItemClickListener;
-import com.florian.projet.view.ProductionHolder;
+import com.florian.projet.view.SectionHolder;
 import com.florian.projet.viewModel.ProductionViewModel;
 
-public class SiteRecyclerAdapter extends RecyclerView.Adapter<ProductionHolder> {
+public class SiteRecyclerAdapter extends RecyclerView.Adapter<SectionHolder> {
     private ProductionViewModel productionViewModel;
 
     private CustomItemClickListener listener;
@@ -21,12 +21,12 @@ public class SiteRecyclerAdapter extends RecyclerView.Adapter<ProductionHolder> 
     }
 
     @Override
-    public ProductionHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public SectionHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         // create a new view
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.production_recycle_item, viewGroup, false);
+                .inflate(R.layout.main_production_recycle_item, viewGroup, false);
 
-        final ProductionHolder holder = new ProductionHolder(view);
+        final SectionHolder holder = new SectionHolder(view);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,11 +38,11 @@ public class SiteRecyclerAdapter extends RecyclerView.Adapter<ProductionHolder> 
     }
 
     @Override
-    public void onBindViewHolder(ProductionHolder holder, int position) {
+    public void onBindViewHolder(SectionHolder holder, int position) {
         holder.titleTextView.setText(productionViewModel.getSite(position).getName());
         holder.volumeTextView.setText(String.valueOf(productionViewModel.getSite(position).getVolume()));
-        holder.wasteQuantityTextView.setText(String.valueOf(productionViewModel.getSite(position).getWasteInQuantity()));
-        holder.wastePercentTextView.setText(String.valueOf(productionViewModel.getSite(position).getWasteInPercent()));
+        holder.wasteTextView.setText(String.valueOf(productionViewModel.getSite(position).getWasteInQuantity()));
+        holder.theoreticalPaceTextView.setText(String.valueOf(productionViewModel.getSite(position).getWasteInPercent()));
     }
 
     @Override

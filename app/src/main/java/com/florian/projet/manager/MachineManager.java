@@ -20,7 +20,7 @@ public class MachineManager {
         return instance;
     }
 
-    public List<Machine> getListMachine() {
+    public List<Machine> getAllMachine() {
         return listMachine;
     }
 
@@ -28,9 +28,17 @@ public class MachineManager {
         listMachine = new ArrayList<>();
         Machine machine;
         for (int i = 1; i < 5; i++) {
-            machine = new Machine(i,i * 103,i,i + 13*i);
+            machine = new Machine(i + "",i * 103,i,i + 13*i);
             listMachine.add(machine);
             //TODO: Récupèration des données à partir du manager qui récupère du serveur
+        }
+    }
+
+    public Machine getMachineAt(int position) {
+        if (position < listMachine.size()) {
+            return listMachine.get(position);
+        } else {
+            return null;
         }
     }
 }

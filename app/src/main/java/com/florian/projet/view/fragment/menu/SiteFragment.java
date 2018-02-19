@@ -1,10 +1,9 @@
-package com.florian.projet.view.fragment;
+package com.florian.projet.view.fragment.menu;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,16 +12,19 @@ import android.view.ViewGroup;
 
 import com.florian.projet.R;
 import com.florian.projet.tools.CustomItemClickListener;
-import com.florian.projet.view.activity.MachineDetailActivity;
-import com.florian.projet.view.adapter.MachineRecyclerAdapter;
+import com.florian.projet.view.activity.SiteDetailActivity;
+import com.florian.projet.view.adapter.SiteRecyclerAdapter;
 import com.florian.projet.viewModel.ProductionViewModel;
 
-public class MachineFragment extends Fragment {
-    RecyclerView recyclerViewMachine;
+public class SiteFragment extends Fragment {
+    RecyclerView recyclerViewSite;
     ProductionViewModel productionViewModel;
 
-    public static MachineFragment newInstance() {
-        MachineFragment fragment = new MachineFragment();
+    public SiteFragment() {
+    }
+
+    public static SiteFragment newInstance() {
+        SiteFragment fragment = new SiteFragment();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
@@ -38,31 +40,33 @@ public class MachineFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_production_machine, container, false);
+        View view = inflater.inflate(R.layout.fragment_menu_site, container, false);
 
-        setRecyclerViewMachine(view);
+        setRecyclerViewSite(view);
 
         return view;
     }
 
-    private void setRecyclerViewMachine(View view) {
-        recyclerViewMachine = view.findViewById(R.id.production_machine_recycler);
-        recyclerViewMachine.setNestedScrollingEnabled(false);
+    private void setRecyclerViewSite(View view) {
+        recyclerViewSite = view.findViewById(R.id.production_site_recycler);
+        recyclerViewSite.setHasFixedSize(true);
+        recyclerViewSite.setNestedScrollingEnabled(false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
-        if (productionViewModel.getMachineList().size() > 0) {
-            MachineRecyclerAdapter machineRecyclerAdapter = new MachineRecyclerAdapter(productionViewModel, new CustomItemClickListener() {
+        if (productionViewModel.getSiteList().size() > 0) {
+            SiteRecyclerAdapter siteRecyclerAdapter = new SiteRecyclerAdapter(productionViewModel, new CustomItemClickListener() {
                 @Override
                 public void onItemClick(View v, int position) {
-                    Intent intent = new Intent(getContext(),MachineDetailActivity.class);
+                    Intent intent = new Intent(getContext(),SiteDetailActivity.class);
+                    intent.putExtra("sitePosition", position);
 
                     startActivity(intent);
                 }
             });
 
-            recyclerViewMachine.setAdapter(machineRecyclerAdapter);
+            recyclerViewSite.setAdapter(siteRecyclerAdapter);
         }
-        recyclerViewMachine.setLayoutManager(layoutManager);
+        recyclerViewSite.setLayoutManager(layoutManager);
     }
 
 }
