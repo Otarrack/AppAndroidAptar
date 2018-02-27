@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.florian.projet.R;
 import com.florian.projet.view.adapter.ArticlePagerAdapter;
+import com.florian.projet.view.adapter.SitePagerAdapter;
 
 public class SiteDetailActivity extends AppCompatActivity {
     Toolbar toolbar;
@@ -29,11 +30,11 @@ public class SiteDetailActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.site_detail_tabLayout);
         if (tabLayout != null) {
-            tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+            tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
             tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
             viewPager = (ViewPager) findViewById(R.id.site_detail_viewPager);
-            viewPager.setAdapter(new ArticlePagerAdapter(getSupportFragmentManager(),this));
+            viewPager.setAdapter(new SitePagerAdapter(getSupportFragmentManager(),this));
             viewPager.setClipToPadding(false);
             viewPager.setPageMargin(12);
 

@@ -1,24 +1,22 @@
 package com.florian.projet.model;
 
 public class Machine {
-    private String id;
+    private String name;
     private double volume;
-    private int rebutInPercent;
-    private double rebutInQuantity;
+    private double waste;
 
-    public Machine(String id, double volume, int rebutInPercent, double rebutInQuantity) {
-        this.id = id;
+    public Machine(String name, double volume, double waste) {
+        this.name = name;
         this.volume = volume;
-        this.rebutInPercent = rebutInPercent;
-        this.rebutInQuantity = rebutInQuantity;
+        this.waste = waste;
     }
 
-    public String getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public double getVolume() {
@@ -29,19 +27,11 @@ public class Machine {
         this.volume = volume;
     }
 
-    public int getWasteInPercent() {
-        return rebutInPercent;
+    public double getWaste() {
+        return waste;
     }
 
-    public void setWasteInPercent(int rebutInPercent) {
-        this.rebutInPercent = rebutInPercent;
-    }
-
-    public double getWasteInQuantity() {
-        return rebutInQuantity;
-    }
-
-    public void setWasteInQuantity(double rebutInQuantity) {
-        this.rebutInQuantity = rebutInQuantity;
+    public void setWaste(double waste) {
+        this.waste = waste;
     }
 }

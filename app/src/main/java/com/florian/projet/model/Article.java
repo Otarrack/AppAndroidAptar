@@ -1,9 +1,11 @@
 package com.florian.projet.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Article {
     private String numArticle;
+    private List<OF> ofList;
     private Site site;
     private Machine machine;
     private Date dateDeclarationProduction;
@@ -27,11 +29,20 @@ public class Article {
         this.cadence = cadence;
     }
 
-    public Article(double qtAsked, double volume, double waste, double cadence) {
+    public Article(String numArticle, double qtAsked, double volume, double waste, double cadence) {
+        this.numArticle = numArticle;
         this.qtAsked = qtAsked;
         this.volume = volume;
         this.waste = waste;
         this.cadence = cadence;
+    }
+
+    public void addOFToList(OF of) {
+        ofList.add(of);
+    }
+
+    public List<OF> getOfList() {
+        return ofList;
     }
 
     public Site getSite() {

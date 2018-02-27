@@ -3,14 +3,13 @@ package com.florian.projet.model;
 public class Site {
     private String name;
     private double volume;
-    private int rebutInPercent;
-    private double rebutInQuantity;
+    private double waste;
 
-    public Site(String name, double volume, int rebutInPercent, double rebutInQuantity) {
+
+    public Site(String name, double volume, double waste) {
         this.name = name;
         this.volume = volume;
-        this.rebutInPercent = rebutInPercent;
-        this.rebutInQuantity = rebutInQuantity;
+        this.waste = waste;
     }
 
     public String getName() {
@@ -29,19 +28,11 @@ public class Site {
         this.volume = volume;
     }
 
-    public int getWasteInPercent() {
-        return rebutInPercent;
+    public double getWaste() {
+        return waste;
     }
 
-    public void setWasteInPercent(int rebutInPercent) {
-        this.rebutInPercent = rebutInPercent;
-    }
-
-    public double getWasteInQuantity() {
-        return rebutInQuantity;
-    }
-
-    public void setWasteInQuantity(double rebutInQuantity) {
-        this.rebutInQuantity = rebutInQuantity;
+    public void setWaste(double waste) {
+        this.waste = waste;
     }
 }

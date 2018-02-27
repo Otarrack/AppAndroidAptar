@@ -3,6 +3,7 @@ package com.florian.projet.manager;
 import com.florian.projet.model.Article;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class ArticleManager {
@@ -10,7 +11,7 @@ public class ArticleManager {
     private List<Article> listArticle;
 
     private ArticleManager() {
-        setListArticle();
+        listArticle = new ArrayList<>();
     }
 
     public static ArticleManager getInstance() {
@@ -24,14 +25,8 @@ public class ArticleManager {
         return listArticle;
     }
 
-    private void setListArticle() {
-        listArticle = new ArrayList<>();
-        Article article;
-        for (int i = 1; i < 15; i++) {
-            article = new Article(i,i * 103,i,i + 13*i);
-            listArticle.add(article);
-            //TODO: Récupèration des données à partir du manager qui récupère du fichier
-        }
+    public void addArticle(Article article) {
+        listArticle.add(article);
     }
 
     public Article getArticleAt(int position) {
@@ -41,6 +36,4 @@ public class ArticleManager {
             return null;
         }
     }
-
-
 }

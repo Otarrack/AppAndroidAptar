@@ -26,6 +26,7 @@
         <item name="colorAccent">@color/aptar_bh_light_blue</item>
         <item name="android:navigationBarColor">@color/aptar_bh_light_blue</item>
         <item name="android:statusBarColor">@color/aptar_bh_primary</item>
+        <item name="android:textColorPrimary">@color/black</item>
     </style>
 
 </resources>

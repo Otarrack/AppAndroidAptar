@@ -51,7 +51,7 @@ public class ArticleFragment extends Fragment {
 
     private void setRecyclerViewArticle(View view) {
         recyclerViewArticle = view.findViewById(R.id.production_article_recycler);
-        recyclerViewArticle.setNestedScrollingEnabled(false);
+        recyclerViewArticle.setNestedScrollingEnabled(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
         if (productionViewModel.getArticleList().size() > 0) {

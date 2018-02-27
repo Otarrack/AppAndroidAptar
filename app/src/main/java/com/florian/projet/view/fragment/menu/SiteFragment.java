@@ -49,8 +49,7 @@ public class SiteFragment extends Fragment {
 
     private void setRecyclerViewSite(View view) {
         recyclerViewSite = view.findViewById(R.id.production_site_recycler);
-        recyclerViewSite.setHasFixedSize(true);
-        recyclerViewSite.setNestedScrollingEnabled(false);
+        recyclerViewSite.setNestedScrollingEnabled(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
         if (productionViewModel.getSiteList().size() > 0) {

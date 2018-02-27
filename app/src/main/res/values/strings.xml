@@ -49,6 +49,13 @@
     /* Strings for ArticlePlanningFragment */
 
     /* Strings for ArticleProductionFragment */
+    <string name="article_production_site">Site :</string>
+    <string name="article_production_machine">Machine :</string>
+    <string name="article_production_num_article">Numéro d\'article :</string>
+    <string name="article_production_declaration_date">Déclaration de production :</string>
+    <string name="article_production_starting_date">Début planifié le :</string>
+    <string name="article_production_ending_date">Fin planifiée le :</string>
+    <string name="article_production_date_title">Date</string>
 
     /* Strings for ArticleProductivityFragment */
 

@@ -50,7 +50,7 @@ public class MachineFragment extends Fragment {
 
     private void setRecyclerViewMachine(View view) {
         recyclerViewMachine = view.findViewById(R.id.production_machine_recycler);
-        recyclerViewMachine.setNestedScrollingEnabled(false);
+        recyclerViewMachine.setNestedScrollingEnabled(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
         if (productionViewModel.getMachineList().size() > 0) {

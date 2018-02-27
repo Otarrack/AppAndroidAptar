@@ -41,8 +41,7 @@ public class SiteRecyclerAdapter extends RecyclerView.Adapter<SectionHolder> {
     public void onBindViewHolder(SectionHolder holder, int position) {
         holder.titleTextView.setText(productionViewModel.getSite(position).getName());
         holder.volumeTextView.setText(String.valueOf(productionViewModel.getSite(position).getVolume()));
-        holder.wasteTextView.setText(String.valueOf(productionViewModel.getSite(position).getWasteInQuantity()));
-        holder.theoreticalPaceTextView.setText(String.valueOf(productionViewModel.getSite(position).getWasteInPercent()));
+        holder.wasteTextView.setText(String.valueOf(productionViewModel.getSite(position).getWaste()));
     }
 
     @Override

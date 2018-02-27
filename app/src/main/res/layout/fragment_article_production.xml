@@ -1,6 +1,224 @@
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/quality_layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools">
 
-</android.support.constraint.ConstraintLayout>
+    <data>
+        <variable name="article" type="com.florian.projet.viewModel.ArticleViewModel"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/article_production_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/article_production_global"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_border"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            card_view:cardCornerRadius="5dp"
+            card_view:cardElevation="4dp"
+            card_view:cardUseCompatPadding="true"
+            card_view:contentPadding="10dp">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/article_production_num_lib"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/article_production_num_article"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/article_production_num_res"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@{article.numArticle}"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/article_production_machine_lib"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/article_production_machine"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="@id/article_production_num_lib"
+                    app:layout_constraintTop_toBottomOf="@id/article_production_num_lib" />
+
+                <TextView
+                    android:id="@+id/article_production_machine_res"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@{article.nomMachine}"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/article_production_num_lib" />
+
+                <TextView
+                    android:id="@+id/article_production_site_lib"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/article_production_site"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="@id/article_production_machine_lib"
+                    app:layout_constraintTop_toBottomOf="@id/article_production_machine_lib" />
+
+                <TextView
+                    android:id="@+id/article_production_site_res"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@{article.nomSite}"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/article_production_machine_lib" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:id="@+id/article_production_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/aptar_bh_light_blue"
+            android:padding="10dp"
+            android:text="@string/article_production_date_title"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/article_production_global" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/article_production_declaration_date_layout"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:background="@color/very_light_grey"
+            app:layout_constraintTop_toBottomOf="@id/article_production_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/article_production_starting_date_layout">
+
+
+            <TextView
+                android:id="@+id/article_production_declaration_date_lib"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/article_production_declaration_date"
+                android:textColor="@color/aptar_bh_primary"
+                android:textAlignment="center"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/article_production_declaration_date_res"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@{article.declarationDate}"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/aptar_bh_light_blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/article_production_starting_date_layout"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:background="@color/very_light_grey"
+            app:layout_constraintTop_toBottomOf="@id/article_production_date"
+            app:layout_constraintStart_toEndOf="@id/article_production_declaration_date_layout"
+            app:layout_constraintEnd_toStartOf="@+id/article_production_ending_date_layout">
+
+            <TextView
+                android:id="@+id/article_production_starting_date_lib"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/article_production_starting_date"
+                android:textColor="@color/aptar_bh_primary"
+                android:textAlignment="center"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/article_production_starting_date_res"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@{article.startingDate}"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/aptar_bh_light_blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/article_production_ending_date_layout"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:background="@color/very_light_grey"
+            app:layout_constraintTop_toBottomOf="@id/article_production_date"
+            app:layout_constraintStart_toEndOf="@id/article_production_starting_date_layout"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/article_production_ending_date_lib"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/article_production_ending_date"
+                android:textColor="@color/aptar_bh_primary"
+                android:textAlignment="center"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/article_production_ending_date_res"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@{article.endingDate}"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/aptar_bh_light_blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
