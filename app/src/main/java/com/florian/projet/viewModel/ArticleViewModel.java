@@ -30,8 +30,8 @@ public class ArticleViewModel {
         applicationManager = ApplicationManager.getInstance();
     }
 
-    public void setCurrentArticle(int position) {
-        currentArticle = articleManager.getArticleAt(position);
+    public void setCurrentArticle(int id) {
+        currentArticle = articleManager.getArticleAt(id);
     }
 
     public void delCurrentArticle() {

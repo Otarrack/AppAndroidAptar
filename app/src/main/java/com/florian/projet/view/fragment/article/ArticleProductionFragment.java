@@ -1,5 +1,6 @@
 package com.florian.projet.view.fragment.article;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 
 import com.florian.projet.R;
 import com.florian.projet.tools.CustomItemClickListener;
+import com.florian.projet.view.activity.ArticleDetailActivity;
+import com.florian.projet.view.activity.OFDetailActivity;
 import com.florian.projet.view.adapter.ArticleOfRecyclerAdapter;
 import com.florian.projet.viewModel.ArticleViewModel;
 
@@ -36,7 +39,6 @@ public class ArticleProductionFragment extends Fragment {
     public static ArticleProductionFragment newInstance() {
         ArticleProductionFragment fragment = new ArticleProductionFragment();
         Bundle args = new Bundle();
-
 
         fragment.setArguments(args);
         return fragment;
@@ -98,7 +100,10 @@ public class ArticleProductionFragment extends Fragment {
             ArticleOfRecyclerAdapter articleOfRecyclerAdapter = new ArticleOfRecyclerAdapter(new CustomItemClickListener() {
                 @Override
                 public void onItemClick(View v, int position) {
+                    Intent intent = new Intent(getContext(),OFDetailActivity.class);
+                    intent.putExtra(getString(R.string.key_num), articleViewModel.getOfList().get(position).getNumOF());
 
+                    startActivity(intent);
                 }
             });
 

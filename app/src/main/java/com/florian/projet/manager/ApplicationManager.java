@@ -6,7 +6,6 @@ import com.florian.projet.model.OF;
 import com.florian.projet.model.Person;
 import com.florian.projet.model.Site;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +16,7 @@ public class ApplicationManager {
     private ArticleManager articleManager;
     private MachineManager machineManager;
     private SiteManager siteManager;
-    private OfManager ofManager;
+    private OFManager ofManager;
     private Date defaultDate;
     private Date fromDate;
     private Date toDate;
@@ -29,7 +28,7 @@ public class ApplicationManager {
         machineManager = MachineManager.getInstance();
         articleManager = ArticleManager.getInstance();
         siteManager = SiteManager.getInstance();
-        ofManager = OfManager.getInstance();
+        ofManager = OFManager.getInstance();
 
         setDefaultDate();
         setAllOF();

@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context="com.florian.projet.view.activity.OFDetailActivity">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/of_detail_global_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/border_bottom_blue_background">
+
+            <TextView
+                android:id="@+id/of_detail_global_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Global"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/aptar_bh_primary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/of_detail_of_lib"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="OF"
+                android:textSize="18sp"
+                android:textColor="@color/aptar_bh_primary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/of_detail_global_title"/>
+
+            <TextView
+                android:id="@+id/of_detail_of_res"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@string/information_vide"
+                android:textSize="18sp"
+                android:textColor="@color/aptar_bh_secondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/of_detail_of_lib"/>
+
+            <TextView
+                android:id="@+id/of_detail_article_lib"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:text="Article"
+                android:textSize="18sp"
+                android:textColor="@color/aptar_bh_primary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/of_detail_of_lib"/>
+
+            <TextView
+                android:id="@+id/of_detail_article_res"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@string/information_vide"
+                android:textSize="18sp"
+                android:textColor="@color/aptar_bh_secondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/of_detail_article_lib"/>
+
+            <TextView
+                android:id="@+id/of_detail_machine_lib"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:text="Machine"
+                android:textSize="18sp"
+                android:textColor="@color/aptar_bh_primary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/of_detail_article_lib"/>
+
+            <TextView
+                android:id="@+id/of_detail_machine_res"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@string/information_vide"
+                android:textSize="18sp"
+                android:textColor="@color/aptar_bh_secondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/of_detail_machine_lib"/>
+
+            <TextView
+                android:id="@+id/of_detail_site_lib"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:text="Site"
+                android:textSize="18sp"
+                android:textColor="@color/aptar_bh_primary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/of_detail_machine_lib"/>
+
+            <TextView
+                android:id="@+id/of_detail_site_res"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@string/information_vide"
+                android:textSize="18sp"
+                android:textColor="@color/aptar_bh_secondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/of_detail_site_lib"/>
+
+            <TextView
+                android:id="@+id/of_detail_person_lib"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:text="Personne"
+                android:textSize="18sp"
+                android:textColor="@color/aptar_bh_primary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/of_detail_site_lib"/>
+
+            <TextView
+                android:id="@+id/of_detail_person_res"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@string/information_vide"
+                android:textSize="18sp"
+                android:textColor="@color/aptar_bh_secondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/of_detail_person_lib"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/of_detail_date_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/border_bottom_blue_background"
+            app:layout_constraintTop_toBottomOf="@id/of_detail_global_layout">
+
+            <TextView
+                android:id="@+id/of_detail_date_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Dates"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/aptar_bh_primary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/of_detail_declaration_lib"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:text="Déclaration production"
+                android:textSize="18sp"
+                android:textColor="@color/aptar_bh_primary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/of_detail_date_title"/>
+
+            <TextView
+                android:id="@+id/of_detail_declaration_res"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@string/information_vide"
+                android:textSize="18sp"
+                android:textColor="@color/aptar_bh_secondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/of_detail_declaration_lib"/>
+
+            <TextView
+                android:id="@+id/of_detail_started_lib"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:text="Début planifiée"
+                android:textSize="18sp"
+                android:textColor="@color/aptar_bh_primary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/of_detail_declaration_lib"/>
+
+            <TextView
+                android:id="@+id/of_detail_started_res"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@string/information_vide"
+                android:textSize="18sp"
+                android:textColor="@color/aptar_bh_secondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/of_detail_started_lib"/>
+
+            <TextView
+                android:id="@+id/of_detail_ending_lib"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:text="Fin planifiée"
+                android:textSize="18sp"
+                android:textColor="@color/aptar_bh_primary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/of_detail_started_lib"/>
+
+            <TextView
+                android:id="@+id/of_detail_ending_res"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@string/information_vide"
+                android:textSize="18sp"
+                android:textColor="@color/aptar_bh_secondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/of_detail_ending_lib"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/of_detail_other_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/border_bottom_blue_background"
+            app:layout_constraintTop_toBottomOf="@id/of_detail_date_layout">
+
+            <TextView
+                android:id="@+id/of_detail_other_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Autre"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/aptar_bh_primary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/of_detail_qt_asked_lib"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:text="Quantité demandée"
+                android:textSize="18sp"
+                android:textColor="@color/aptar_bh_primary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/of_detail_other_title"/>
+
+            <TextView
+                android:id="@+id/of_detail_qt_asked_res"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@string/information_vide"
+                android:textSize="18sp"
+                android:textColor="@color/aptar_bh_secondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/of_detail_qt_asked_lib"/>
+
+            <TextView
+                android:id="@+id/of_detail_volume_lib"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:text="Volume"
+                android:textSize="18sp"
+                android:textColor="@color/aptar_bh_primary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/of_detail_qt_asked_lib"/>
+
+            <TextView
+                android:id="@+id/of_detail_volume_res"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@string/information_vide"
+                android:textSize="18sp"
+                android:textColor="@color/aptar_bh_secondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/of_detail_volume_lib"/>
+
+            <TextView
+                android:id="@+id/of_detail_waste_lib"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:text="Rebut"
+                android:textSize="18sp"
+                android:textColor="@color/aptar_bh_primary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/of_detail_volume_lib"/>
+
+            <TextView
+                android:id="@+id/of_detail_waste_res"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@string/information_vide"
+                android:textSize="18sp"
+                android:textColor="@color/aptar_bh_secondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/of_detail_waste_lib"/>
+
+            <TextView
+                android:id="@+id/of_detail_cadence_lib"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:text="Cadence théorique"
+                android:textSize="18sp"
+                android:textColor="@color/aptar_bh_primary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/of_detail_waste_lib"/>
+
+            <TextView
+                android:id="@+id/of_detail_cadence_res"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@string/information_vide"
+                android:textSize="18sp"
+                android:textColor="@color/aptar_bh_secondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/of_detail_cadence_lib"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

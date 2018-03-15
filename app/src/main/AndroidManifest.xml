@@ -9,7 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Aptar">
-
         <activity android:name=".view.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +20,7 @@
         <activity android:name=".view.activity.ArticleDetailActivity" />
         <activity android:name=".view.activity.SiteDetailActivity" />
         <activity android:name=".view.activity.PeriodActivity" />
+        <activity android:name=".view.activity.OFDetailActivity"></activity>
     </application>
 
 </manifest>

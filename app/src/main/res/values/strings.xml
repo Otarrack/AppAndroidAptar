@@ -62,6 +62,7 @@
     <string name="article_production_data_volume">Volume</string>
     <string name="article_production_data_waste_percent">Rebut (%)</string>
     <string name="article_production_data_waste_qt">Rebut (Qt)</string>
+    <string name="key_num">num</string>
 
     /* Strings for ArticleProductivityFragment */
 
