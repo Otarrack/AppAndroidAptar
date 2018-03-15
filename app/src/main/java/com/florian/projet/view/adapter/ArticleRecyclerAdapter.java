@@ -8,15 +8,15 @@ import android.view.ViewGroup;
 import com.florian.projet.R;
 import com.florian.projet.tools.CustomItemClickListener;
 import com.florian.projet.view.SectionHolder;
-import com.florian.projet.viewModel.ProductionViewModel;
+import com.florian.projet.viewModel.MenuViewModel;
 
 public class ArticleRecyclerAdapter extends RecyclerView.Adapter<SectionHolder> {
-    private ProductionViewModel productionViewModel;
+    private MenuViewModel menuViewModel;
 
     private CustomItemClickListener listener;
 
-    public ArticleRecyclerAdapter(ProductionViewModel productionViewModel, CustomItemClickListener listener) {
-        this.productionViewModel = productionViewModel;
+    public ArticleRecyclerAdapter(CustomItemClickListener listener) {
+        this.menuViewModel = MenuViewModel.getInstance();
         this.listener = listener;
     }
 
@@ -24,7 +24,7 @@ public class ArticleRecyclerAdapter extends RecyclerView.Adapter<SectionHolder> 
     public SectionHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         // create a new view
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.main_production_recycle_item, viewGroup, false);
+                .inflate(R.layout.recycler_item_main, viewGroup, false);
 
         final SectionHolder holder = new SectionHolder(view);
         view.setOnClickListener(new View.OnClickListener() {
@@ -39,14 +39,15 @@ public class ArticleRecyclerAdapter extends RecyclerView.Adapter<SectionHolder> 
 
     @Override
     public void onBindViewHolder(SectionHolder holder, int position) {
-        holder.titleTextView.setText(String.valueOf(productionViewModel.getArticle(position).getNumArticle()));
-        holder.volumeTextView.setText(String.valueOf(productionViewModel.getArticle(position).getVolume()));
-        holder.wasteTextView.setText(String.valueOf(productionViewModel.getArticle(position).getWaste()));
+        holder.titleTextView.setText(String.valueOf(menuViewModel.getArticle(position).getNumArticle()));
+        holder.volumeTextView.setText(String.valueOf(menuViewModel.getArticle(position).getVolume()));
+        holder.wasteTextView.setText(String.valueOf(menuViewModel.getArticle(position).getWaste()));
+        holder.theoreticalPaceTextView.setText(String.valueOf(menuViewModel.getArticle(position).getCadence()));
     }
 
     @Override
     public int getItemCount() {
-        return productionViewModel.getArticleList().size();
+        return menuViewModel.getArticleList().size();
     }
 
 }

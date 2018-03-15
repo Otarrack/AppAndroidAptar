@@ -17,7 +17,7 @@ public class ApplicationManager {
     private ArticleManager articleManager;
     private MachineManager machineManager;
     private SiteManager siteManager;
-    private List<OF> listOF;
+    private OfManager ofManager;
     private Date defaultDate;
     private Date fromDate;
     private Date toDate;
@@ -29,6 +29,7 @@ public class ApplicationManager {
         machineManager = MachineManager.getInstance();
         articleManager = ArticleManager.getInstance();
         siteManager = SiteManager.getInstance();
+        ofManager = OfManager.getInstance();
 
         setDefaultDate();
         setAllOF();
@@ -42,12 +43,11 @@ public class ApplicationManager {
     }
 
     private void setAllOF() {
-        listOF = new ArrayList<>();
         OF of;
         String numOf;
-        Site site;
-        Article article;
-        Machine machine;
+        String nameSite;
+        String nameMachine;
+        String numArticle;
         Person person;
         Date dateDeclarationProduction;
         Date dateStartPlanned;
@@ -57,9 +57,28 @@ public class ApplicationManager {
         double waste;
         double cadence;
 
-        for (int i = 1; i < 15; i++) {
+        Site site;
+        Article article;
+        Machine machine;
 
-            numOf = "OF : " + 1;
+        for (int i = 1; i <= 15; i++) {
+
+            numOf = "OF : " + i;
+
+            if (i < 6) {
+                numArticle = "12099EI1293";
+                nameSite = "Oyonnax";
+                nameMachine = "293ZEE";
+            } else if (i < 9) {
+                numArticle = "12J3I310SDK";
+                nameSite = "Groissiat";
+                nameMachine = "123RAR";
+            } else {
+                numArticle = "213NFNEO2L1";
+                nameSite = "Martignat";
+                nameMachine = "KZEA21";
+            }
+
             dateDeclarationProduction = new Date();
             dateStartPlanned = new Date();
             dateEndPlanned = new Date();
@@ -67,21 +86,79 @@ public class ApplicationManager {
             volume = i * 2;
             waste = i * 3;
             cadence = i * 4;
-            site = new Site("Site " + i,volume,waste);
-            machine = new Machine("Machine " + i,volume,waste);
-            article = new Article("Article " + i,qtAsked,volume,waste,cadence);
             person = new Person();
 
-            siteManager.addSite(site);
-            machineManager.addMachine(machine);
-            articleManager.addArticle(article);
-
-            of = new OF(numOf, site, machine, article, person, dateDeclarationProduction,
+            of = new OF(numOf, nameSite, nameMachine, numArticle, person, dateDeclarationProduction,
                     dateStartPlanned, dateEndPlanned, qtAsked, volume, waste, cadence);
 
-            listOF.add(of);
+            site = new Site(nameSite);
+            machine = new Machine(nameMachine);
+            article = new Article(numArticle);
+
+            site = getExistingSite(site);
+            site.setVolume(site.getVolume() + volume);
+            site.setWaste(site.getWaste() + waste);
+
+            machine = getExistingMachine(machine);
+            machine.setVolume(machine.getVolume() + volume);
+            machine.setWaste(machine.getWaste() + waste);
+
+            article = getExistingArticle(article);
+            article.addOfToList(of);
+
+            article.setQtAsked(article.getQtAsked() + qtAsked);
+            article.setVolume(article.getVolume() + volume);
+            article.setWaste(article.getWaste() + waste);
+            article.setCadence(article.getCadence() + cadence);
+            article.setSite(site);
+            article.setMachine(machine);
+            article.setDateDeclarationProduction(dateDeclarationProduction);
+            article.setDateStartPlanned(dateStartPlanned);
+            article.setDateEndPlanned(dateEndPlanned);
+
+            ofManager.addOf(of);
+
             //TODO: Récupèration des données à partir du manager qui récupère du fichier
         }
+    }
+
+    private Article getExistingArticle(Article newArticle) {
+        List<Article> articleList = articleManager.getAllArticle();
+
+        for (Article article : articleList) {
+            if (newArticle.getNumArticle().equals(article.getNumArticle())) {
+                return article;
+            }
+        }
+
+        articleManager.addArticle(newArticle);
+        return newArticle;
+    }
+
+    private Machine getExistingMachine(Machine newMachine) {
+        List<Machine> machineList = machineManager.getAllMachine();
+
+        for (Machine machine : machineList) {
+            if (newMachine.getMachineName().equals(machine.getMachineName())) {
+                return machine;
+            }
+        }
+
+        machineManager.addMachine(newMachine);
+        return newMachine;
+    }
+
+    private Site getExistingSite(Site newSite) {
+        List<Site> siteList = siteManager.getAllSite();
+
+        for (Site site : siteList) {
+            if (newSite.getSiteName().equals(site.getSiteName())) {
+                return site;
+            }
+        }
+
+        siteManager.addSite(newSite);
+        return newSite;
     }
 
     private Date getDefaultDate() {

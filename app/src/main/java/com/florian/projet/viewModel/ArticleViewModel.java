@@ -1,7 +1,6 @@
 package com.florian.projet.viewModel;
 
 import android.content.Context;
-import android.graphics.Color;
 
 import com.florian.projet.R;
 import com.florian.projet.manager.ApplicationManager;
@@ -9,8 +8,8 @@ import com.florian.projet.manager.ArticleManager;
 import com.florian.projet.model.Article;
 import com.florian.projet.model.OF;
 
+import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class ArticleViewModel {
@@ -39,28 +38,57 @@ public class ArticleViewModel {
         currentArticle = null;
     }
 
+    public List<OF> getOfList() {
+        return currentArticle.getOfList();
+    }
+
+    public OF getOfAt(int position) {
+        if (currentArticle.getOfList() == null) {
+            return null;
+        }
+        return currentArticle.getOfList().get(position);
+    }
+
     public String getNumArticle() {
         return currentArticle.getNumArticle();
     }
 
     public String getNomMachine() {
-        return currentArticle.getMachine().getName();
+        if (currentArticle.getMachine() == null) {
+            return "";
+        }
+        return currentArticle.getMachine().getMachineName();
     }
 
     public String getNomSite() {
-        return currentArticle.getSite().getName();
+        if (currentArticle.getSite() == null) {
+            return "";
+        }
+        return currentArticle.getSite().getSiteName();
     }
 
     public String getDeclarationDate() {
-        return currentArticle.getDateDeclarationProduction().toString();
+
+        if (currentArticle.getDateDeclarationProduction() == null) {
+            return "";
+        }
+        return DateFormat.getDateInstance(DateFormat.MEDIUM).format(currentArticle.getDateDeclarationProduction());
     }
 
     public String getStartingDate() {
-        return currentArticle.getDateStartPlanned().toString();
+
+        if (currentArticle.getDateStartPlanned() == null) {
+            return "";
+        }
+        return DateFormat.getDateInstance(DateFormat.MEDIUM).format(currentArticle.getDateStartPlanned());
     }
 
     public String getEndingDate() {
-        return currentArticle.getDateEndPlanned().toString();
+
+        if (currentArticle.getDateEndPlanned() == null) {
+            return "";
+        }
+        return DateFormat.getDateInstance(DateFormat.MEDIUM).format(currentArticle.getDateEndPlanned());
     }
 
     public double getVolumeInPeriod() {

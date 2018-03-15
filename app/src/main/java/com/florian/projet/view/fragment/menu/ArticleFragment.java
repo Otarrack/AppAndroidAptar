@@ -11,16 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.florian.projet.R;
-import com.florian.projet.model.Article;
 import com.florian.projet.tools.CustomItemClickListener;
 import com.florian.projet.view.activity.ArticleDetailActivity;
-import com.florian.projet.view.activity.MachineDetailActivity;
 import com.florian.projet.view.adapter.ArticleRecyclerAdapter;
-import com.florian.projet.viewModel.ProductionViewModel;
+import com.florian.projet.viewModel.MenuViewModel;
 
 public class ArticleFragment extends Fragment {
     RecyclerView recyclerViewArticle;
-    ProductionViewModel productionViewModel;
+    MenuViewModel menuViewModel;
 
     public ArticleFragment() {
     }
@@ -37,7 +35,7 @@ public class ArticleFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        productionViewModel = ProductionViewModel.getInstance();
+        menuViewModel = MenuViewModel.getInstance();
     }
 
     @Override
@@ -54,8 +52,8 @@ public class ArticleFragment extends Fragment {
         recyclerViewArticle.setNestedScrollingEnabled(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
-        if (productionViewModel.getArticleList().size() > 0) {
-            ArticleRecyclerAdapter articleRecyclerAdapter = new ArticleRecyclerAdapter(productionViewModel, new CustomItemClickListener() {
+        if (menuViewModel.getArticleList().size() > 0) {
+            ArticleRecyclerAdapter articleRecyclerAdapter = new ArticleRecyclerAdapter(new CustomItemClickListener() {
                 @Override
                 public void onItemClick(View v, int position) {
                     Intent intent = new Intent(getContext(),ArticleDetailActivity.class);

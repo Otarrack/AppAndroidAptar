@@ -4,9 +4,9 @@ import java.util.Date;
 
 public class OF {
     private String numOF;
-    private Site site;
-    private Machine machine;
-    private Article article;
+    private String nameSite;
+    private String nameMachine;
+    private String numArticle;
     private Person person;
     private Date dateDeclarationProduction;
     private Date dateStartPlanned;
@@ -20,11 +20,11 @@ public class OF {
 
     }
 
-    public OF(String numOF, Site site, Machine machine, Article article, Person person, Date dateDeclarationProduction, Date dateStartPlanned, Date dateEndPlanned, double qtAsked, double volume, double waste, double cadence) {
+    public OF(String numOF, String nameSite, String nameMachine, String numArticle, Person person, Date dateDeclarationProduction, Date dateStartPlanned, Date dateEndPlanned, double qtAsked, double volume, double waste, double cadence) {
         this.numOF = numOF;
-        this.site = site;
-        this.machine = machine;
-        this.article = article;
+        this.nameSite = nameSite;
+        this.nameMachine = nameMachine;
+        this.numArticle = numArticle;
         this.person = person;
         this.dateDeclarationProduction = dateDeclarationProduction;
         this.dateStartPlanned = dateStartPlanned;
@@ -43,28 +43,28 @@ public class OF {
         this.numOF = numOF;
     }
 
-    public Site getSite() {
-        return site;
+    public String getNameSite() {
+        return nameSite;
     }
 
-    public void setSite(Site site) {
-        this.site = site;
+    public void setNameSite(String nameSite) {
+        this.nameSite = nameSite;
     }
 
-    public Machine getMachine() {
-        return machine;
+    public String getNameMachine() {
+        return nameMachine;
     }
 
-    public void setMachine(Machine machine) {
-        this.machine = machine;
+    public void setNameMachine(String nameMachine) {
+        this.nameMachine = nameMachine;
     }
 
-    public Article getArticle() {
-        return article;
+    public String getNumArticle() {
+        return numArticle;
     }
 
-    public void setArticle(Article article) {
-        this.article = article;
+    public void setNumArticle(String numArticle) {
+        this.numArticle = numArticle;
     }
 
     public Person getPerson() {

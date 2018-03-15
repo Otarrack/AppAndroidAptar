@@ -8,15 +8,15 @@ import android.view.ViewGroup;
 import com.florian.projet.R;
 import com.florian.projet.tools.CustomItemClickListener;
 import com.florian.projet.view.SectionHolder;
-import com.florian.projet.viewModel.ProductionViewModel;
+import com.florian.projet.viewModel.MenuViewModel;
 
 public class MachineRecyclerAdapter extends RecyclerView.Adapter<SectionHolder> {
-    private ProductionViewModel productionViewModel;
+    private MenuViewModel menuViewModel;
 
     private CustomItemClickListener listener;
 
-    public MachineRecyclerAdapter(ProductionViewModel productionViewModel, CustomItemClickListener listener) {
-        this.productionViewModel = productionViewModel;
+    public MachineRecyclerAdapter(MenuViewModel menuViewModel, CustomItemClickListener listener) {
+        this.menuViewModel = menuViewModel;
         this.listener = listener;
     }
 
@@ -24,7 +24,7 @@ public class MachineRecyclerAdapter extends RecyclerView.Adapter<SectionHolder> 
     public SectionHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         // create a new view
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.main_production_recycle_item, viewGroup, false);
+                .inflate(R.layout.recycler_item_main, viewGroup, false);
 
         final SectionHolder holder = new SectionHolder(view);
         view.setOnClickListener(new View.OnClickListener() {
@@ -39,14 +39,14 @@ public class MachineRecyclerAdapter extends RecyclerView.Adapter<SectionHolder> 
 
     @Override
     public void onBindViewHolder(SectionHolder holder, int position) {
-        holder.titleTextView.setText(String.valueOf(productionViewModel.getMachine(position).getName()));
-        holder.volumeTextView.setText(String.valueOf(productionViewModel.getMachine(position).getVolume()));
-        holder.wasteTextView.setText(String.valueOf(productionViewModel.getMachine(position).getWaste()));
+        holder.titleTextView.setText(String.valueOf(menuViewModel.getMachine(position).getMachineName()));
+        holder.volumeTextView.setText(String.valueOf(menuViewModel.getMachine(position).getVolume()));
+        holder.wasteTextView.setText(String.valueOf(menuViewModel.getMachine(position).getWaste()));
     }
 
     @Override
     public int getItemCount() {
-        return productionViewModel.getMachineList().size();
+        return menuViewModel.getMachineList().size();
     }
 
 }

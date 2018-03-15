@@ -24,11 +24,11 @@ public class MachinePagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return ArticleProductionFragment.newInstance();
+                return new Fragment();
             case 1:
-                return ArticleProductivityFragment.newInstance();
+                return new Fragment();
             case 2:
-                return ArticleOperatorPerfFragment.newInstance();
+                return new Fragment();
             default:
                 return new Fragment();
         }

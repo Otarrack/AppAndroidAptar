@@ -23,17 +23,27 @@ public class SiteDetailActivity extends AppCompatActivity {
         initializeViewPager();
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
     private void initializeViewPager() {
 
-        this.toolbar = (Toolbar) findViewById(R.id.site_detail_toolbar);
+        this.toolbar = findViewById(R.id.site_detail_toolbar);
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
-        tabLayout = (TabLayout) findViewById(R.id.site_detail_tabLayout);
+        tabLayout = findViewById(R.id.site_detail_tabLayout);
         if (tabLayout != null) {
             tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
             tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
-            viewPager = (ViewPager) findViewById(R.id.site_detail_viewPager);
+            viewPager = findViewById(R.id.site_detail_viewPager);
             viewPager.setAdapter(new SitePagerAdapter(getSupportFragmentManager(),this));
             viewPager.setClipToPadding(false);
             viewPager.setPageMargin(12);

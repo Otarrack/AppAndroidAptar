@@ -1,10 +1,7 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/tools">
-
-    <data>
-        <variable name="article" type="com.florian.projet.viewModel.ArticleViewModel"/>
-    </data>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/article_production_layout"
@@ -12,213 +9,359 @@
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.CardView
-            android:id="@+id/article_production_global"
+            android:id="@+id/article_production_card_global"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/card_border"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            card_view:cardCornerRadius="5dp"
-            card_view:cardElevation="4dp"
-            card_view:cardUseCompatPadding="true"
-            card_view:contentPadding="10dp">
+            app:cardCornerRadius="3dp"
+            app:cardElevation="3dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintTop_toTopOf="parent">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:padding="10dp">
 
                 <TextView
-                    android:id="@+id/article_production_num_lib"
+                    android:id="@+id/article_production_global_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/article_production_global_title"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/aptar_bh_primary"
+                    android:textSize="20sp"
+                    android:background="@drawable/border_bottom_blue_background"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:padding="1dp"/>
+
+                <TextView
+                    android:id="@+id/article_production_global_num_lib"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="@string/article_production_num_article"
+                    android:textColor="@color/aptar_bh_primary"
                     android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@id/article_production_global_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
                 <TextView
-                    android:id="@+id/article_production_num_res"
+                    android:id="@+id/article_production_global_num_res"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@{article.numArticle}"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
+                    android:text="@string/information_vide"
+                    android:textColor="@color/aptar_bh_secondary"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@id/article_production_global_num_lib"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
 
                 <TextView
-                    android:id="@+id/article_production_machine_lib"
+                    android:id="@+id/article_production_global_machine_lib"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="@string/article_production_machine"
+                    android:textColor="@color/aptar_bh_primary"
                     android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="@id/article_production_num_lib"
-                    app:layout_constraintTop_toBottomOf="@id/article_production_num_lib" />
+                    app:layout_constraintTop_toBottomOf="@id/article_production_global_num_res"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
                 <TextView
-                    android:id="@+id/article_production_machine_res"
+                    android:id="@+id/article_production_global_machine_res"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@{article.nomMachine}"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/article_production_num_lib" />
+                    android:text="@string/information_vide"
+                    android:textColor="@color/aptar_bh_secondary"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@id/article_production_global_machine_lib"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
                 <TextView
-                    android:id="@+id/article_production_site_lib"
+                    android:id="@+id/article_production_global_site_lib"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="@string/article_production_site"
+                    android:textColor="@color/aptar_bh_primary"
                     android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="@id/article_production_machine_lib"
-                    app:layout_constraintTop_toBottomOf="@id/article_production_machine_lib" />
+                    app:layout_constraintTop_toBottomOf="@id/article_production_global_machine_res"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
                 <TextView
-                    android:id="@+id/article_production_site_res"
+                    android:id="@+id/article_production_global_site_res"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@{article.nomSite}"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/article_production_machine_lib" />
+                    android:text="@string/information_vide"
+                    android:textColor="@color/aptar_bh_secondary"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@id/article_production_global_site_lib"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
             </android.support.constraint.ConstraintLayout>
 
         </android.support.v7.widget.CardView>
 
-        <TextView
-            android:id="@+id/article_production_date"
+        <android.support.v7.widget.CardView
+            android:id="@+id/article_production_card_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/aptar_bh_light_blue"
-            android:padding="10dp"
-            android:text="@string/article_production_date_title"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/article_production_global" />
+            app:cardCornerRadius="3dp"
+            app:cardElevation="3dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintTop_toBottomOf="@id/article_production_card_global">
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/article_production_declaration_date_layout"
-            android:layout_width="0dp"
-            android:layout_height="120dp"
-            android:background="@color/very_light_grey"
-            app:layout_constraintTop_toBottomOf="@id/article_production_date"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/article_production_starting_date_layout">
-
-
-            <TextView
-                android:id="@+id/article_production_declaration_date_lib"
-                android:layout_width="wrap_content"
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/article_production_declaration_date"
-                android:textColor="@color/aptar_bh_primary"
-                android:textAlignment="center"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:padding="10dp">
 
-            <TextView
-                android:id="@+id/article_production_declaration_date_res"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/article_production_date_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_bottom_blue_background"
+                    android:padding="1dp"
+                    android:text="@string/article_production_date_title"
+                    android:textAlignment="center"
+                    android:textColor="@color/aptar_bh_primary"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/article_production_date_declaration_lib"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/article_production_declaration_date"
+                    android:textColor="@color/aptar_bh_primary"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/article_production_date_title" />
+
+                <TextView
+                    android:id="@+id/article_production_date_declaration_res"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/information_vide"
+                    android:textColor="@color/aptar_bh_secondary"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/article_production_date_declaration_lib" />
+
+                <TextView
+                    android:id="@+id/article_production_date_starting_lib"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/article_production_starting_date"
+                    android:textColor="@color/aptar_bh_primary"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/article_production_date_declaration_res" />
+
+                <TextView
+                    android:id="@+id/article_production_date_starting_res"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/information_vide"
+                    android:textColor="@color/aptar_bh_secondary"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/article_production_date_starting_lib" />
+
+                <TextView
+                    android:id="@+id/article_production_date_ending_lib"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/article_production_ending_date"
+                    android:textColor="@color/aptar_bh_primary"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/article_production_date_starting_res" />
+
+                <TextView
+                    android:id="@+id/article_production_date_ending_res"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/information_vide"
+                    android:textColor="@color/aptar_bh_secondary"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/article_production_date_ending_lib" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/article_production_card_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="3dp"
+            app:cardElevation="3dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintTop_toBottomOf="@id/article_production_card_date">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@{article.declarationDate}"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/aptar_bh_light_blue"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                android:padding="10dp">
 
-        </android.support.constraint.ConstraintLayout>
+                <TextView
+                    android:id="@+id/article_production_data_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/article_production_data_title"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/aptar_bh_primary"
+                    android:textSize="20sp"
+                    android:background="@drawable/border_bottom_blue_background"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:padding="1dp"/>
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/article_production_starting_date_layout"
-            android:layout_width="0dp"
-            android:layout_height="120dp"
-            android:background="@color/very_light_grey"
-            app:layout_constraintTop_toBottomOf="@id/article_production_date"
-            app:layout_constraintStart_toEndOf="@id/article_production_declaration_date_layout"
-            app:layout_constraintEnd_toStartOf="@+id/article_production_ending_date_layout">
+                <TextView
+                    android:id="@+id/article_production_data_volume_lib"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/article_production_data_volume"
+                    android:textColor="@color/aptar_bh_primary"
+                    android:textSize="16sp"
+                    android:textAlignment="center"
+                    android:padding="3dp"
+                    android:background="@drawable/border_side_blue_background"
+                    app:layout_constraintTop_toBottomOf="@id/article_production_data_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/article_production_data_waste_qt_lib"/>
 
-            <TextView
-                android:id="@+id/article_production_starting_date_lib"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/article_production_data_volume_res"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/information_vide"
+                    android:textColor="@color/aptar_bh_secondary"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    app:layout_constraintTop_toBottomOf="@id/article_production_data_volume_lib"
+                    app:layout_constraintStart_toStartOf="@id/article_production_data_volume_lib"
+                    app:layout_constraintEnd_toEndOf="@id/article_production_data_volume_lib" />
+
+                <TextView
+                    android:id="@+id/article_production_data_waste_qt_lib"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/article_production_data_waste_qt"
+                    android:textColor="@color/aptar_bh_primary"
+                    android:textSize="16sp"
+                    android:textAlignment="center"
+                    android:padding="3dp"
+                    android:background="@drawable/border_side_blue_background"
+                    app:layout_constraintTop_toBottomOf="@id/article_production_data_title"
+                    app:layout_constraintLeft_toRightOf="@id/article_production_data_volume_lib"
+                    app:layout_constraintRight_toLeftOf="@+id/article_production_data_waste_percent_lib"/>
+
+                <TextView
+                    android:id="@+id/article_production_data_waste_qt_res"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/information_vide"
+                    android:textColor="@color/aptar_bh_secondary"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    app:layout_constraintTop_toBottomOf="@id/article_production_data_waste_qt_lib"
+                    app:layout_constraintStart_toStartOf="@id/article_production_data_waste_qt_lib"
+                    app:layout_constraintEnd_toEndOf="@id/article_production_data_waste_qt_lib" />
+
+                <TextView
+                    android:id="@+id/article_production_data_waste_percent_lib"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/article_production_data_waste_percent"
+                    android:textColor="@color/aptar_bh_primary"
+                    android:textSize="16sp"
+                    android:textAlignment="center"
+                    android:padding="3dp"
+                    android:background="@drawable/border_side_blue_background"
+                    app:layout_constraintTop_toBottomOf="@id/article_production_data_title"
+                    app:layout_constraintStart_toEndOf="@id/article_production_data_waste_qt_lib"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <TextView
+                    android:id="@+id/article_production_data_waste_percent_res"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/information_vide"
+                    android:textColor="@color/aptar_bh_secondary"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    app:layout_constraintTop_toBottomOf="@id/article_production_data_waste_percent_lib"
+                    app:layout_constraintStart_toStartOf="@id/article_production_data_waste_percent_lib"
+                    app:layout_constraintEnd_toEndOf="@id/article_production_data_waste_percent_lib" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/article_production_card_of"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="3dp"
+            app:cardElevation="3dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintTop_toBottomOf="@id/article_production_card_data">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/article_production_starting_date"
-                android:textColor="@color/aptar_bh_primary"
-                android:textAlignment="center"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:padding="10dp">
 
-            <TextView
-                android:id="@+id/article_production_starting_date_res"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@{article.startingDate}"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/aptar_bh_light_blue"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                <TextView
+                    android:id="@+id/article_production_of_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Liste des OF"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/aptar_bh_primary"
+                    android:textSize="20sp"
+                    android:background="@drawable/border_bottom_blue_background"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:padding="1dp"/>
 
-        </android.support.constraint.ConstraintLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_article_production_of"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toBottomOf="@id/article_production_of_title"/>
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/article_production_ending_date_layout"
-            android:layout_width="0dp"
-            android:layout_height="120dp"
-            android:background="@color/very_light_grey"
-            app:layout_constraintTop_toBottomOf="@id/article_production_date"
-            app:layout_constraintStart_toEndOf="@id/article_production_starting_date_layout"
-            app:layout_constraintEnd_toEndOf="parent">
+            </android.support.constraint.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/article_production_ending_date_lib"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/article_production_ending_date"
-                android:textColor="@color/aptar_bh_primary"
-                android:textAlignment="center"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/article_production_ending_date_res"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@{article.endingDate}"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/aptar_bh_light_blue"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
-
-        </android.support.constraint.ConstraintLayout>
+        </android.support.v7.widget.CardView>
 
     </android.support.constraint.ConstraintLayout>
-</layout>
+
+</ScrollView>

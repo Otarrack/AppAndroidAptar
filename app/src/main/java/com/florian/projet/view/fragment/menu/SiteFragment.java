@@ -14,11 +14,11 @@ import com.florian.projet.R;
 import com.florian.projet.tools.CustomItemClickListener;
 import com.florian.projet.view.activity.SiteDetailActivity;
 import com.florian.projet.view.adapter.SiteRecyclerAdapter;
-import com.florian.projet.viewModel.ProductionViewModel;
+import com.florian.projet.viewModel.MenuViewModel;
 
 public class SiteFragment extends Fragment {
     RecyclerView recyclerViewSite;
-    ProductionViewModel productionViewModel;
+    MenuViewModel menuViewModel;
 
     public SiteFragment() {
     }
@@ -35,7 +35,7 @@ public class SiteFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        productionViewModel = ProductionViewModel.getInstance();
+        menuViewModel = MenuViewModel.getInstance();
     }
 
     @Override
@@ -52,8 +52,8 @@ public class SiteFragment extends Fragment {
         recyclerViewSite.setNestedScrollingEnabled(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
-        if (productionViewModel.getSiteList().size() > 0) {
-            SiteRecyclerAdapter siteRecyclerAdapter = new SiteRecyclerAdapter(productionViewModel, new CustomItemClickListener() {
+        if (menuViewModel.getSiteList().size() > 0) {
+            SiteRecyclerAdapter siteRecyclerAdapter = new SiteRecyclerAdapter(menuViewModel, new CustomItemClickListener() {
                 @Override
                 public void onItemClick(View v, int position) {
                     Intent intent = new Intent(getContext(),SiteDetailActivity.class);

@@ -1,23 +1,26 @@
 package com.florian.projet.model;
 
 public class Site {
-    private String name;
+    private String siteName;
     private double volume;
     private double waste;
 
+    public Site(String siteName) {
+        this.siteName = siteName;
+    }
 
-    public Site(String name, double volume, double waste) {
-        this.name = name;
+    public Site(String siteName, double volume, double waste) {
+        this.siteName = siteName;
         this.volume = volume;
         this.waste = waste;
     }
 
-    public String getName() {
-        return name;
+    public String getSiteName() {
+        return siteName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSiteName(String siteName) {
+        this.siteName = siteName;
     }
 
     public double getVolume() {

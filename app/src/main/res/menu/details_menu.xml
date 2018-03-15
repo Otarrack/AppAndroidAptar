@@ -4,10 +4,8 @@
 
     <item
         android:id="@+id/action_period"
-        android:icon="@android:drawable/ic_menu_my_calendar"
+        android:icon="@drawable/ic_event_note_white"
         android:title="@string/action_period"
         app:showAsAction="ifRoom" />
-
-
 
 </menu>

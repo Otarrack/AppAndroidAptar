@@ -14,11 +14,11 @@ import com.florian.projet.R;
 import com.florian.projet.tools.CustomItemClickListener;
 import com.florian.projet.view.activity.MachineDetailActivity;
 import com.florian.projet.view.adapter.MachineRecyclerAdapter;
-import com.florian.projet.viewModel.ProductionViewModel;
+import com.florian.projet.viewModel.MenuViewModel;
 
 public class MachineFragment extends Fragment {
     RecyclerView recyclerViewMachine;
-    ProductionViewModel productionViewModel;
+    MenuViewModel menuViewModel;
 
     public MachineFragment() {
 
@@ -36,7 +36,7 @@ public class MachineFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        productionViewModel = ProductionViewModel.getInstance();
+        menuViewModel = MenuViewModel.getInstance();
     }
 
     @Override
@@ -53,8 +53,8 @@ public class MachineFragment extends Fragment {
         recyclerViewMachine.setNestedScrollingEnabled(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
-        if (productionViewModel.getMachineList().size() > 0) {
-            MachineRecyclerAdapter machineRecyclerAdapter = new MachineRecyclerAdapter(productionViewModel, new CustomItemClickListener() {
+        if (menuViewModel.getMachineList().size() > 0) {
+            MachineRecyclerAdapter machineRecyclerAdapter = new MachineRecyclerAdapter(menuViewModel, new CustomItemClickListener() {
                 @Override
                 public void onItemClick(View v, int position) {
                     Intent intent = new Intent(getContext(),MachineDetailActivity.class);

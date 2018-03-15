@@ -1,22 +1,26 @@
 package com.florian.projet.model;
 
 public class Machine {
-    private String name;
+    private String machineName;
     private double volume;
     private double waste;
 
-    public Machine(String name, double volume, double waste) {
-        this.name = name;
+    public Machine(String machineName) {
+        this.machineName = machineName;
+    }
+
+    public Machine(String machineName, double volume, double waste) {
+        this.machineName = machineName;
         this.volume = volume;
         this.waste = waste;
     }
 
-    public String getName() {
-        return name;
+    public String getMachineName() {
+        return machineName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMachineName(String machineName) {
+        this.machineName = machineName;
     }
 
     public double getVolume() {

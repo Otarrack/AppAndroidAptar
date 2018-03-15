@@ -9,20 +9,20 @@ import com.florian.projet.model.Site;
 
 import java.util.ArrayList;
 
-public class ProductionViewModel {
+public class MenuViewModel {
+    private static MenuViewModel instance;
     private ArticleManager articleManager;
     private MachineManager machineManager;
     private SiteManager siteManager;
-    private static ProductionViewModel instance;
 
-    public static ProductionViewModel getInstance() {
+    public static MenuViewModel getInstance() {
         if(instance == null) {
-            instance = new ProductionViewModel();
+            instance = new MenuViewModel();
         }
         return instance;
     }
 
-    private ProductionViewModel() {
+    private MenuViewModel() {
         siteManager = SiteManager.getInstance();
         machineManager = MachineManager.getInstance();
         articleManager = ArticleManager.getInstance();

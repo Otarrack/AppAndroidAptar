@@ -1,5 +1,6 @@
 package com.florian.projet.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,23 +28,22 @@ public class Article {
         this.volume = volume;
         this.waste = waste;
         this.cadence = cadence;
+        this.ofList = new ArrayList<>();
     }
 
-    public Article(String numArticle, double qtAsked, double volume, double waste, double cadence) {
+    public Article(String numArticle) {
         this.numArticle = numArticle;
-        this.qtAsked = qtAsked;
-        this.volume = volume;
-        this.waste = waste;
-        this.cadence = cadence;
+        this.ofList = new ArrayList<>();
     }
 
-    public void addOFToList(OF of) {
+    public void addOfToList(OF of) {
         ofList.add(of);
     }
 
     public List<OF> getOfList() {
         return ofList;
     }
+
 
     public Site getSite() {
         return site;

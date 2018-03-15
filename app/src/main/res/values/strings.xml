@@ -4,6 +4,7 @@
     <string name="app_desc">Description Application</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="information_vide">- - - -</string>
 
     /* Key Strings */
     <string name="key_position">position</string>
@@ -49,13 +50,18 @@
     /* Strings for ArticlePlanningFragment */
 
     /* Strings for ArticleProductionFragment */
-    <string name="article_production_site">Site :</string>
-    <string name="article_production_machine">Machine :</string>
-    <string name="article_production_num_article">Numéro d\'article :</string>
-    <string name="article_production_declaration_date">Déclaration de production :</string>
-    <string name="article_production_starting_date">Début planifié le :</string>
-    <string name="article_production_ending_date">Fin planifiée le :</string>
+    <string name="article_production_site">Site</string>
+    <string name="article_production_machine">Machine</string>
+    <string name="article_production_num_article">Numéro d\'article</string>
+    <string name="article_production_declaration_date">Déclaration de production</string>
+    <string name="article_production_starting_date">Début planifié</string>
+    <string name="article_production_ending_date">Fin planifiée</string>
+    <string name="article_production_global_title">Global</string>
     <string name="article_production_date_title">Date</string>
+    <string name="article_production_data_title">Données</string>
+    <string name="article_production_data_volume">Volume</string>
+    <string name="article_production_data_waste_percent">Rebut (%)</string>
+    <string name="article_production_data_waste_qt">Rebut (Qt)</string>
 
     /* Strings for ArticleProductivityFragment */
 

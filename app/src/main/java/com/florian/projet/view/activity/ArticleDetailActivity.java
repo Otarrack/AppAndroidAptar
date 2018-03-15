@@ -48,6 +48,8 @@ public class ArticleDetailActivity extends AppCompatActivity {
             alertDialogBuilder.show();
         }
 
+        setTitle("Article : " + articleViewModel.getNumArticle());
+
         initializeViewPager();
     }
 
@@ -57,9 +59,11 @@ public class ArticleDetailActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.details_menu,menu);
+
         return true;
     }
 
@@ -74,23 +78,26 @@ public class ArticleDetailActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-        articleViewModel.delCurrentArticle();
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     private void initializeViewPager() {
 
-        this.toolbar = (Toolbar) findViewById(R.id.article_detail_toolbar);
+        this.toolbar = findViewById(R.id.article_detail_toolbar);
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
-        tabLayout = (TabLayout) findViewById(R.id.article_detail_tabLayout);
+        tabLayout = findViewById(R.id.article_detail_tabLayout);
         if (tabLayout != null) {
             tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
             tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
-            viewPager = (ViewPager) findViewById(R.id.article_detail_viewPager);
+            viewPager = findViewById(R.id.article_detail_viewPager);
             viewPager.setAdapter(new ArticlePagerAdapter(getSupportFragmentManager(),this));
             viewPager.setClipToPadding(false);
             viewPager.setPageMargin(12);
