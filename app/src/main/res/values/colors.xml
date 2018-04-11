@@ -13,5 +13,15 @@
     <color name="green">#00a400</color>
     <color name="aptar_bh_primary">#6e2a8d</color>
     <color name="aptar_bh_secondary">#808183</color>
-    <color name="aptar_bh_light_blue">#c2e1f0</color>
+    <color name="aptar_bh_light_blue">#82e1f0</color>
+
+
+
+    <color name="dbx_white_opaque_100">#FFFFFFFF</color>
+    <color name="dbx_primary">#FF007EE5</color>
+    <color name="dbx_primary_dark">#FF0078d9</color>
+    <color name="dbx_color_control_normal">@color/dbx_primary</color>
+    <color name="dbx_color_control_activated">@color/dbx_primary</color>
+    <color name="dbx_color_control_highlight">@color/dbx_primary_dark</color>
+    <color name="dbx_color_switch_thumbNormal">@color/dbx_primary</color>
 </resources>

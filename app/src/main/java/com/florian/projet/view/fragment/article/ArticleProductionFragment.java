@@ -19,7 +19,6 @@ import com.florian.projet.viewModel.ArticleViewModel;
 
 public class ArticleProductionFragment extends Fragment {
     ArticleViewModel articleViewModel;
-    RecyclerView recyclerViewOf;
 
     TextView numArticleTextView;
     TextView siteTextView;
@@ -59,8 +58,6 @@ public class ArticleProductionFragment extends Fragment {
         initViews(view);
         setValuesOnViews();
 
-        setRecyclerViewOf(view);
-
         return view;
     }
 
@@ -92,23 +89,4 @@ public class ArticleProductionFragment extends Fragment {
         wastePercentTextView.setText(String.valueOf(articleViewModel.getWastePercentInPeriod()));
     }
 
-    private void setRecyclerViewOf(View view) {
-        recyclerViewOf = view.findViewById(R.id.recycler_article_production_of);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-
-        if (articleViewModel.getOfList().size() > 0) {
-            ArticleOfRecyclerAdapter articleOfRecyclerAdapter = new ArticleOfRecyclerAdapter(new CustomItemClickListener() {
-                @Override
-                public void onItemClick(View v, int position) {
-                    Intent intent = new Intent(getContext(),OFDetailActivity.class);
-                    intent.putExtra(getString(R.string.key_num), articleViewModel.getOfList().get(position).getNumOF());
-
-                    startActivity(intent);
-                }
-            });
-
-            recyclerViewOf.setAdapter(articleOfRecyclerAdapter);
-        }
-        recyclerViewOf.setLayoutManager(layoutManager);
-    }
 }

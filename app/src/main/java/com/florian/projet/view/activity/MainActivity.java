@@ -1,13 +1,12 @@
 package com.florian.projet.view.activity;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.florian.projet.R;
 import com.florian.projet.view.MyDrawerMenu;
@@ -22,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
         initDrawerMenu();
     }
+
 
     private void initDrawerMenu() {
         this.myDrawerMenu = new MyDrawerMenu(this);

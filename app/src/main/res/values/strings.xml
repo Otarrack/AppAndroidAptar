@@ -63,7 +63,14 @@
     <string name="article_production_data_waste_percent">Rebut (%)</string>
     <string name="article_production_data_waste_qt">Rebut (Qt)</string>
     <string name="key_num">num</string>
+    <string name="article_of_item_asked_qt">Quantité prévue</string>
 
     /* Strings for ArticleProductivityFragment */
 
+
+    /* Dropbox */
+    <!-- Change this to your app key -->
+    <string name="app_key">epzhp1cvwybijfw</string>
+    <string name="title_activity_files">Files</string>
+    <string name="title_activity_openwith">Open With</string>
 </resources>

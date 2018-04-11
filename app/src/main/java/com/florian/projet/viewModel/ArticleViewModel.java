@@ -1,6 +1,7 @@
 package com.florian.projet.viewModel;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 
 import com.florian.projet.R;
 import com.florian.projet.manager.ApplicationManager;
@@ -168,5 +169,37 @@ public class ArticleViewModel {
         return currentArticle.getOfList();
     }
 
+    public Drawable drawableOFInTime(OF of, Context context) {
+        Calendar startCalendar = Calendar.getInstance();
+        Calendar endCalendar = Calendar.getInstance();
+        Calendar declarationProdCalendar = Calendar.getInstance();
+
+        startCalendar.setTime(of.getDateStartPlanned());
+        endCalendar.setTime(of.getDateEndPlanned());
+        declarationProdCalendar.setTime(currentArticle.getDateDeclarationProduction());
+
+        if (startCalendar.before(declarationProdCalendar) && endCalendar.after(declarationProdCalendar)) {
+            return context.getResources().getDrawable(R.drawable.border_all_green_background);
+        } else {
+            return context.getResources().getDrawable(R.drawable.border_all_red_background);
+        }
+
+    }
+
+    public String getOFStartDateFormat(OF of) {
+
+        if (of.getDateStartPlanned() == null) {
+            return "";
+        }
+        return DateFormat.getDateInstance(DateFormat.MEDIUM).format(of.getDateStartPlanned());
+    }
+
+    public String getOFEndDateFormat(OF of) {
+
+        if (of.getDateEndPlanned() == null) {
+            return "";
+        }
+        return DateFormat.getDateInstance(DateFormat.MEDIUM).format(of.getDateEndPlanned());
+    }
 
 }

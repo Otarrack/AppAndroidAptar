@@ -1,5 +1,7 @@
 package com.florian.projet.manager;
 
+import com.dropbox.core.v2.DbxClientV2;
+import com.florian.projet.asyncTasks.DropboxConnectionTask;
 import com.florian.projet.model.Article;
 import com.florian.projet.model.Machine;
 import com.florian.projet.model.OF;
@@ -12,6 +14,10 @@ import java.util.List;
 
 public class ApplicationManager {
     private static ApplicationManager instance;
+
+    private static String accessToken;
+    private DropboxClientManager dropboxClientManager;
+
     private Calendar calendar;
     private ArticleManager articleManager;
     private MachineManager machineManager;
@@ -24,6 +30,9 @@ public class ApplicationManager {
     private ApplicationManager() {
 
         calendar = Calendar.getInstance();
+
+        accessToken = "-9R3IBvu8LAAAAAAAAAAGW-3BSWHfzW-eL-TD6etgrfP-I0QJHuD2LCuf0_SFINa";
+        dropboxClientManager = DropboxClientManager.getInstance();
 
         machineManager = MachineManager.getInstance();
         articleManager = ArticleManager.getInstance();
@@ -39,6 +48,10 @@ public class ApplicationManager {
             instance = new ApplicationManager();
         }
         return instance;
+    }
+
+    private DbxClientV2 getDbxClient() {
+        return dropboxClientManager.getClient();
     }
 
     private void setAllOF() {
@@ -62,6 +75,10 @@ public class ApplicationManager {
 
         for (int i = 1; i <= 15; i++) {
 
+            dateDeclarationProduction = new Date();
+            dateStartPlanned = new Date();
+            dateEndPlanned = new Date();
+
             numOf = "OF : " + i;
 
             if (i < 6) {
@@ -78,9 +95,32 @@ public class ApplicationManager {
                 nameMachine = "KZEA21";
             }
 
-            dateDeclarationProduction = new Date();
-            dateStartPlanned = new Date();
-            dateEndPlanned = new Date();
+            if (i < 2) {
+                calendar.setTime(dateStartPlanned);
+                calendar.add(Calendar.DAY_OF_YEAR, -10);
+                dateStartPlanned = calendar.getTime();
+
+                calendar.setTime(dateEndPlanned);
+                calendar.add(Calendar.DAY_OF_YEAR, -1);
+                dateEndPlanned = calendar.getTime();
+            } else if (i < 4) {
+                calendar.setTime(dateStartPlanned);
+                calendar.add(Calendar.DAY_OF_YEAR, -10);
+                dateStartPlanned = calendar.getTime();
+
+                calendar.setTime(dateEndPlanned);
+                calendar.add(Calendar.DAY_OF_YEAR, 5);
+                dateEndPlanned = calendar.getTime();
+            } else {
+                calendar.setTime(dateStartPlanned);
+                calendar.add(Calendar.DAY_OF_YEAR, 4);
+                dateStartPlanned = calendar.getTime();
+
+                calendar.setTime(dateEndPlanned);
+                calendar.add(Calendar.DAY_OF_YEAR, 12);
+                dateEndPlanned = calendar.getTime();
+            }
+
             qtAsked = i;
             volume = i * 2;
             waste = i * 3;

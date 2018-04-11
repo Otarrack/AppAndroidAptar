@@ -19,6 +19,7 @@
             android:layout_margin="5dp"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:textColor="@color/aptar_bh_primary"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toTopOf="parent"/>
 
