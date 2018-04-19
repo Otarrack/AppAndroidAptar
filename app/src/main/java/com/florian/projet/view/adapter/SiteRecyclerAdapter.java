@@ -1,5 +1,6 @@
 package com.florian.projet.view.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +13,12 @@ import com.florian.projet.viewModel.MenuViewModel;
 
 public class SiteRecyclerAdapter extends RecyclerView.Adapter<SectionHolder> {
     private MenuViewModel menuViewModel;
+    private Context context;
 
     private CustomItemClickListener listener;
 
-    public SiteRecyclerAdapter(MenuViewModel menuViewModel, CustomItemClickListener listener) {
+    public SiteRecyclerAdapter(Context context, MenuViewModel menuViewModel, CustomItemClickListener listener) {
+        this.context = context;
         this.menuViewModel = menuViewModel;
         this.listener = listener;
     }
@@ -39,9 +42,14 @@ public class SiteRecyclerAdapter extends RecyclerView.Adapter<SectionHolder> {
 
     @Override
     public void onBindViewHolder(SectionHolder holder, int position) {
-        holder.titleTextView.setText(menuViewModel.getSite(position).getSiteName());
-        holder.volumeTextView.setText(String.valueOf(menuViewModel.getSite(position).getVolume()));
-        holder.wasteTextView.setText(String.valueOf(menuViewModel.getSite(position).getWaste()));
+        String siteName = menuViewModel.getSite(position).getSiteName();
+        String machineNumber = context.getString(R.string.recycler_site_nb_machine) + " " + menuViewModel.getSite(position).getMachineList().size();
+
+        holder.titleTextView.setText(siteName);
+        holder.titleTextView.setText(machineNumber);
+
+//        holder.volumeTextView.setText(String.valueOf(menuViewModel.getSite(position).getVolume()));
+//        holder.wasteTextView.setText(String.valueOf(menuViewModel.getSite(position).getWaste()));
     }
 
     @Override

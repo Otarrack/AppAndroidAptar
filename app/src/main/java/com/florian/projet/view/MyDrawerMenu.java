@@ -47,14 +47,13 @@ public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedList
             fragment = SiteFragment.newInstance();
             activity.setTitle(R.string.menu_site_title);
 
-        } else if (id == R.id.nav_machine) {
-            fragment = MachineFragment.newInstance();
-            activity.setTitle(R.string.menu_machine_title);
-
-        } else if (id == R.id.nav_article) {
-            fragment = ArticleFragment.newInstance();
-            activity.setTitle(R.string.menu_article_title);
-
+//        } else if (id == R.id.nav_machine) {
+//            fragment = MachineFragment.newInstance();
+//            activity.setTitle(R.string.menu_machine_title);
+//
+//        } else if (id == R.id.nav_article) {
+//            fragment = ArticleFragment.newInstance();
+//            activity.setTitle(R.string.menu_article_title);
         }
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

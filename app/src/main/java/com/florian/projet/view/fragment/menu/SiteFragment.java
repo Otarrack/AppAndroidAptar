@@ -1,5 +1,6 @@
 package com.florian.projet.view.fragment.menu;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,8 +18,10 @@ import com.florian.projet.view.adapter.SiteRecyclerAdapter;
 import com.florian.projet.viewModel.MenuViewModel;
 
 public class SiteFragment extends Fragment {
-    RecyclerView recyclerViewSite;
-    MenuViewModel menuViewModel;
+    private RecyclerView recyclerViewSite;
+    private MenuViewModel menuViewModel;
+
+    private Context context;
 
     public SiteFragment() {
     }
@@ -47,13 +50,20 @@ public class SiteFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        this.context = context;
+
+        super.onAttach(context);
+    }
+
     private void setRecyclerViewSite(View view) {
         recyclerViewSite = view.findViewById(R.id.production_site_recycler);
         recyclerViewSite.setNestedScrollingEnabled(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
         if (menuViewModel.getSiteList().size() > 0) {
-            SiteRecyclerAdapter siteRecyclerAdapter = new SiteRecyclerAdapter(menuViewModel, new CustomItemClickListener() {
+            SiteRecyclerAdapter siteRecyclerAdapter = new SiteRecyclerAdapter(context, menuViewModel, new CustomItemClickListener() {
                 @Override
                 public void onItemClick(View v, int position) {
                     Intent intent = new Intent(getContext(),SiteDetailActivity.class);

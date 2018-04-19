@@ -1,13 +1,20 @@
 package com.florian.projet.manager;
 
-import com.dropbox.core.v2.DbxClientV2;
-import com.florian.projet.asyncTasks.DropboxConnectionTask;
-import com.florian.projet.model.Article;
-import com.florian.projet.model.Machine;
-import com.florian.projet.model.OF;
-import com.florian.projet.model.Person;
-import com.florian.projet.model.Site;
+import android.util.Log;
 
+import com.dropbox.core.v2.DbxClientV2;
+import com.florian.projet.asyncTasks.DropboxDownloadDataFileTask;
+import com.florian.projet.asyncTasks.GetCurrentAccountTask;
+import com.florian.projet.asyncTasks.ParseMESFileTask;
+import com.florian.projet.model.Article;
+import com.florian.projet.model.MachineMESFile;
+import com.florian.projet.model.Machine;
+import com.florian.projet.model.Site;
+import com.florian.projet.model.SiteMESFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -15,8 +22,10 @@ import java.util.List;
 public class ApplicationManager {
     private static ApplicationManager instance;
 
-    private static String accessToken;
-    private DropboxClientManager dropboxClientManager;
+    public static final String FILE_MES_NAME = "fichiermes.xls";
+
+    private DropboxManager dropboxManager;
+    private MESFileManager dataMESFileManager;
 
     private Calendar calendar;
     private ArticleManager articleManager;
@@ -28,19 +37,12 @@ public class ApplicationManager {
     private Date toDate;
 
     private ApplicationManager() {
-
         calendar = Calendar.getInstance();
-
-        accessToken = "-9R3IBvu8LAAAAAAAAAAGW-3BSWHfzW-eL-TD6etgrfP-I0QJHuD2LCuf0_SFINa";
-        dropboxClientManager = DropboxClientManager.getInstance();
-
         machineManager = MachineManager.getInstance();
         articleManager = ArticleManager.getInstance();
         siteManager = SiteManager.getInstance();
         ofManager = OFManager.getInstance();
-
-        setDefaultDate();
-        setAllOF();
+        dataMESFileManager = MESFileManager.getInstance();
     }
 
     public static ApplicationManager getInstance() {
@@ -50,11 +52,29 @@ public class ApplicationManager {
         return instance;
     }
 
-    private DbxClientV2 getDbxClient() {
-        return dropboxClientManager.getClient();
+    public void init(GetCurrentAccountTask.Callback callback) {
+        dropboxManager = DropboxManager.getInstance();
+        dropboxManager.init(callback);
+
+        setDefaultDate();
     }
 
-    private void setAllOF() {
+    private DbxClientV2 getDbxClient() {
+        return dropboxManager.getClient();
+    }
+
+    public void downloadDataFile(File path, DropboxDownloadDataFileTask.Callback callback) {
+        dropboxManager.downloadFile(path, callback);
+    }
+
+
+    public void parseXLSFile(File file, final ParseMESFileTask.Callback callback) throws IOException {
+        if (file.getName().equals(FILE_MES_NAME)) {
+            dataMESFileManager.parseXLSFile(file, callback);
+        }
+    }
+
+    /*private void setAllOF() {
         OF of;
         String numOf;
         String nameSite;
@@ -159,7 +179,7 @@ public class ApplicationManager {
 
             //TODO: Récupèration des données à partir du manager qui récupère du fichier
         }
-    }
+    }*/
 
     private Article getExistingArticle(Article newArticle) {
         List<Article> articleList = articleManager.getAllArticle();

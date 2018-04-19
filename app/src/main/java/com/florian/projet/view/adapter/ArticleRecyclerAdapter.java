@@ -40,9 +40,9 @@ public class ArticleRecyclerAdapter extends RecyclerView.Adapter<SectionHolder> 
     @Override
     public void onBindViewHolder(SectionHolder holder, int position) {
         holder.titleTextView.setText(String.valueOf(menuViewModel.getArticle(position).getNumArticle()));
-        holder.volumeTextView.setText(String.valueOf(menuViewModel.getArticle(position).getVolume()));
-        holder.wasteTextView.setText(String.valueOf(menuViewModel.getArticle(position).getWaste()));
-        holder.theoreticalPaceTextView.setText(String.valueOf(menuViewModel.getArticle(position).getCadence()));
+//        holder.volumeTextView.setText(String.valueOf(menuViewModel.getArticle(position).getVolume()));
+//        holder.wasteTextView.setText(String.valueOf(menuViewModel.getArticle(position).getWaste()));
+//        holder.theoreticalPaceTextView.setText(String.valueOf(menuViewModel.getArticle(position).getCadence()));
     }
 
     @Override

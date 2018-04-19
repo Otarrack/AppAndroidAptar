@@ -13,21 +13,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Aptar">
+        <activity android:name=".view.activity.SplashScreenActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".view.activity.MainActivity">
-             <intent-filter>
-                 <action android:name="android.intent.action.MAIN" />
+        </activity>
+        <activity android:name=".view.activity.MachineDetailActivity" />
+        <activity android:name=".view.activity.ArticleDetailActivity" />
+        <activity android:name=".view.activity.SiteDetailActivity" />
+        <activity android:name=".view.activity.PeriodActivity" />
+        <activity android:name=".view.activity.OFDetailActivity" />
 
-                 <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
-         </activity>
-         <activity android:name=".view.activity.MachineDetailActivity" />
-         <activity android:name=".view.activity.ArticleDetailActivity" />
-         <activity android:name=".view.activity.SiteDetailActivity" />
-         <activity android:name=".view.activity.PeriodActivity" />
-         <activity android:name=".view.activity.OFDetailActivity" />
-
-        <!--<activity
+        <!--
+        <activity
             android:name=".dropbox.UserActivity"
             android:label="@string/app_name">
             <intent-filter>
@@ -61,7 +63,8 @@
                 <category android:name="android.intent.category.DEFAULT"/>
                 <data android:mimeType="text/plain"/>
             </intent-filter>
-        </activity>-->
+        </activity>
+        -->
 
     </application>
 

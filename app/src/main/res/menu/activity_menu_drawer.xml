@@ -6,14 +6,15 @@
             android:id="@+id/nav_site"
             android:icon="@drawable/ic_menu_location"
             android:title="@string/menu_site_title" />
-        <item
+
+        <!-- <item
             android:id="@+id/nav_machine"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_machine_title" />
         <item
             android:id="@+id/nav_article"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_article_title" />
+            android:title="@string/menu_article_title" />-->
     </group>
 
 </menu>

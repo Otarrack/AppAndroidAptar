@@ -73,4 +73,5 @@
     <string name="app_key">epzhp1cvwybijfw</string>
     <string name="title_activity_files">Files</string>
     <string name="title_activity_openwith">Open With</string>
+    <string name="recycler_site_nb_machine">Nombre de machines :</string>
 </resources>

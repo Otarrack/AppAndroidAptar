@@ -40,8 +40,8 @@ public class MachineRecyclerAdapter extends RecyclerView.Adapter<SectionHolder> 
     @Override
     public void onBindViewHolder(SectionHolder holder, int position) {
         holder.titleTextView.setText(String.valueOf(menuViewModel.getMachine(position).getMachineName()));
-        holder.volumeTextView.setText(String.valueOf(menuViewModel.getMachine(position).getVolume()));
-        holder.wasteTextView.setText(String.valueOf(menuViewModel.getMachine(position).getWaste()));
+//        holder.volumeTextView.setText(String.valueOf(menuViewModel.getMachine(position).getVolume()));
+//        holder.wasteTextView.setText(String.valueOf(menuViewModel.getMachine(position).getWaste()));
     }
 
     @Override
