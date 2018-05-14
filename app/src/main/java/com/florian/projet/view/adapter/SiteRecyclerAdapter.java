@@ -43,18 +43,15 @@ public class SiteRecyclerAdapter extends RecyclerView.Adapter<SectionHolder> {
     @Override
     public void onBindViewHolder(SectionHolder holder, int position) {
         String siteName = menuViewModel.getSite(position).getSiteName();
-        String machineNumber = context.getString(R.string.recycler_site_nb_machine) + " " + menuViewModel.getSite(position).getMachineList().size();
+        String machineNumber = context.getString(R.string.recycler_site_nb_machine) + menuViewModel.getSite(position).getMachineList().size();
 
         holder.titleTextView.setText(siteName);
-        holder.titleTextView.setText(machineNumber);
+        holder.machineNumberTextView.setText(machineNumber);
 
-//        holder.volumeTextView.setText(String.valueOf(menuViewModel.getSite(position).getVolume()));
-//        holder.wasteTextView.setText(String.valueOf(menuViewModel.getSite(position).getWaste()));
     }
 
     @Override
     public int getItemCount() {
         return menuViewModel.getSiteList().size();
     }
-
 }

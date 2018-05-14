@@ -26,6 +26,7 @@
 
     /* Strings for SiteFragment */
     <string name="menu_site_title">Site</string>
+    <string name="recycler_site_nb_machine">#</string>
 
     <string name="main_recycler_item_volume">Volume</string>
     <string name="main_recycler_item_waste">Rebuts déclarés</string>
@@ -73,5 +74,4 @@
     <string name="app_key">epzhp1cvwybijfw</string>
     <string name="title_activity_files">Files</string>
     <string name="title_activity_openwith">Open With</string>
-    <string name="recycler_site_nb_machine">Nombre de machines :</string>
 </resources>

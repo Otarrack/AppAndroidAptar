@@ -144,18 +144,39 @@ public class MESFileManager {
 
     private void setSiteList() {
 
-        ArrayList<MachineMESFile> machineList1Et2 = getSiteMESFile1().getMachineList();
+        ArrayList<MachineMESFile> machineList1Et2 = new ArrayList<>();
+        machineList1Et2.addAll(getSiteMESFile1().getMachineList());
         machineList1Et2.addAll(getSiteMESFile2().getMachineList());
 
         this.siteList = new ArrayList<>();
 
-        siteList.add(new SiteMESFile("Tous", getAllMachineMESFilesList()));
-        siteList.add(getSiteMESFile1());
-        siteList.add(getSiteMESFile2());
-        siteList.add(new SiteMESFile("1 et 2", machineList1Et2));
-        siteList.add(getSiteMESFile3());
-        siteList.add(getSiteMESFile4());
-        siteList.add(getSiteMESFile5());
+        if (getAllMachineMESFilesList().size() > 0) {
+            siteList.add(new SiteMESFile("Tous", getAllMachineMESFilesList()));
+        }
+
+        if (getSiteMESFile1().getMachineList().size() > 0) {
+            siteList.add(getSiteMESFile1());
+        }
+
+        if (getSiteMESFile2().getMachineList().size() > 0) {
+            siteList.add(getSiteMESFile2());
+        }
+
+        if (machineList1Et2.size() > 0) {
+            siteList.add(new SiteMESFile("Oyo - 1 et Marti - 2", machineList1Et2));
+        }
+
+        if (getSiteMESFile3().getMachineList().size() > 0) {
+            siteList.add(getSiteMESFile3());
+        }
+
+        if (getSiteMESFile4().getMachineList().size() > 0) {
+            siteList.add(getSiteMESFile4());
+        }
+
+        if (getSiteMESFile5().getMachineList().size() > 0) {
+            siteList.add(getSiteMESFile5());
+        }
     }
 
     public ArrayList<SiteMESFile> getSiteList() {

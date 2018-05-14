@@ -77,5 +77,4 @@ public class SiteFragment extends Fragment {
         }
         recyclerViewSite.setLayoutManager(layoutManager);
     }
-
 }
