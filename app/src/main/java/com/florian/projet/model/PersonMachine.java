@@ -1,5 +1,7 @@
 package com.florian.projet.model;
 
+import com.florian.projet.quarantaine.Machine;
+
 public class PersonMachine {
     private Machine machine;
     private Person person;

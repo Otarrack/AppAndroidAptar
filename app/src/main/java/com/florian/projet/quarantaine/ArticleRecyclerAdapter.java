@@ -1,27 +1,22 @@
-package com.florian.projet.view.adapter;
+package com.florian.projet.quarantaine;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.florian.projet.R;
-import com.florian.projet.model.SiteEnum;
 import com.florian.projet.tools.CustomItemClickListener;
 import com.florian.projet.view.SectionHolder;
+import com.florian.projet.viewModel.MenuViewModel;
 
-import java.util.ArrayList;
-
-public class SiteRecyclerAdapter extends RecyclerView.Adapter<SectionHolder> {
-    private ArrayList<SiteEnum> siteList;
-    private Context context;
+public class ArticleRecyclerAdapter extends RecyclerView.Adapter<SectionHolder> {
+    private MenuViewModel menuViewModel;
 
     private CustomItemClickListener listener;
 
-    public SiteRecyclerAdapter(Context context, ArrayList<SiteEnum> siteList, CustomItemClickListener listener) {
-        this.context = context;
-        this.siteList = siteList;
+    public ArticleRecyclerAdapter(CustomItemClickListener listener) {
+        this.menuViewModel = MenuViewModel.getInstance();
         this.listener = listener;
     }
 
@@ -44,16 +39,15 @@ public class SiteRecyclerAdapter extends RecyclerView.Adapter<SectionHolder> {
 
     @Override
     public void onBindViewHolder(SectionHolder holder, int position) {
-        String siteName = siteList.get(position).getName();
-        String machineNumber = context.getString(R.string.recycler_site_nb_machine) + siteList.get(position).getMachineMESList().size();
-
-        holder.titleTextView.setText(siteName);
-        holder.machineNumberTextView.setText(machineNumber);
-
+        holder.titleTextView.setText(String.valueOf(menuViewModel.getArticle(position).getNumArticle()));
+//        holder.volumeTextView.setText(String.valueOf(menuViewModel.getArticle(position).getVolume()));
+//        holder.wasteTextView.setText(String.valueOf(menuViewModel.getArticle(position).getWaste()));
+//        holder.theoreticalPaceTextView.setText(String.valueOf(menuViewModel.getArticle(position).getCadence()));
     }
 
     @Override
     public int getItemCount() {
-        return siteList.size();
+        return menuViewModel.getArticleList().size();
     }
+
 }

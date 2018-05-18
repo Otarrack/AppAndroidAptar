@@ -1,12 +1,16 @@
 package com.florian.projet.viewModel;
 
+import com.florian.projet.manager.MESFileManager;
 import com.florian.projet.manager.MachineManager;
-import com.florian.projet.model.Machine;
+import com.florian.projet.model.MachineMESFile;
+import com.florian.projet.quarantaine.Machine;
+
+import java.util.ArrayList;
 
 public class MachineViewModel {
     private static MachineViewModel instance;
-    private MachineManager machineManager;
-    private Machine currentMachine;
+    private MachineMESFile currentMachine;
+    private MESFileManager mesFileManager;
 
     public static MachineViewModel getInstance() {
         if(instance == null) {
@@ -16,14 +20,22 @@ public class MachineViewModel {
     }
 
     private MachineViewModel() {
-        machineManager = MachineManager.getInstance();
+        mesFileManager = MESFileManager.getInstance();
     }
 
-    public void setCurrentMachine(int id) {
-        currentMachine = machineManager.getMachineAt(id);
+    public void setCurrentMachine(MachineMESFile machine) {
+        currentMachine = machine;
     }
 
     public void delCurrentMachine() {
         currentMachine = null;
+    }
+
+    public ArrayList<MachineMESFile> getAllMachineMES() {
+        return mesFileManager.getAllMachineMES();
+    }
+
+    public MachineMESFile getCurrentMachine() {
+        return currentMachine;
     }
 }

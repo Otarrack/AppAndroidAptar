@@ -15,6 +15,7 @@ import com.florian.projet.asyncTasks.DropboxDownloadDataFileTask;
 import com.florian.projet.asyncTasks.GetCurrentAccountTask;
 import com.florian.projet.asyncTasks.ParseMESFileTask;
 import com.florian.projet.model.MachineMESFile;
+import com.florian.projet.model.SiteEnum;
 import com.florian.projet.viewModel.SplashScreenViewModel;
 
 import java.io.File;
@@ -31,7 +32,12 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
 
         splashScreenViewModel = SplashScreenViewModel.getInstance();
-        initApp();
+
+        if (SiteEnum.ALL.getMachineMESList().size() == 0) {
+            initApp();
+        } else {
+            startMainActivity();
+        }
     }
 
 
@@ -127,6 +133,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
 
         startActivity(intent);
+        finish();
     }
 
     private void failLoadingData() {

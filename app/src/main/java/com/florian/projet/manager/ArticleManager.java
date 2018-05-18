@@ -1,9 +1,8 @@
 package com.florian.projet.manager;
 
-import com.florian.projet.model.Article;
+import com.florian.projet.quarantaine.Article;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class ArticleManager {

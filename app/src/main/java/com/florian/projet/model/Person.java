@@ -1,5 +1,7 @@
 package com.florian.projet.model;
 
+import com.florian.projet.quarantaine.Machine;
+
 import java.util.List;
 
 public class Person {

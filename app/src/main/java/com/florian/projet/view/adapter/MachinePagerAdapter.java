@@ -6,13 +6,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.florian.projet.R;
-import com.florian.projet.view.fragment.article.ArticleOperatorPerfFragment;
-import com.florian.projet.view.fragment.article.ArticlePlanningFragment;
-import com.florian.projet.view.fragment.article.ArticleProductionFragment;
-import com.florian.projet.view.fragment.article.ArticleProductivityFragment;
+import com.florian.projet.view.fragment.MachineMCUFragment;
+import com.florian.projet.view.fragment.MachineOMEFragment;
 
 public class MachinePagerAdapter extends FragmentPagerAdapter {
-    private final int PAGE_COUNT = 3;
     private Context mContext;
 
     public MachinePagerAdapter(FragmentManager fm, Context context) {
@@ -24,11 +21,9 @@ public class MachinePagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new Fragment();
+                return new MachineMCUFragment();
             case 1:
-                return new Fragment();
-            case 2:
-                return new Fragment();
+                return new MachineOMEFragment();
             default:
                 return new Fragment();
         }
@@ -36,18 +31,16 @@ public class MachinePagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return PAGE_COUNT;
+        return 2;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return mContext.getString(R.string.section_pager_production);
+                return mContext.getString(R.string.machine_pager_mcu);
             case 1:
-                return mContext.getString(R.string.section_pager_productivity);
-            case 2:
-                return mContext.getString(R.string.section_pager_operator_performance);
+                return mContext.getString(R.string.machine_pager_ome);
             default:
                 return null;
         }

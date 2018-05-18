@@ -1,12 +1,15 @@
 package com.florian.projet.viewModel;
 
 import com.florian.projet.manager.SiteManager;
-import com.florian.projet.model.Site;
+import com.florian.projet.model.SiteEnum;
+import com.florian.projet.quarantaine.Site;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SiteViewModel {
     private static SiteViewModel instance;
     private SiteManager siteManager;
-    private Site currentSite;
 
     public static SiteViewModel getInstance() {
         if(instance == null) {
@@ -19,11 +22,7 @@ public class SiteViewModel {
         siteManager = SiteManager.getInstance();
     }
 
-    public void setCurrentSite(int id) {
-        currentSite = siteManager.getSiteAt(id);
-    }
-
-    public void delCurrentSite() {
-        currentSite = null;
+    public ArrayList<SiteEnum> getSiteList() {
+        return siteManager.getAllSite();
     }
 }

@@ -1,4 +1,4 @@
-package com.florian.projet.view.adapter;
+package com.florian.projet.quarantaine;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -6,12 +6,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.florian.projet.R;
+import com.florian.projet.quarantaine.ArticlePlanningFragment;
+import com.florian.projet.quarantaine.ArticleProductionFragment;
+import com.florian.projet.quarantaine.ArticleProductivityFragment;
+import com.florian.projet.quarantaine.ArticleOperatorPerfFragment;
 
-public class SitePagerAdapter extends FragmentPagerAdapter {
-    private final int PAGE_COUNT = 3;
+public class ArticlePagerAdapter extends FragmentPagerAdapter {
+    private final int PAGE_COUNT = 4;
     private Context mContext;
 
-    public SitePagerAdapter(FragmentManager fm, Context context) {
+    public ArticlePagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.mContext = context;
     }
@@ -20,11 +24,13 @@ public class SitePagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new Fragment();
+                return ArticleProductionFragment.newInstance();
             case 1:
-                return new Fragment();
+                return ArticleProductivityFragment.newInstance();
             case 2:
-                return new Fragment();
+                return ArticleOperatorPerfFragment.newInstance();
+            case 3:
+                return ArticlePlanningFragment.newInstance();
             default:
                 return new Fragment();
         }
@@ -44,6 +50,8 @@ public class SitePagerAdapter extends FragmentPagerAdapter {
                 return mContext.getString(R.string.section_pager_productivity);
             case 2:
                 return mContext.getString(R.string.section_pager_operator_performance);
+            case 3:
+                return mContext.getString(R.string.section_pager_planning);
             default:
                 return null;
         }

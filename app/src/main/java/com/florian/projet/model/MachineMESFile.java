@@ -2,31 +2,28 @@ package com.florian.projet.model;
 
 public class MachineMESFile {
     private String machineName;
-    private String tempsMaximumOuverture;
-    private String vacances;
-    private String arretPlanifie;
-    private String tempsPause;
-    private String maintenancePreventive;
-    private String absenceOF;
-    private String prelevement;
-    private String tempsProductifEffectif;
+    private String maxTimeOpenned;
+    private String holidays;
+    private String plannedStop;
+    private String breakTime;
+    private String preventiveMaintenance;
+    private String missingOF;
+    private String sample;
+    private String actualProductiveTime;
     private double mcu;
-    private String tempsSetup;
-    private String microArret;
-    private String autreTempsArret;
-    private double tauxRebut;
-    private String perteEfficaciteRebut;
-    private String perteEfficaciteCavite;
-    private String perteEfficaciteTempsCycle;
-    private String efficaciteVitessePerdue;
-    private String tempsProductifNet;
-    private String tempsProductifNetQME;
-    private String qualiteBonneProduite;
+    private String setupTime;
+    private String microStopTime;
+    private String otherStopTime;
+    private double scrapRate;
+    private String scrapLossEfficiency;
+    private String cavityLossEfficiency;
+    private String cycleTimeLossEfficiency;
+    private String speedLostEfficiency;
+    private String netProductiveTime;
+    private String netProductiveTimeQME;
+    private double goodQualityProduced;
     private double qme;
-    private double omeMoyenne;
-    private double omePlanifie;
-    private double omeMoyenneSurPlanifie;
-    private String aquiredProdTime;
+    private double averageOME;
 
     public MachineMESFile() {
 
@@ -40,68 +37,68 @@ public class MachineMESFile {
         this.machineName = machineName;
     }
 
-    public String getTempsMaximumOuverture() {
-        return tempsMaximumOuverture;
+    public String getMaxTimeOpenned() {
+        return maxTimeOpenned;
     }
 
-    public void setTempsMaximumOuverture(String tempsMaximumOuverture) {
-        this.tempsMaximumOuverture = tempsMaximumOuverture;
+    public void setMaxTimeOpenned(String maxTimeOpenned) {
+        this.maxTimeOpenned = maxTimeOpenned;
     }
 
-    public String getVacances() {
-        return vacances;
+    public String getHolidays() {
+        return holidays;
     }
 
-    public void setVacances(String vacances) {
-        this.vacances = vacances;
+    public void setHolidays(String holidays) {
+        this.holidays = holidays;
     }
 
-    public String getArretPlanifie() {
-        return arretPlanifie;
+    public String getPlannedStop() {
+        return plannedStop;
     }
 
-    public void setArretPlanifie(String arretPlanifie) {
-        this.arretPlanifie = arretPlanifie;
+    public void setPlannedStop(String plannedStop) {
+        this.plannedStop = plannedStop;
     }
 
-    public String getTempsPause() {
-        return tempsPause;
+    public String getBreakTime() {
+        return breakTime;
     }
 
-    public void setTempsPause(String tempsPause) {
-        this.tempsPause = tempsPause;
+    public void setBreakTime(String breakTime) {
+        this.breakTime = breakTime;
     }
 
-    public String getMaintenancePreventive() {
-        return maintenancePreventive;
+    public String getPreventiveMaintenance() {
+        return preventiveMaintenance;
     }
 
-    public void setMaintenancePreventive(String maintenancePreventive) {
-        this.maintenancePreventive = maintenancePreventive;
+    public void setPreventiveMaintenance(String preventiveMaintenance) {
+        this.preventiveMaintenance = preventiveMaintenance;
     }
 
-    public String getAbsenceOF() {
-        return absenceOF;
+    public String getMissingOF() {
+        return missingOF;
     }
 
-    public void setAbsenceOF(String absenceOF) {
-        this.absenceOF = absenceOF;
+    public void setMissingOF(String missingOF) {
+        this.missingOF = missingOF;
     }
 
-    public String getPrelevement() {
-        return prelevement;
+    public String getSample() {
+        return sample;
     }
 
-    public void setPrelevement(String prelevement) {
-        this.prelevement = prelevement;
+    public void setSample(String sample) {
+        this.sample = sample;
     }
 
-    public String getTempsProductifEffectif() {
-        return tempsProductifEffectif;
+    public String getActualProductiveTime() {
+        return actualProductiveTime;
     }
 
-    public void setTempsProductifEffectif(String tempsProductifEffectif) {
-        this.tempsProductifEffectif = tempsProductifEffectif;
+    public void setActualProductiveTime(String actualProductiveTime) {
+        this.actualProductiveTime = actualProductiveTime;
     }
 
     public double getMcu() {
@@ -112,92 +109,92 @@ public class MachineMESFile {
         this.mcu = mcu;
     }
 
-    public String getTempsSetup() {
-        return tempsSetup;
+    public String getSetupTime() {
+        return setupTime;
     }
 
-    public void setTempsSetup(String tempsSetup) {
-        this.tempsSetup = tempsSetup;
+    public void setSetupTime(String setupTime) {
+        this.setupTime = setupTime;
     }
 
-    public String getMicroArret() {
-        return microArret;
+    public String getMicroStopTime() {
+        return microStopTime;
     }
 
-    public void setMicroArret(String microArret) {
-        this.microArret = microArret;
+    public void setMicroStopTime(String microStopTime) {
+        this.microStopTime = microStopTime;
     }
 
-    public String getAutreTempsArret() {
-        return autreTempsArret;
+    public String getOtherStopTime() {
+        return otherStopTime;
     }
 
-    public void setAutreTempsArret(String autreTempsArret) {
-        this.autreTempsArret = autreTempsArret;
+    public void setOtherStopTime(String otherStopTime) {
+        this.otherStopTime = otherStopTime;
     }
 
-    public double getTauxRebut() {
-        return tauxRebut;
+    public double getScrapRate() {
+        return scrapRate;
     }
 
-    public void setTauxRebut(double tauxRebut) {
-        this.tauxRebut = tauxRebut;
+    public void setScrapRate(double scrapRate) {
+        this.scrapRate = scrapRate;
     }
 
-    public String getPerteEfficaciteRebut() {
-        return perteEfficaciteRebut;
+    public String getScrapLossEfficiency() {
+        return scrapLossEfficiency;
     }
 
-    public void setPerteEfficaciteRebut(String perteEfficaciteRebut) {
-        this.perteEfficaciteRebut = perteEfficaciteRebut;
+    public void setScrapLossEfficiency(String scrapLossEfficiency) {
+        this.scrapLossEfficiency = scrapLossEfficiency;
     }
 
-    public String getPerteEfficaciteCavite() {
-        return perteEfficaciteCavite;
+    public String getCavityLossEfficiency() {
+        return cavityLossEfficiency;
     }
 
-    public void setPerteEfficaciteCavite(String perteEfficaciteCavite) {
-        this.perteEfficaciteCavite = perteEfficaciteCavite;
+    public void setCavityLossEfficiency(String cavityLossEfficiency) {
+        this.cavityLossEfficiency = cavityLossEfficiency;
     }
 
-    public String getPerteEfficaciteTempsCycle() {
-        return perteEfficaciteTempsCycle;
+    public String getCycleTimeLossEfficiency() {
+        return cycleTimeLossEfficiency;
     }
 
-    public void setPerteEfficaciteTempsCycle(String perteEfficaciteTempsCycle) {
-        this.perteEfficaciteTempsCycle = perteEfficaciteTempsCycle;
+    public void setCycleTimeLossEfficiency(String cycleTimeLossEfficiency) {
+        this.cycleTimeLossEfficiency = cycleTimeLossEfficiency;
     }
 
-    public String getEfficaciteVitessePerdue() {
-        return efficaciteVitessePerdue;
+    public String getSpeedLostEfficiency() {
+        return speedLostEfficiency;
     }
 
-    public void setEfficaciteVitessePerdue(String efficaciteVitessePerdue) {
-        this.efficaciteVitessePerdue = efficaciteVitessePerdue;
+    public void setSpeedLostEfficiency(String speedLostEfficiency) {
+        this.speedLostEfficiency = speedLostEfficiency;
     }
 
-    public String getTempsProductifNet() {
-        return tempsProductifNet;
+    public String getNetProductiveTime() {
+        return netProductiveTime;
     }
 
-    public void setTempsProductifNet(String tempsProductifNet) {
-        this.tempsProductifNet = tempsProductifNet;
+    public void setNetProductiveTime(String netProductiveTime) {
+        this.netProductiveTime = netProductiveTime;
     }
 
-    public String getTempsProductifNetQME() {
-        return tempsProductifNetQME;
+    public String getNetProductiveTimeQME() {
+        return netProductiveTimeQME;
     }
 
-    public void setTempsProductifNetQME(String tempsProductifNetQME) {
-        this.tempsProductifNetQME = tempsProductifNetQME;
+    public void setNetProductiveTimeQME(String netProductiveTimeQME) {
+        this.netProductiveTimeQME = netProductiveTimeQME;
     }
 
-    public String getQualiteBonneProduite() {
-        return qualiteBonneProduite;
+    public double getGoodQualityProduced() {
+        return goodQualityProduced;
     }
 
-    public void setQualiteBonneProduite(String qualiteBonneProduite) {
-        this.qualiteBonneProduite = qualiteBonneProduite;
+    public void setGoodQualityProduced(double goodQualityProduced) {
+        this.goodQualityProduced = goodQualityProduced;
     }
 
     public double getQme() {
@@ -208,35 +205,11 @@ public class MachineMESFile {
         this.qme = qme;
     }
 
-    public double getOmeMoyenne() {
-        return omeMoyenne;
+    public double getAverageOME() {
+        return averageOME;
     }
 
-    public void setOmeMoyenne(double omeMoyenne) {
-        this.omeMoyenne = omeMoyenne;
-    }
-
-    public double getOmePlanifie() {
-        return omePlanifie;
-    }
-
-    public void setOmePlanifie(double omePlanifie) {
-        this.omePlanifie = omePlanifie;
-    }
-
-    public double getOmeMoyenneSurPlanifie() {
-        return omeMoyenneSurPlanifie;
-    }
-
-    public void setOmeMoyenneSurPlanifie(double omeMoyenneSurPlanifie) {
-        this.omeMoyenneSurPlanifie = omeMoyenneSurPlanifie;
-    }
-
-    public String getAquiredProdTime() {
-        return aquiredProdTime;
-    }
-
-    public void setAquiredProdTime(String aquiredProdTime) {
-        this.aquiredProdTime = aquiredProdTime;
+    public void setAverageOME(double averageOME) {
+        this.averageOME = averageOME;
     }
 }

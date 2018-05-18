@@ -7,10 +7,11 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.florian.projet.R;
-import com.florian.projet.view.adapter.ArticlePagerAdapter;
 import com.florian.projet.view.adapter.MachinePagerAdapter;
+import com.florian.projet.viewModel.MachineViewModel;
 
 public class MachineDetailActivity extends AppCompatActivity {
+    MachineViewModel machineViewModel;
     Toolbar toolbar;
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -20,6 +21,9 @@ public class MachineDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_machine_detail);
 
+        machineViewModel = MachineViewModel.getInstance();
+        setTitle("Machine : " + machineViewModel.getCurrentMachine().getMachineName());
+
         initializeViewPager();
     }
 
@@ -27,6 +31,12 @@ public class MachineDetailActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    protected void onStop() {
+        machineViewModel.delCurrentMachine();
+        super.onStop();
     }
 
     private void initializeViewPager() {
@@ -40,7 +50,7 @@ public class MachineDetailActivity extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.machine_detail_tabLayout);
         if (tabLayout != null) {
-            tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
+            tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
             tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
             viewPager = findViewById(R.id.machine_detail_viewPager);

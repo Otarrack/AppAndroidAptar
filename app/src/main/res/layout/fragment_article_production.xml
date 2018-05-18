@@ -37,7 +37,7 @@
                     android:padding="1dp"/>
 
                 <TextView
-                    android:id="@+id/article_production_global_num_lib"
+                    android:id="@+id/machine_mcu_mcu_lib"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -49,25 +49,25 @@
                     app:layout_constraintEnd_toEndOf="parent"/>
 
                 <TextView
-                    android:id="@+id/article_production_global_num_res"
+                    android:id="@+id/machine_mcu_mcu_res"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/information_vide"
                     android:textColor="@color/aptar_bh_secondary"
                     android:textSize="16sp"
-                    app:layout_constraintTop_toBottomOf="@id/article_production_global_num_lib"
+                    app:layout_constraintTop_toBottomOf="@id/machine_mcu_mcu_lib"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
 
                 <TextView
-                    android:id="@+id/article_production_global_machine_lib"
+                    android:id="@+id/machine_mcu_actual_productive_time_lib"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="@string/article_production_machine"
                     android:textColor="@color/aptar_bh_primary"
                     android:textSize="16sp"
-                    app:layout_constraintTop_toBottomOf="@id/article_production_global_num_res"
+                    app:layout_constraintTop_toBottomOf="@id/machine_mcu_mcu_res"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
 
@@ -78,7 +78,7 @@
                     android:text="@string/information_vide"
                     android:textColor="@color/aptar_bh_secondary"
                     android:textSize="16sp"
-                    app:layout_constraintTop_toBottomOf="@id/article_production_global_machine_lib"
+                    app:layout_constraintTop_toBottomOf="@id/machine_mcu_actual_productive_time_lib"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
 

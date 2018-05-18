@@ -6,8 +6,8 @@ import android.graphics.drawable.Drawable;
 import com.florian.projet.R;
 import com.florian.projet.manager.ApplicationManager;
 import com.florian.projet.manager.ArticleManager;
-import com.florian.projet.model.Article;
-import com.florian.projet.model.OF;
+import com.florian.projet.quarantaine.Article;
+import com.florian.projet.quarantaine.OF;
 
 import java.text.DateFormat;
 import java.util.Calendar;

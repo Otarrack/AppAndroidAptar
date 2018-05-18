@@ -1,16 +1,18 @@
 package com.florian.projet.manager;
 
-import com.florian.projet.model.Site;
+import com.florian.projet.model.SiteEnum;
+import com.florian.projet.quarantaine.Site;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SiteManager {
     private static SiteManager instance;
-    private List<Site> listSite;
+    private ArrayList<SiteEnum> siteList;
 
     private SiteManager() {
-        listSite = new ArrayList<>();
+        siteList = new ArrayList<>(Arrays.asList(SiteEnum.values()));
     }
 
     public static SiteManager getInstance() {
@@ -20,17 +22,13 @@ public class SiteManager {
         return instance;
     }
 
-    public List<Site> getAllSite() {
-        return listSite;
+    public ArrayList<SiteEnum> getAllSite() {
+        return siteList;
     }
 
-    public void addSite(Site site) {
-        listSite.add(site);
-    }
-
-    public Site getSiteAt(int position) {
-        if (position < listSite.size()) {
-            return listSite.get(position);
+    public SiteEnum getSiteAt(int position) {
+        if (position < siteList.size()) {
+            return siteList.get(position);
         } else {
             return null;
         }

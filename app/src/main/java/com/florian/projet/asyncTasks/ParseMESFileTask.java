@@ -68,6 +68,7 @@ public class ParseMESFileTask extends AsyncTask<File, Void, ArrayList<MachineMES
                             addNumericalValue(cell, machineMESFile);
 
                         } else {
+                            Log.d("AUTRE CELL : [" + cell.getColumnIndex() + ";" + cell.getRowIndex() + "] ", cell.getNumericCellValue() + " ");
                             //U Can Handel Boolean, Formula, Errors
                         }
                     }
@@ -95,117 +96,107 @@ public class ParseMESFileTask extends AsyncTask<File, Void, ArrayList<MachineMES
     }
 
     private void addStringValue(HSSFCell cell, MachineMESFile machineMESFile) {
-        switch (cell.getColumnIndex() + 1) {
-            case 1: // COLUMN_MACHINE_NAME;
+        switch (cell.getColumnIndex()) {
+            case 0: // COLUMN_MACHINE_NAME;
                 machineMESFile.setMachineName(cell.getStringCellValue());
                 break;
 
-            case 2: // COLUMN_TEMPS_MAX_OUVERTURE
-                machineMESFile.setTempsMaximumOuverture(cell.getStringCellValue());
+            case 1: // COLUMN_TEMPS_MAX_OUVERTURE
+                machineMESFile.setMaxTimeOpenned(cell.getStringCellValue());
                 break;
 
-            case 3: // COLUMN_VACANCES
-                machineMESFile.setVacances(cell.getStringCellValue());
+            case 2: // COLUMN_VACANCES
+                machineMESFile.setHolidays(cell.getStringCellValue());
                 break;
 
-            case 4: // COLUMN_ARRET_PLANNIFIE
-                machineMESFile.setArretPlanifie(cell.getStringCellValue());
+            case 3: // COLUMN_ARRET_PLANNIFIE
+                machineMESFile.setPlannedStop(cell.getStringCellValue());
                 break;
 
-            case 5: // COLUMN_TEMPS_PAUSE
-                machineMESFile.setTempsPause(cell.getStringCellValue());
+            case 4: // COLUMN_TEMPS_PAUSE
+                machineMESFile.setBreakTime(cell.getStringCellValue());
                 break;
 
-            case 6: // COLUMN_MAINTENANCE_PREVENTIVE
-                machineMESFile.setMaintenancePreventive(cell.getStringCellValue());
+            case 5: // COLUMN_MAINTENANCE_PREVENTIVE
+                machineMESFile.setPreventiveMaintenance(cell.getStringCellValue());
                 break;
 
-            case 7: // COLUMN_ABSENCE_OF
-                machineMESFile.setAbsenceOF(cell.getStringCellValue());
+            case 6: // COLUMN_ABSENCE_OF
+                machineMESFile.setMissingOF(cell.getStringCellValue());
                 break;
 
-            case 8: // COLUMN_PRELEVEMENT
-                machineMESFile.setPrelevement(cell.getStringCellValue());
+            case 7: // COLUMN_PRELEVEMENT
+                machineMESFile.setSample(cell.getStringCellValue());
                 break;
 
-            case 9: // COLUMN_TEMPS_PRODUCTIF_EFFECTIF
-                machineMESFile.setTempsProductifEffectif(cell.getStringCellValue());
+            case 8: // COLUMN_TEMPS_PRODUCTIF_EFFECTIF
+                machineMESFile.setActualProductiveTime(cell.getStringCellValue());
                 break;
 
-            case 12: // COLUMN_TEMPS_SETUP
-                machineMESFile.setTempsSetup(cell.getStringCellValue());
+            case 11: // COLUMN_TEMPS_SETUP
+                machineMESFile.setSetupTime(cell.getStringCellValue());
                 break;
 
-            case 13: // COLUMN_MICRO_ARRET
-                machineMESFile.setMicroArret(cell.getStringCellValue());
+            case 12: // COLUMN_MICRO_ARRET
+                machineMESFile.setMicroStopTime(cell.getStringCellValue());
                 break;
 
-            case 14: // COLUMN_AUTRE_TEMPS_ARRET
-                machineMESFile.setAutreTempsArret(cell.getStringCellValue());
+            case 13: // COLUMN_AUTRE_TEMPS_ARRET
+                machineMESFile.setOtherStopTime(cell.getStringCellValue());
                 break;
 
-            case 16: // COLUMN_PERTE_EFFICACITE_REBUT
-                machineMESFile.setPerteEfficaciteRebut(cell.getStringCellValue());
+            case 15: // COLUMN_PERTE_EFFICACITE_REBUT
+                machineMESFile.setScrapLossEfficiency(cell.getStringCellValue());
                 break;
 
-            case 17: // COLUMN_PERTE_EFFICACITE_CAVITE
-                machineMESFile.setPerteEfficaciteCavite(cell.getStringCellValue());
+            case 16: // COLUMN_PERTE_EFFICACITE_CAVITE
+                machineMESFile.setCavityLossEfficiency(cell.getStringCellValue());
                 break;
 
-            case 18: // COLUMN_PERTE_EFFICACITE_TEMPS_CYCLE
-                machineMESFile.setPerteEfficaciteTempsCycle(cell.getStringCellValue());
+            case 17: // COLUMN_PERTE_EFFICACITE_TEMPS_CYCLE
+                machineMESFile.setCycleTimeLossEfficiency(cell.getStringCellValue());
                 break;
 
-            case 19: // COLUMN_EFFICACITE_VITESSE_PERDUE
-                machineMESFile.setEfficaciteVitessePerdue(cell.getStringCellValue());
+            case 18: // COLUMN_EFFICACITE_VITESSE_PERDUE
+                machineMESFile.setSpeedLostEfficiency(cell.getStringCellValue());
                 break;
 
-            case 20: // COLUMN_TEMPS_PRODUCTIF_NET
-                machineMESFile.setTempsProductifNet(cell.getStringCellValue());
+            case 19: // COLUMN_TEMPS_PRODUCTIF_NET
+                machineMESFile.setNetProductiveTime(cell.getStringCellValue());
                 break;
 
-            case 21: // COLUMN_TEMPS_PRODUCTIF_NET_QME
-                machineMESFile.setTempsProductifNetQME(cell.getStringCellValue());
+            case 20: // COLUMN_TEMPS_PRODUCTIF_NET_QME
+                machineMESFile.setNetProductiveTimeQME(cell.getStringCellValue());
                 break;
 
-            case 22: // COLUMN_QUALITE_BONNE_PRODUITE
-                machineMESFile.setQualiteBonneProduite(cell.getStringCellValue());
-                break;
-
-            case 28: // COLUMN_AQUIRED_PRODTIME
-                machineMESFile.setAquiredProdTime(cell.getStringCellValue());
-                break;
             default:
                 break;
         }
     }
 
     private void addNumericalValue(HSSFCell cell, MachineMESFile machineMESFile) {
-        switch (cell.getColumnIndex() + 1) {
+        switch (cell.getColumnIndex()) {
 
-            case 10: // COLUMN_MCU
+            case 9: // COLUMN_MCU
                 machineMESFile.setMcu(cell.getNumericCellValue());
                 break;
 
-            case 15: // COLUMN_TAUX_REBUT
-                machineMESFile.setTauxRebut(cell.getNumericCellValue());
+            case 14: // COLUMN_TAUX_REBUT
+                machineMESFile.setScrapRate(cell.getNumericCellValue());
                 break;
 
-            case 24: // COLUMN_QME
+            case 22: // COLUMN_QUALITE_BONNE_PRODUITE
+                machineMESFile.setGoodQualityProduced(cell.getNumericCellValue());
+                break;
+
+            case 23: // COLUMN_QME
                 machineMESFile.setQme(cell.getNumericCellValue());
                 break;
 
-            case 25: // COLUMN_OME_MOYENNE
-                machineMESFile.setOmeMoyenne(cell.getNumericCellValue());
+            case 24: // COLUMN_OME_MOYENNE
+                machineMESFile.setAverageOME(cell.getNumericCellValue());
                 break;
 
-            case 26: // COLUMN_OME_PLANIFIE
-                machineMESFile.setOmePlanifie(cell.getNumericCellValue());
-                break;
-
-            case 27: // COLUMN_OME_MOYENNE_SUR_PLANIFIE
-                machineMESFile.setOmeMoyenneSurPlanifie(cell.getNumericCellValue());
-                break;
             default:
                 break;
         }

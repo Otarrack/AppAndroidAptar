@@ -1,11 +1,10 @@
 package com.florian.projet.viewModel;
 
 import com.florian.projet.manager.OFManager;
-import com.florian.projet.model.OF;
+import com.florian.projet.quarantaine.OF;
 import com.florian.projet.model.Person;
 
 import java.text.DateFormat;
-import java.util.Date;
 
 public class OFViewModel {
     public static OFViewModel instance;

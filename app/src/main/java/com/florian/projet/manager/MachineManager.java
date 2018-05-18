@@ -1,6 +1,6 @@
 package com.florian.projet.manager;
 
-import com.florian.projet.model.Machine;
+import com.florian.projet.quarantaine.Machine;
 
 import java.util.ArrayList;
 import java.util.List;

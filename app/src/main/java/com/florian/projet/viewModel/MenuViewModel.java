@@ -4,10 +4,9 @@ import com.florian.projet.manager.ArticleManager;
 import com.florian.projet.manager.MESFileManager;
 import com.florian.projet.manager.MachineManager;
 import com.florian.projet.manager.SiteManager;
-import com.florian.projet.model.Article;
-import com.florian.projet.model.Machine;
 import com.florian.projet.model.MachineMESFile;
-import com.florian.projet.model.Site;
+import com.florian.projet.quarantaine.Article;
+import com.florian.projet.quarantaine.Machine;
 import com.florian.projet.model.SiteMESFile;
 
 import java.util.ArrayList;
@@ -36,10 +35,11 @@ public class MenuViewModel {
 
     public ArrayList<SiteMESFile> getSiteList() {
 
-        return mesFileManager.getSiteList();
+        //return mesFileManager.getSiteList();
 
 
         // return new ArrayList<>(siteManager.getAllSite());
+        return null;
     }
 
     public ArrayList<Article> getArticleList() {
@@ -50,10 +50,15 @@ public class MenuViewModel {
         return new ArrayList<>(machineManager.getAllMachine());
     }
 
+    public ArrayList<MachineMESFile> getMESMachineList() {
+        return new ArrayList<>(mesFileManager.getAllMachineMES());
+    }
+
     public SiteMESFile getSite(int position) {
-        return mesFileManager.getSiteAt(position);
+        //return mesFileManager.getSiteAt(position);
 
         //return siteManager.getSiteAt(position);
+        return null;
     }
 
     public Article getArticle(int position) {

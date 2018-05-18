@@ -1,0 +1,313 @@
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/machine_ome_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/machine_ome_average_lib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Moyenne OME"
+            android:textColor="@color/aptar_bh_primary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/machine_ome_average_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/information_vide"
+            android:textColor="@color/aptar_bh_secondary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_ome_average_lib"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/machine_ome_qme_lib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="QME"
+            android:textColor="@color/aptar_bh_primary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_ome_average_res"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/machine_ome_qme_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/information_vide"
+            android:textColor="@color/aptar_bh_secondary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_ome_qme_lib"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/machine_ome_good_quality_produced_lib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Quantité Bonne Produite"
+            android:textColor="@color/aptar_bh_primary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_ome_qme_res"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/machine_ome_good_quality_produced_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/information_vide"
+            android:textColor="@color/aptar_bh_secondary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_ome_good_quality_produced_lib"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/machine_ome_net_productive_time_qme_lib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Temps Productif Net QME"
+            android:textColor="@color/aptar_bh_primary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_ome_good_quality_produced_res"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/machine_ome_net_productive_time_qme_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/information_vide"
+            android:textColor="@color/aptar_bh_secondary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_ome_net_productive_time_qme_lib"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/machine_ome_net_productive_time_lib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Temps Productif Net"
+            android:textColor="@color/aptar_bh_primary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_ome_net_productive_time_qme_res"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/machine_ome_net_productive_time_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/information_vide"
+            android:textColor="@color/aptar_bh_secondary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_ome_net_productive_time_lib"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/machine_ome_speed_lost_efficiency_lib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Efficacité Vitesse Perdue"
+            android:textColor="@color/aptar_bh_primary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_ome_net_productive_time_res"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/machine_ome_speed_lost_efficiency_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/information_vide"
+            android:textColor="@color/aptar_bh_secondary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_ome_speed_lost_efficiency_lib"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/machine_ome_cycle_time_loss_efficiency_lib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Perte d'Efficacité Temps de Cycle"
+            android:textColor="@color/aptar_bh_primary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_ome_speed_lost_efficiency_res"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/machine_ome_cycle_time_loss_efficiency_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/information_vide"
+            android:textColor="@color/aptar_bh_secondary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_ome_cycle_time_loss_efficiency_lib"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/machine_ome_cavity_loss_efficiency_lib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Vacances"
+            android:textColor="@color/aptar_bh_primary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_ome_cycle_time_loss_efficiency_res"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/machine_ome_cavity_loss_efficiency_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/information_vide"
+            android:textColor="@color/aptar_bh_secondary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_ome_cavity_loss_efficiency_lib"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/machine_ome_scrap_loss_efficiency_lib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Perte d'Efficacité Rebut"
+            android:textColor="@color/aptar_bh_primary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_ome_cavity_loss_efficiency_res"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/machine_ome_scrap_loss_efficiency_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/information_vide"
+            android:textColor="@color/aptar_bh_secondary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_ome_scrap_loss_efficiency_lib"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/machine_ome_scrap_rate_lib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Taux de Rebut"
+            android:textColor="@color/aptar_bh_primary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_ome_scrap_loss_efficiency_res"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/machine_ome_scrap_rate_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/information_vide"
+            android:textColor="@color/aptar_bh_secondary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_ome_scrap_rate_lib"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/machine_ome_other_stop_time_lib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Autres Temps d'Arrêt"
+            android:textColor="@color/aptar_bh_primary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_ome_scrap_rate_res"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/machine_ome_other_stop_time_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/information_vide"
+            android:textColor="@color/aptar_bh_secondary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_ome_other_stop_time_lib"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/machine_ome_micro_stop_time_lib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Micro-Arrêt"
+            android:textColor="@color/aptar_bh_primary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_ome_other_stop_time_res"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/machine_ome_micro_stop_time_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/information_vide"
+            android:textColor="@color/aptar_bh_secondary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_ome_micro_stop_time_lib"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/machine_ome_setup_time_lib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Temps de Setup"
+            android:textColor="@color/aptar_bh_primary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_ome_micro_stop_time_res"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/machine_ome_setup_time_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/information_vide"
+            android:textColor="@color/aptar_bh_secondary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_ome_setup_time_lib"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

@@ -1,6 +1,5 @@
 package com.florian.projet.view;
 
-import android.graphics.Typeface;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,13 +8,9 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 
 import com.florian.projet.R;
-import com.florian.projet.view.fragment.menu.ArticleFragment;
-import com.florian.projet.view.fragment.menu.MachineFragment;
-import com.florian.projet.view.fragment.menu.SiteFragment;
+import com.florian.projet.view.fragment.SiteListFragment;
 
 public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedListener {
     private AppCompatActivity activity;
@@ -44,7 +39,7 @@ public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedList
 
 
         if (id == R.id.nav_site) {
-            fragment = SiteFragment.newInstance();
+            fragment = SiteListFragment.newInstance();
             activity.setTitle(R.string.menu_site_title);
 
 //        } else if (id == R.id.nav_machine) {

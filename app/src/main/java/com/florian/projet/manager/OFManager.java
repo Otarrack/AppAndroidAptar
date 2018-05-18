@@ -1,6 +1,6 @@
 package com.florian.projet.manager;
 
-import com.florian.projet.model.OF;
+import com.florian.projet.quarantaine.OF;
 
 import java.util.ArrayList;
 import java.util.List;

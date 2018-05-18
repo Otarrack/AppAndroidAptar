@@ -74,4 +74,6 @@
     <string name="app_key">epzhp1cvwybijfw</string>
     <string name="title_activity_files">Files</string>
     <string name="title_activity_openwith">Open With</string>
+    <string name="machine_pager_mcu">MCU</string>
+    <string name="machine_pager_ome">OME</string>
 </resources>

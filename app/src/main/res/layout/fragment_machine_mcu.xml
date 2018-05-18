@@ -1,0 +1,255 @@
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/machine_mcu_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <!--<android.support.v7.widget.CardView
+            android:id="@+id/article_production_card_global"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="3dp"
+            app:cardElevation="3dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/article_production_global_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/article_production_global_title"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/aptar_bh_primary"
+                    android:textSize="20sp"
+                    android:background="@drawable/border_bottom_blue_background"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:padding="1dp"/>-->
+
+        <TextView
+            android:id="@+id/machine_mcu_mcu_lib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="MCU"
+            android:textColor="@color/aptar_bh_primary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/machine_mcu_mcu_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/information_vide"
+            android:textColor="@color/aptar_bh_secondary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_mcu_mcu_lib"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/machine_mcu_actual_productive_time_lib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Temps Productif Effectif"
+            android:textColor="@color/aptar_bh_primary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_mcu_mcu_res"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/machine_mcu_actual_productive_time_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/information_vide"
+            android:textColor="@color/aptar_bh_secondary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_mcu_actual_productive_time_lib"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/machine_mcu_sample_lib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Prélévement"
+            android:textColor="@color/aptar_bh_primary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_mcu_actual_productive_time_res"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/machine_mcu_sample_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/information_vide"
+            android:textColor="@color/aptar_bh_secondary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_mcu_sample_lib"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/machine_mcu_missing_of_lib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Absence d'OF"
+            android:textColor="@color/aptar_bh_primary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_mcu_sample_res"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/machine_mcu_missing_of_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/information_vide"
+            android:textColor="@color/aptar_bh_secondary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_mcu_missing_of_lib"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/machine_mcu_preventive_maintenance_lib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Maintenance Préventive"
+            android:textColor="@color/aptar_bh_primary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_mcu_missing_of_res"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/machine_mcu_preventive_maintenance_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/information_vide"
+            android:textColor="@color/aptar_bh_secondary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_mcu_preventive_maintenance_lib"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/machine_mcu_break_time_lib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Temps de Pause"
+            android:textColor="@color/aptar_bh_primary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_mcu_preventive_maintenance_res"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/machine_mcu_break_time_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/information_vide"
+            android:textColor="@color/aptar_bh_secondary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_mcu_break_time_lib"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/machine_mcu_planned_stop_lib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Arrêt Planifié"
+            android:textColor="@color/aptar_bh_primary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_mcu_break_time_res"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/machine_mcu_planned_stop_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/information_vide"
+            android:textColor="@color/aptar_bh_secondary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_mcu_planned_stop_lib"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/machine_mcu_holidays_lib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Vacances"
+            android:textColor="@color/aptar_bh_primary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_mcu_planned_stop_res"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/machine_mcu_holidays_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/information_vide"
+            android:textColor="@color/aptar_bh_secondary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_mcu_holidays_lib"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/machine_mcu_max_time_openned_lib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Temps Maximum d'Ouverture"
+            android:textColor="@color/aptar_bh_primary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_mcu_holidays_res"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/machine_mcu_max_time_openned_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/information_vide"
+            android:textColor="@color/aptar_bh_secondary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/machine_mcu_max_time_openned_lib"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+
+        <!--</android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>-->
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

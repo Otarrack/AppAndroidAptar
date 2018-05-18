@@ -8,7 +8,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context="com.florian.projet.view.activity.OFDetailActivity">
+        tools:context="com.florian.projet.quarantaine.OFDetailActivity">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/of_detail_global_layout"

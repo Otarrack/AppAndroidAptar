@@ -1,20 +1,15 @@
 package com.florian.projet.manager;
 
-import android.util.Log;
-
 import com.dropbox.core.v2.DbxClientV2;
 import com.florian.projet.asyncTasks.DropboxDownloadDataFileTask;
 import com.florian.projet.asyncTasks.GetCurrentAccountTask;
 import com.florian.projet.asyncTasks.ParseMESFileTask;
-import com.florian.projet.model.Article;
-import com.florian.projet.model.MachineMESFile;
-import com.florian.projet.model.Machine;
-import com.florian.projet.model.Site;
-import com.florian.projet.model.SiteMESFile;
+import com.florian.projet.quarantaine.Article;
+import com.florian.projet.quarantaine.Machine;
+import com.florian.projet.quarantaine.Site;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -30,8 +25,6 @@ public class ApplicationManager {
     private Calendar calendar;
     private ArticleManager articleManager;
     private MachineManager machineManager;
-    private SiteManager siteManager;
-    private OFManager ofManager;
     private Date defaultDate;
     private Date fromDate;
     private Date toDate;
@@ -40,8 +33,6 @@ public class ApplicationManager {
         calendar = Calendar.getInstance();
         machineManager = MachineManager.getInstance();
         articleManager = ArticleManager.getInstance();
-        siteManager = SiteManager.getInstance();
-        ofManager = OFManager.getInstance();
         dataMESFileManager = MESFileManager.getInstance();
     }
 
@@ -207,7 +198,7 @@ public class ApplicationManager {
         return newMachine;
     }
 
-    private Site getExistingSite(Site newSite) {
+    /*private Site getExistingSite(Site newSite) {
         List<Site> siteList = siteManager.getAllSite();
 
         for (Site site : siteList) {
@@ -218,7 +209,7 @@ public class ApplicationManager {
 
         siteManager.addSite(newSite);
         return newSite;
-    }
+    }*/
 
     private Date getDefaultDate() {
         return defaultDate;

@@ -1,10 +1,7 @@
 package com.florian.projet.manager;
 
-import com.florian.projet.model.Machine;
 import com.florian.projet.model.Person;
-import com.florian.projet.model.PersonMachine;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PersonManager {

@@ -20,51 +20,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.MainActivity">
-        </activity>
+        <activity android:name=".view.activity.MainActivity" />
+        <activity android:name=".view.activity.MachineListActivity" />
         <activity android:name=".view.activity.MachineDetailActivity" />
-        <activity android:name=".view.activity.ArticleDetailActivity" />
-        <activity android:name=".view.activity.SiteDetailActivity" />
+
+
+        <activity android:name=".quarantaine.ArticleDetailActivity" />
         <activity android:name=".view.activity.PeriodActivity" />
-        <activity android:name=".view.activity.OFDetailActivity" />
-
-        <!--
-        <activity
-            android:name=".dropbox.UserActivity"
-            android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".dropbox.FilesActivity"
-            android:label="@string/title_activity_files" />
-        <activity
-            android:name="com.dropbox.core.android.AuthActivity"
-            android:configChanges="orientation|keyboard"
-            android:launchMode="singleTask">
-            <intent-filter>
-
-                &lt;!&ndash;Change this to be db- followed by your app key &ndash;&gt;
-                <data android:scheme="db-epzhp1cvwybijfw" />
-
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".dropbox.internal.OpenWithActivity"
-            android:label="@string/title_activity_openwith">
-            <intent-filter>
-                <action android:name="com.dropbox.android.intent.action.DBXC_EDIT"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="text/plain"/>
-            </intent-filter>
-        </activity>
-        -->
+        <activity android:name=".quarantaine.OFDetailActivity" />
 
     </application>
 
