@@ -1,32 +1,71 @@
 package com.florian.projet.model;
 
-public class MachineMESFile {
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
+@Entity(tableName = "machines")
+public class Machine {
+    @ColumnInfo(name = "id_question")
+    @PrimaryKey(autoGenerate = true)
+    private int idQuestion;
+    @ColumnInfo(name = "name")
     private String machineName;
+    @ColumnInfo(name = "max_time_openned")
     private String maxTimeOpenned;
+    @ColumnInfo(name = "holidays")
     private String holidays;
+    @ColumnInfo(name = "planned_stop")
     private String plannedStop;
+    @ColumnInfo(name = "break_time")
     private String breakTime;
+    @ColumnInfo(name = "preventive_maintenance")
     private String preventiveMaintenance;
+    @ColumnInfo(name = "missing_of")
     private String missingOF;
+    @ColumnInfo(name = "sample")
     private String sample;
+    @ColumnInfo(name = "actual_productive_time")
     private String actualProductiveTime;
+    @ColumnInfo(name = "mcu")
     private double mcu;
+    @ColumnInfo(name = "setup_time")
     private String setupTime;
+    @ColumnInfo(name = "micro_stop_time")
     private String microStopTime;
+    @ColumnInfo(name = "other_stop_time")
     private String otherStopTime;
+    @ColumnInfo(name = "scrap_rate")
     private double scrapRate;
+    @ColumnInfo(name = "scrap_loss_efficiency")
     private String scrapLossEfficiency;
+    @ColumnInfo(name = "cavity_loss_efficiency")
     private String cavityLossEfficiency;
+    @ColumnInfo(name = "cycle_time_loss_efficiency")
     private String cycleTimeLossEfficiency;
+    @ColumnInfo(name = "speed_lost_efficiency")
     private String speedLostEfficiency;
+    @ColumnInfo(name = "net_productive_time")
     private String netProductiveTime;
+    @ColumnInfo(name = "net_productive_time_qme")
     private String netProductiveTimeQME;
+    @ColumnInfo(name = "good_quality_produced")
     private double goodQualityProduced;
+    @ColumnInfo(name = "qme")
     private double qme;
+    @ColumnInfo(name = "average_ome")
     private double averageOME;
 
-    public MachineMESFile() {
+    public Machine() {
 
+    }
+
+    public int getIdQuestion() {
+        return idQuestion;
+    }
+
+    public void setIdQuestion(int idQuestion) {
+        this.idQuestion = idQuestion;
     }
 
     public String getMachineName() {

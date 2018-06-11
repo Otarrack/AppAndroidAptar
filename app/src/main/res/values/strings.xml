@@ -76,4 +76,5 @@
     <string name="title_activity_openwith">Open With</string>
     <string name="machine_pager_mcu">MCU</string>
     <string name="machine_pager_ome">OME</string>
+    <string name="menu_favorite_title">Favoris</string>
 </resources>

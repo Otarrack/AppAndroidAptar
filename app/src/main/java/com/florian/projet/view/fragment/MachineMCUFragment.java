@@ -2,14 +2,13 @@ package com.florian.projet.view.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.florian.projet.R;
-import com.florian.projet.model.MachineMESFile;
+import com.florian.projet.model.Machine;
 import com.florian.projet.viewModel.MachineViewModel;
 
 import java.text.NumberFormat;
@@ -71,7 +70,7 @@ public class MachineMCUFragment extends Fragment {
     }
 
     private void setValuesOnViews() {
-        MachineMESFile machine = machineViewModel.getCurrentMachine();
+        Machine machine = machineViewModel.getCurrentMachine();
 
         if (machine != null) {
             maxTimeOpennedTextView.setText(machine.getMaxTimeOpenned());

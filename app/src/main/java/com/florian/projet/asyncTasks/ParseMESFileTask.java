@@ -1,9 +1,13 @@
 package com.florian.projet.asyncTasks;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.florian.projet.model.MachineMESFile;
+import com.florian.projet.bdd.database.FavMachineDataBase;
+import com.florian.projet.manager.FavoriteMachineManager;
+import com.florian.projet.model.Machine;
+import com.florian.projet.model.SiteEnum;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -18,22 +22,24 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 
-public class ParseMESFileTask extends AsyncTask<File, Void, ArrayList<MachineMESFile>> {
+public class ParseMESFileTask extends AsyncTask<File, Void, ArrayList<Machine>> {
     private Callback callback;
+    private Context context;
     private Exception mException;
 
     public interface Callback {
-        void onSuccess(ArrayList<MachineMESFile> dataLineList);
+        void onSuccess(ArrayList<Machine> dataLineList);
         void onFailed(Exception e);
     }
 
-    public ParseMESFileTask(Callback callback) {
+    public ParseMESFileTask(Context context, Callback callback) {
         this.callback = callback;
+        this.context = context;
     }
 
     @Override
-    protected ArrayList<MachineMESFile> doInBackground(File... files) {
-        ArrayList<MachineMESFile> dataLineList = new ArrayList<>();
+    protected ArrayList<Machine> doInBackground(File... files) {
+        ArrayList<Machine> dataLineList = new ArrayList<>();
 
         try {
             InputStream excelFile;
@@ -46,12 +52,12 @@ public class ParseMESFileTask extends AsyncTask<File, Void, ArrayList<MachineMES
             HSSFCell cell;
 
             Iterator rows = sheet.rowIterator();
-            MachineMESFile machineMESFile;
+            Machine machine;
 
             while (rows.hasNext()) {
                 row = (HSSFRow) rows.next();
                 Iterator cells = row.cellIterator();
-                machineMESFile = new MachineMESFile();
+                machine = new Machine();
 
                 if (row.getRowNum() >= 9) {
                     while (cells.hasNext()) {
@@ -60,12 +66,12 @@ public class ParseMESFileTask extends AsyncTask<File, Void, ArrayList<MachineMES
                         if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
                             Log.d("[1] CELL : [" + cell.getColumnIndex() + ";" + cell.getRowIndex() + "] ", cell.getStringCellValue() + " ");
 
-                            addStringValue(cell, machineMESFile);
+                            addStringValue(cell, machine);
 
                         } else if (cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) {
                             Log.d("[2] CELL : [" + cell.getColumnIndex() + ";" + cell.getRowIndex() + "] ", cell.getNumericCellValue() + " ");
 
-                            addNumericalValue(cell, machineMESFile);
+                            addNumericalValue(cell, machine);
 
                         } else {
                             Log.d("AUTRE CELL : [" + cell.getColumnIndex() + ";" + cell.getRowIndex() + "] ", cell.getNumericCellValue() + " ");
@@ -73,11 +79,13 @@ public class ParseMESFileTask extends AsyncTask<File, Void, ArrayList<MachineMES
                         }
                     }
 
-                    if (machineMESFile.getMachineName() != null) {
-                        dataLineList.add(machineMESFile);
+                    if (machine.getMachineName() != null) {
+                        dataLineList.add(machine);
                     }
                 }
             }
+
+            initFavoriteMachine(context);
 
         } catch (IOException e) {
             Log.d("ERREUR ", e.getMessage());
@@ -87,86 +95,86 @@ public class ParseMESFileTask extends AsyncTask<File, Void, ArrayList<MachineMES
     }
 
     @Override
-    protected void onPostExecute(ArrayList<MachineMESFile> machineMESFiles) {
+    protected void onPostExecute(ArrayList<Machine> machines) {
         if (mException == null) {
-            callback.onSuccess(machineMESFiles);
+            callback.onSuccess(machines);
         } else {
             callback.onFailed(mException);
         }
     }
 
-    private void addStringValue(HSSFCell cell, MachineMESFile machineMESFile) {
+    private void addStringValue(HSSFCell cell, Machine machine) {
         switch (cell.getColumnIndex()) {
             case 0: // COLUMN_MACHINE_NAME;
-                machineMESFile.setMachineName(cell.getStringCellValue());
+                machine.setMachineName(cell.getStringCellValue());
                 break;
 
             case 1: // COLUMN_TEMPS_MAX_OUVERTURE
-                machineMESFile.setMaxTimeOpenned(cell.getStringCellValue());
+                machine.setMaxTimeOpenned(cell.getStringCellValue());
                 break;
 
             case 2: // COLUMN_VACANCES
-                machineMESFile.setHolidays(cell.getStringCellValue());
+                machine.setHolidays(cell.getStringCellValue());
                 break;
 
             case 3: // COLUMN_ARRET_PLANNIFIE
-                machineMESFile.setPlannedStop(cell.getStringCellValue());
+                machine.setPlannedStop(cell.getStringCellValue());
                 break;
 
             case 4: // COLUMN_TEMPS_PAUSE
-                machineMESFile.setBreakTime(cell.getStringCellValue());
+                machine.setBreakTime(cell.getStringCellValue());
                 break;
 
             case 5: // COLUMN_MAINTENANCE_PREVENTIVE
-                machineMESFile.setPreventiveMaintenance(cell.getStringCellValue());
+                machine.setPreventiveMaintenance(cell.getStringCellValue());
                 break;
 
             case 6: // COLUMN_ABSENCE_OF
-                machineMESFile.setMissingOF(cell.getStringCellValue());
+                machine.setMissingOF(cell.getStringCellValue());
                 break;
 
             case 7: // COLUMN_PRELEVEMENT
-                machineMESFile.setSample(cell.getStringCellValue());
+                machine.setSample(cell.getStringCellValue());
                 break;
 
             case 8: // COLUMN_TEMPS_PRODUCTIF_EFFECTIF
-                machineMESFile.setActualProductiveTime(cell.getStringCellValue());
+                machine.setActualProductiveTime(cell.getStringCellValue());
                 break;
 
             case 11: // COLUMN_TEMPS_SETUP
-                machineMESFile.setSetupTime(cell.getStringCellValue());
+                machine.setSetupTime(cell.getStringCellValue());
                 break;
 
             case 12: // COLUMN_MICRO_ARRET
-                machineMESFile.setMicroStopTime(cell.getStringCellValue());
+                machine.setMicroStopTime(cell.getStringCellValue());
                 break;
 
             case 13: // COLUMN_AUTRE_TEMPS_ARRET
-                machineMESFile.setOtherStopTime(cell.getStringCellValue());
+                machine.setOtherStopTime(cell.getStringCellValue());
                 break;
 
             case 15: // COLUMN_PERTE_EFFICACITE_REBUT
-                machineMESFile.setScrapLossEfficiency(cell.getStringCellValue());
+                machine.setScrapLossEfficiency(cell.getStringCellValue());
                 break;
 
             case 16: // COLUMN_PERTE_EFFICACITE_CAVITE
-                machineMESFile.setCavityLossEfficiency(cell.getStringCellValue());
+                machine.setCavityLossEfficiency(cell.getStringCellValue());
                 break;
 
             case 17: // COLUMN_PERTE_EFFICACITE_TEMPS_CYCLE
-                machineMESFile.setCycleTimeLossEfficiency(cell.getStringCellValue());
+                machine.setCycleTimeLossEfficiency(cell.getStringCellValue());
                 break;
 
             case 18: // COLUMN_EFFICACITE_VITESSE_PERDUE
-                machineMESFile.setSpeedLostEfficiency(cell.getStringCellValue());
+                machine.setSpeedLostEfficiency(cell.getStringCellValue());
                 break;
 
             case 19: // COLUMN_TEMPS_PRODUCTIF_NET
-                machineMESFile.setNetProductiveTime(cell.getStringCellValue());
+                machine.setNetProductiveTime(cell.getStringCellValue());
                 break;
 
             case 20: // COLUMN_TEMPS_PRODUCTIF_NET_QME
-                machineMESFile.setNetProductiveTimeQME(cell.getStringCellValue());
+                machine.setNetProductiveTimeQME(cell.getStringCellValue());
                 break;
 
             default:
@@ -174,31 +182,38 @@ public class ParseMESFileTask extends AsyncTask<File, Void, ArrayList<MachineMES
         }
     }
 
-    private void addNumericalValue(HSSFCell cell, MachineMESFile machineMESFile) {
+    private void addNumericalValue(HSSFCell cell, Machine machine) {
         switch (cell.getColumnIndex()) {
 
             case 9: // COLUMN_MCU
-                machineMESFile.setMcu(cell.getNumericCellValue());
+                machine.setMcu(cell.getNumericCellValue());
                 break;
 
             case 14: // COLUMN_TAUX_REBUT
-                machineMESFile.setScrapRate(cell.getNumericCellValue());
+                machine.setScrapRate(cell.getNumericCellValue());
                 break;
 
             case 22: // COLUMN_QUALITE_BONNE_PRODUITE
-                machineMESFile.setGoodQualityProduced(cell.getNumericCellValue());
+                machine.setGoodQualityProduced(cell.getNumericCellValue());
                 break;
 
             case 23: // COLUMN_QME
-                machineMESFile.setQme(cell.getNumericCellValue());
+                machine.setQme(cell.getNumericCellValue());
                 break;
 
             case 24: // COLUMN_OME_MOYENNE
-                machineMESFile.setAverageOME(cell.getNumericCellValue());
+                machine.setAverageOME(cell.getNumericCellValue());
                 break;
 
             default:
                 break;
         }
+    }
+
+    private void initFavoriteMachine(Context context) {
+        FavoriteMachineManager favoriteMachineManager = FavoriteMachineManager.getInstance();
+        favoriteMachineManager.setAppQuestionDatabase(FavMachineDataBase.getInstance(context));
+
+        SiteEnum.FAV.setMachineMESList(favoriteMachineManager.getAllFavMachine());
     }
 }

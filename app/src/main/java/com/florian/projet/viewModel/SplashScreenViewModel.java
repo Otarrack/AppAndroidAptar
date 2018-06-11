@@ -1,5 +1,7 @@
 package com.florian.projet.viewModel;
 
+import android.content.Context;
+
 import com.florian.projet.asyncTasks.DropboxDownloadDataFileTask;
 import com.florian.projet.asyncTasks.GetCurrentAccountTask;
 import com.florian.projet.asyncTasks.ParseMESFileTask;
@@ -31,7 +33,7 @@ public class SplashScreenViewModel {
         applicationManager.downloadDataFile(path, callback);
     }
 
-    public void parseXlsFile(File file, ParseMESFileTask.Callback callback) throws IOException{
-        applicationManager.parseXLSFile(file, callback);
+    public void parseXlsFile(Context context, File file, ParseMESFileTask.Callback callback) throws IOException{
+        applicationManager.parseXLSFile(context, file, callback);
     }
 }

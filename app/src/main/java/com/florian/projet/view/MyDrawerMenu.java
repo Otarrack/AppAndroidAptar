@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.florian.projet.R;
+import com.florian.projet.model.SiteEnum;
+import com.florian.projet.view.fragment.FavorisListFragment;
 import com.florian.projet.view.fragment.SiteListFragment;
 
 public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedListener {
@@ -42,10 +44,10 @@ public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedList
             fragment = SiteListFragment.newInstance();
             activity.setTitle(R.string.menu_site_title);
 
-//        } else if (id == R.id.nav_machine) {
-//            fragment = MachineFragment.newInstance();
-//            activity.setTitle(R.string.menu_machine_title);
-//
+        } else if (id == R.id.nav_favorite) {
+            fragment = FavorisListFragment.newInstance();
+            activity.setTitle(R.string.menu_favorite_title);
+
 //        } else if (id == R.id.nav_article) {
 //            fragment = ArticleFragment.newInstance();
 //            activity.setTitle(R.string.menu_article_title);

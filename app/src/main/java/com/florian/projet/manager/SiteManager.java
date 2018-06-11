@@ -1,11 +1,9 @@
 package com.florian.projet.manager;
 
 import com.florian.projet.model.SiteEnum;
-import com.florian.projet.quarantaine.Site;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class SiteManager {
     private static SiteManager instance;
@@ -13,6 +11,7 @@ public class SiteManager {
 
     private SiteManager() {
         siteList = new ArrayList<>(Arrays.asList(SiteEnum.values()));
+        siteList.remove(SiteEnum.FAV);
     }
 
     public static SiteManager getInstance() {

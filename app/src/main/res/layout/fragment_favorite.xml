@@ -5,17 +5,17 @@
     android:layout_height="match_parent">
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/site_list_layout"
+        android:id="@+id/favorite_list_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/machine_list_recycler"
+            android:id="@+id/favorite_list_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toRightOf="parent"
             app:layout_constraintRight_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
     </android.support.constraint.ConstraintLayout>
 

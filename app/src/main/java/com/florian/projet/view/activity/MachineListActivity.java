@@ -9,11 +9,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 
 import com.florian.projet.R;
-import com.florian.projet.model.MachineMESFile;
+import com.florian.projet.model.Machine;
 import com.florian.projet.model.SiteEnum;
 import com.florian.projet.tools.CustomItemClickListener;
 import com.florian.projet.view.adapter.MachineRecyclerAdapter;
@@ -27,7 +26,7 @@ public class MachineListActivity extends AppCompatActivity {
 
     MachineViewModel machineViewModel;
 
-    ArrayList<MachineMESFile> machineMESList;
+    ArrayList<Machine> machineMESList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +35,17 @@ public class MachineListActivity extends AppCompatActivity {
 
         machineViewModel = MachineViewModel.getInstance();
         initToolbar();
+        initSearchView();
 
         SiteEnum siteEnum = (SiteEnum) getIntent().getSerializableExtra("SiteEnum");
-        machineMESList = siteEnum.getMachineMESList();
+        machineMESList = siteEnum.getMachineList();
 
         setRecyclerViewMachine();
 
+
+    }
+
+    private void initSearchView() {
         // Get the SearchView and set the searchable configuration
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = findViewById(R.id.machine_list_search);
@@ -65,6 +69,7 @@ public class MachineListActivity extends AppCompatActivity {
                 return false;
             }
         });
+        searchView.clearFocus();
     }
 
     private void initToolbar() {
@@ -92,8 +97,7 @@ public class MachineListActivity extends AppCompatActivity {
 
     }
 
-    private void setNewRecyclerViewMachine(final ArrayList<MachineMESFile> machineList) {
-        Log.d("SIZE", machineList.size() + "");
+    private void setNewRecyclerViewMachine(final ArrayList<Machine> machineList) {
         MachineRecyclerAdapter machineRecyclerAdapter = new MachineRecyclerAdapter(machineList, new CustomItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
@@ -105,11 +109,12 @@ public class MachineListActivity extends AppCompatActivity {
         });
 
         recyclerViewMachine.setAdapter(machineRecyclerAdapter);
+        recyclerViewMachine.requestFocus();
     }
 
     private void doMySearch(String query) {
-        ArrayList<MachineMESFile> searchMachineList = new ArrayList<>();
-        for (MachineMESFile machineMES : machineMESList) {
+        ArrayList<Machine> searchMachineList = new ArrayList<>();
+        for (Machine machineMES : machineMESList) {
             if (machineMES.getMachineName().toLowerCase().contains(query.toLowerCase())) {
                 searchMachineList.add(machineMES);
             }

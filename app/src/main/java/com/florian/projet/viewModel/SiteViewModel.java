@@ -2,10 +2,8 @@ package com.florian.projet.viewModel;
 
 import com.florian.projet.manager.SiteManager;
 import com.florian.projet.model.SiteEnum;
-import com.florian.projet.quarantaine.Site;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class SiteViewModel {
     private static SiteViewModel instance;

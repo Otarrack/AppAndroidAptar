@@ -1,9 +1,11 @@
 package com.florian.projet.manager;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import com.florian.projet.asyncTasks.ParseMESFileTask;
-import com.florian.projet.model.MachineMESFile;
+import com.florian.projet.bdd.database.FavMachineDataBase;
+import com.florian.projet.model.Machine;
 import com.florian.projet.model.SiteEnum;
 
 import java.io.File;
@@ -13,8 +15,8 @@ import java.util.ArrayList;
 public class MESFileManager {
     private static MESFileManager instance;
 
-    private MachineMESFile totalMachine;
-    private ArrayList<MachineMESFile> allMachineMESFilesList;
+    private Machine totalMachine;
+    private ArrayList<Machine> allMachineMESFilesList;
 
     private MESFileManager() {
         allMachineMESFilesList = new ArrayList<>();
@@ -27,48 +29,28 @@ public class MESFileManager {
         return instance;
     }
 
-    void parseXLSFile(File file, final ParseMESFileTask.Callback callback) throws IOException {
-        new ParseMESFileTask(new ParseMESFileTask.Callback() {
+    void parseXLSFile(final Context context, File file, final ParseMESFileTask.Callback callback) throws IOException {
+        new ParseMESFileTask(context, new ParseMESFileTask.Callback() {
             @Override
-            public void onSuccess(ArrayList<MachineMESFile> dataLineList) {
+            public void onSuccess(ArrayList<Machine> dataLineList) {
 
-                for (MachineMESFile machineMESFile: dataLineList) {
+                for (Machine machine : dataLineList) {
 
-                    if (machineMESFile.getMachineName().equals("Machine")) {
-                        totalMachine = machineMESFile;
+                    if (machine.getMachineName().equals("Machine")) {
+                        totalMachine = machine;
                     } else {
 
-                        allMachineMESFilesList.add(machineMESFile);
+                        allMachineMESFilesList.add(machine);
 
-                        char siteChar = machineMESFile.getMachineName().charAt(0);
+                        char siteChar = machine.getMachineName().charAt(0);
 
                         for (SiteEnum siteEnum: SiteEnum.values()) {
                             for (int num : siteEnum.getSiteNum()) {
                                 if (String.valueOf(siteChar).equals(String.valueOf(num))){
-                                    siteEnum.addMachineMESToList(machineMESFile);
+                                    siteEnum.addMachineMESToList(machine);
                                 }
                             }
                         }
-
-                        /*switch (String.valueOf(siteChar)) {
-                            case "1":
-                                siteMESFile1.addMachineToList(machineMESFile);
-                                break;
-                            case "2":
-                                siteMESFile2.addMachineToList(machineMESFile);
-                                break;
-                            case "3":
-                                siteMESFile3.addMachineToList(machineMESFile);
-                                break;
-                            case "4":
-                                siteMESFile4.addMachineToList(machineMESFile);
-                                break;
-                            case "5":
-                                siteMESFile5.addMachineToList(machineMESFile);
-                                break;
-                            default:
-
-                        }*/
                     }
                 }
 
@@ -83,57 +65,9 @@ public class MESFileManager {
         }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, file);
     }
 
-    public ArrayList<MachineMESFile> getAllMachineMES() {
+    public ArrayList<Machine> getAllMachineMES() {
         return allMachineMESFilesList;
     }
 
-    public MachineMESFile getTotalMachine() {
-        return totalMachine;
-    }
-
-   /* private void setSiteList() {
-
-        ArrayList<MachineMESFile> machineList1Et2 = new ArrayList<>();
-        machineList1Et2.addAll(getSiteMESFile1().getMachineList());
-        machineList1Et2.addAll(getSiteMESFile2().getMachineList());
-
-        this.siteList = new ArrayList<>();
-
-        if (getAllMachineMES().size() > 0) {
-            siteList.add(new SiteMESFile("Tous", getAllMachineMES()));
-        }
-
-        if (getSiteMESFile1().getMachineList().size() > 0) {
-            siteList.add(getSiteMESFile1());
-        }
-
-        if (getSiteMESFile2().getMachineList().size() > 0) {
-            siteList.add(getSiteMESFile2());
-        }
-
-        if (machineList1Et2.size() > 0) {
-            siteList.add(new SiteMESFile("Oyo - 1 et Marti - 2", machineList1Et2));
-        }
-
-        if (getSiteMESFile3().getMachineList().size() > 0) {
-            siteList.add(getSiteMESFile3());
-        }
-
-        if (getSiteMESFile4().getMachineList().size() > 0) {
-            siteList.add(getSiteMESFile4());
-        }
-
-        if (getSiteMESFile5().getMachineList().size() > 0) {
-            siteList.add(getSiteMESFile5());
-        }
-    }
-
-    public ArrayList<SiteMESFile> getSiteList() {
-        return siteList;
-    }
-    public SiteMESFile getSiteAt(int position) {
-        return getSiteList().get(position);
-    }
-*/
 }
 

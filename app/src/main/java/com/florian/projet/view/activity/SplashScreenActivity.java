@@ -14,7 +14,7 @@ import com.florian.projet.R;
 import com.florian.projet.asyncTasks.DropboxDownloadDataFileTask;
 import com.florian.projet.asyncTasks.GetCurrentAccountTask;
 import com.florian.projet.asyncTasks.ParseMESFileTask;
-import com.florian.projet.model.MachineMESFile;
+import com.florian.projet.model.Machine;
 import com.florian.projet.model.SiteEnum;
 import com.florian.projet.viewModel.SplashScreenViewModel;
 
@@ -33,7 +33,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         splashScreenViewModel = SplashScreenViewModel.getInstance();
 
-        if (SiteEnum.ALL.getMachineMESList().size() == 0) {
+        if (SiteEnum.ALL.getMachineList().size() == 0) {
             initApp();
         } else {
             startMainActivity();
@@ -99,14 +99,15 @@ public class SplashScreenActivity extends AppCompatActivity {
     private void readFile(File file) {
         try {
             dialog.setMessage("Lecture du fichier...");
-            splashScreenViewModel.parseXlsFile(file, new ParseMESFileTask.Callback() {
+            splashScreenViewModel.parseXlsFile(this, file, new ParseMESFileTask.Callback() {
                 @Override
-                public void onSuccess(ArrayList<MachineMESFile> dataLineList) {
+                public void onSuccess(ArrayList<Machine> dataLineList) {
                     if (dataLineList.isEmpty()) {
                         dialog.dismiss();
                         failLoadingData();
                     } else {
                         dialog.dismiss();
+
                         startMainActivity();
                     }
                 }
