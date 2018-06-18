@@ -11,7 +11,6 @@ public class SiteManager {
 
     private SiteManager() {
         siteList = new ArrayList<>(Arrays.asList(SiteEnum.values()));
-        siteList.remove(SiteEnum.FAV);
     }
 
     public static SiteManager getInstance() {

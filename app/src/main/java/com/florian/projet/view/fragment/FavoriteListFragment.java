@@ -10,10 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.florian.projet.R;
+import com.florian.projet.manager.DatabaseManager;
 import com.florian.projet.model.Machine;
-import com.florian.projet.model.SiteEnum;
 import com.florian.projet.tools.CustomItemClickListener;
 import com.florian.projet.view.activity.MachineDetailActivity;
 import com.florian.projet.view.adapter.MachineRecyclerAdapter;
@@ -21,19 +22,20 @@ import com.florian.projet.viewModel.FavorisViewModel;
 import com.florian.projet.viewModel.MachineViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class FavorisListFragment extends Fragment {
+public class FavoriteListFragment extends Fragment {
     private FavorisViewModel favorisViewModel;
     private MachineViewModel machineViewModel;
     private RecyclerView recyclerViewMachine;
 
     private Context context;
 
-    public FavorisListFragment() {
+    public FavoriteListFragment() {
     }
 
-    public static FavorisListFragment newInstance() {
-        FavorisListFragment fragment = new FavorisListFragment();
+    public static FavoriteListFragment newInstance() {
+        FavoriteListFragment fragment = new FavoriteListFragment();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
@@ -50,9 +52,21 @@ public class FavorisListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_favorite, container, false);
+        final View view = inflater.inflate(R.layout.fragment_favorite, container, false);
 
-        setRecyclerViewMachine(view, favorisViewModel.getMachineList());
+        favorisViewModel.getAllFavMachine(new DatabaseManager.GetAllFavTask.Callback() {
+            @Override
+            public void onSuccess(List<Machine> machineList) {
+                setRecyclerViewMachine(view, new ArrayList<>(machineList));
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+                Toast.makeText(getContext(),
+                        R.string.get_fav_error,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return view;
     }
@@ -70,7 +84,7 @@ public class FavorisListFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerViewMachine.setLayoutManager(layoutManager);
 
-        MachineRecyclerAdapter machineRecyclerAdapter = new MachineRecyclerAdapter(machineList, new CustomItemClickListener() {
+        MachineRecyclerAdapter machineRecyclerAdapter = new MachineRecyclerAdapter(machineList, true, new CustomItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
                 machineViewModel.setCurrentMachine(machineList.get(position));

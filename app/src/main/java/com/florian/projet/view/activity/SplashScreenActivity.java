@@ -14,17 +14,21 @@ import com.florian.projet.R;
 import com.florian.projet.asyncTasks.DropboxDownloadDataFileTask;
 import com.florian.projet.asyncTasks.GetCurrentAccountTask;
 import com.florian.projet.asyncTasks.ParseMESFileTask;
+import com.florian.projet.manager.DatabaseManager;
 import com.florian.projet.model.Machine;
-import com.florian.projet.model.SiteEnum;
+import com.florian.projet.tools.SimpleCallback;
 import com.florian.projet.viewModel.SplashScreenViewModel;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SplashScreenActivity extends AppCompatActivity {
-    private ProgressDialog dialog;
+    private static ProgressDialog dialog;
     private SplashScreenViewModel splashScreenViewModel;
+
+    private ArrayList<Machine> allMachineInDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,94 +37,71 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         splashScreenViewModel = SplashScreenViewModel.getInstance();
 
-        if (SiteEnum.ALL.getMachineList().size() == 0) {
-            initApp();
-        } else {
-            startMainActivity();
-        }
+        initProgressDialog();
+        getLocalData();
+
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    private void initApp() {
+    private void initProgressDialog() {
         dialog = new ProgressDialog(this);
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         dialog.setCancelable(false);
         dialog.setMessage("Connexion...");
         dialog.show();
+    }
 
+    private void getLocalData() {
+        splashScreenViewModel.getLocalData(new DatabaseManager.GetAllTask.Callback() {
+            @Override
+            public void onSuccess(List<Machine> machineList) {
+                allMachineInDatabase = new ArrayList<>(machineList);
+                initApp();
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+                Log.d("Fail Get Local Data", e.getMessage());
+                initApp();
+            }
+        });
+    }
+
+    private void initApp() {
         splashScreenViewModel.initApp(new GetCurrentAccountTask.Callback() {
             @Override
             public void onComplete(FullAccount fullAccount) {
-
                 downloadFile();
             }
 
             @Override
             public void onError(Exception e) {
-                dialog.dismiss();
-
-                failLoadingData();
                 Log.d("ERREUR getFullAccount()", e.getMessage());
+                failLoadingMesFile();
             }
         });
     }
 
     private void downloadFile() {
-        File path = getFilesDir();
-
         dialog.setMessage("Téléchargement du fichier...");
+
+        File path = getFilesDir();
         splashScreenViewModel.downloadDataFile(path, new DropboxDownloadDataFileTask.Callback() {
             @Override
             public void onSuccess(File file) {
-
                 if (file != null) {
                     sendDownloadedFile(file);
-
                     readFile(file);
+
                 } else {
-                    dialog.dismiss();
-                    failLoadingData();
+                    failLoadingMesFile();
                 }
             }
 
             @Override
             public void onFailed(Exception e) {
-                dialog.dismiss();
-                failLoadingData();
+                failLoadingMesFile();
             }
         });
-    }
-
-    private void readFile(File file) {
-        try {
-            dialog.setMessage("Lecture du fichier...");
-            splashScreenViewModel.parseXlsFile(this, file, new ParseMESFileTask.Callback() {
-                @Override
-                public void onSuccess(ArrayList<Machine> dataLineList) {
-                    if (dataLineList.isEmpty()) {
-                        dialog.dismiss();
-                        failLoadingData();
-                    } else {
-                        dialog.dismiss();
-
-                        startMainActivity();
-                    }
-                }
-
-                @Override
-                public void onFailed(Exception e) {
-                    failLoadingData();
-                }
-            });
-        } catch (IOException e) {
-            Log.d("RATÉ", "" + e.getMessage());
-            failLoadingData();
-        }
     }
 
     private void sendDownloadedFile(File file) {
@@ -130,23 +111,110 @@ public class SplashScreenActivity extends AppCompatActivity {
         sendBroadcast(intent);
     }
 
+    private void readFile(File file) {
+        try {
+            dialog.setMessage("Lecture du fichier...");
+            splashScreenViewModel.parseXlsFile(this, file, new ParseMESFileTask.Callback() {
+                @Override
+                public void onSuccess(ArrayList<Machine> dataLineList) {
+                    if (dataLineList.isEmpty()) {
+                        failLoadingMesFile();
+                    } else {
+
+                        getMachineListWithFav(dataLineList);
+                    }
+                }
+
+                @Override
+                public void onFailed(Exception e) {
+                    failLoadingMesFile();
+                }
+            });
+        } catch (IOException e) {
+            Log.d("Catch Read File", "" + e.getMessage());
+            failLoadingMesFile();
+        }
+    }
+
+    private void getMachineListWithFav(ArrayList<Machine> allMachineInMESFile) {
+        ArrayList<Machine> finalMachineList = splashScreenViewModel.initMachineListWithFav(allMachineInMESFile, allMachineInDatabase);
+
+        refreshAllMachineInDatabase(finalMachineList);
+    }
+
+    private void refreshAllMachineInDatabase(final ArrayList<Machine> machineArrayList) {
+        splashScreenViewModel.refreshAllMachineInDatabase(machineArrayList, new SimpleCallback() {
+            @Override
+            public void onSuccess() {
+                getLocalDataAfterRefresh();
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+                Log.d("POURQUOI ?", e.getMessage());
+                failLoadingData();
+            }
+        });
+    }
+    private void getLocalDataAfterRefresh() {
+        splashScreenViewModel.getLocalData(new DatabaseManager.GetAllTask.Callback() {
+            @Override
+            public void onSuccess(List<Machine> machineList) {
+                allMachineInDatabase = new ArrayList<>(machineList);
+                initSiteEnum(allMachineInDatabase);
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+                Log.d("Fail Get Data Refresh", e.getMessage());
+                failLoadingData();
+            }
+        });
+    }
+
+    private void failLoadingMesFile() {
+        dialog.dismiss();
+        if (allMachineInDatabase != null) {
+            new AlertDialog.Builder(this)
+                    .setTitle("")
+                    .setMessage("Impossible de récupérer les données en ligne, les données locales seront chargées.")
+                    .setCancelable(false)
+                    .setPositiveButton("Continuer", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            SplashScreenActivity.dialog.setMessage("Chargement des données locales...");
+                            SplashScreenActivity.dialog.show();
+                            initSiteEnum(allMachineInDatabase);
+                        }
+                    }).show();
+        } else {
+            failLoadingData();
+        }
+    }
+
+    private void initSiteEnum(ArrayList<Machine> machineArrayList) {
+        splashScreenViewModel.initSiteEnum(machineArrayList);
+
+        startMainActivity();
+    }
+
     private void startMainActivity() {
+        dialog.dismiss();
         Intent intent = new Intent(this, MainActivity.class);
 
         startActivity(intent);
-        finish();
     }
 
     private void failLoadingData() {
+        dialog.dismiss();
         new AlertDialog.Builder(this)
-                .setTitle("Erreur")
-                .setMessage("Impossible de récupérer les données en ligne")
+                .setTitle("Impossible de lancer l'application")
+                .setMessage("Chargement en ligne impossible et aucune données locales trouvées")
                 .setCancelable(false)
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Fermer l'application", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // TODO : Définir ce qu'il se passe si pas possible de récupérer le
-                        // TODO : fichier -> BDD locale ?
+                        finish();
                     }
                 }).show();
     }

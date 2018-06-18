@@ -2,12 +2,10 @@ package com.florian.projet.viewModel;
 
 import android.util.Log;
 
+import com.florian.projet.manager.DatabaseManager;
 import com.florian.projet.manager.FavoriteMachineManager;
-import com.florian.projet.manager.SiteManager;
 import com.florian.projet.model.Machine;
 import com.florian.projet.model.SiteEnum;
-
-import java.util.ArrayList;
 
 public class FavorisViewModel {
     private static FavorisViewModel instance;
@@ -24,17 +22,15 @@ public class FavorisViewModel {
         favoriteMachineManager = FavoriteMachineManager.getInstance();
     }
 
-    public void insertMachine(Machine machine) {
+    public void updateFavMachine(Machine machine) {
         try {
-            Log.d("YEDAZ", machine.getMachineName());
-            favoriteMachineManager.insertMachine(machine);
+            favoriteMachineManager.update(machine);
         } catch (Exception e) {
-            //
+            Log.d("Insert Fav View Model", e.getMessage());
         }
     }
 
-    public ArrayList<Machine> getMachineList() {
-        Log.d("YEDAZ", favoriteMachineManager.getAllFavMachine().size() +"");
-        return favoriteMachineManager.getAllFavMachine();
+    public void getAllFavMachine(DatabaseManager.GetAllFavTask.Callback callback) {
+        favoriteMachineManager.getAllFavMachine(callback);
     }
 }

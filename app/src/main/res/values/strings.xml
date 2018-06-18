@@ -72,9 +72,26 @@
     /* Dropbox */
     <!-- Change this to your app key -->
     <string name="app_key">epzhp1cvwybijfw</string>
+
     <string name="title_activity_files">Files</string>
     <string name="title_activity_openwith">Open With</string>
+
     <string name="machine_pager_mcu">MCU</string>
     <string name="machine_pager_ome">OME</string>
+
     <string name="menu_favorite_title">Favoris</string>
+
+    <string name="database_name">MachineDatabase</string>
+
+    <string name="add_one_machine_success">Impossible d\'ajouter la machine</string>
+    <string name="add_one_machine_error">La machine a été ajoutée</string>
+    <string name="add_all_machine_success">Les machines ont été ajoutées</string>
+    <string name="add_all_machine_error">Impossible d\'ajouter les machines</string>
+    <string name="del_one_machine_success">La machine a été supprimée</string>
+    <string name="del_one_machine_error">Impossible de supprimer la machine</string>
+    <string name="add_one_fav_success">La machine a été ajoutée aux favoris</string>
+    <string name="add_one_fav_error">Impossible d\'ajouter la machine aux favoris</string>
+    <string name="del_one_fav_success">La machine a été retirée des favoris</string>
+    <string name="del_one_fav_error">Impossible de retirer la machine des favoris</string>
+    <string name="get_fav_error">Impossible de récupérer les favoris</string>
 </resources>

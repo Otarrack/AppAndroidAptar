@@ -4,10 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.florian.projet.bdd.database.FavMachineDataBase;
-import com.florian.projet.manager.FavoriteMachineManager;
 import com.florian.projet.model.Machine;
-import com.florian.projet.model.SiteEnum;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -84,8 +81,6 @@ public class ParseMESFileTask extends AsyncTask<File, Void, ArrayList<Machine>> 
                     }
                 }
             }
-
-            initFavoriteMachine(context);
 
         } catch (IOException e) {
             Log.d("ERREUR ", e.getMessage());
@@ -208,12 +203,5 @@ public class ParseMESFileTask extends AsyncTask<File, Void, ArrayList<Machine>> 
             default:
                 break;
         }
-    }
-
-    private void initFavoriteMachine(Context context) {
-        FavoriteMachineManager favoriteMachineManager = FavoriteMachineManager.getInstance();
-        favoriteMachineManager.setAppQuestionDatabase(FavMachineDataBase.getInstance(context));
-
-        SiteEnum.FAV.setMachineMESList(favoriteMachineManager.getAllFavMachine());
     }
 }

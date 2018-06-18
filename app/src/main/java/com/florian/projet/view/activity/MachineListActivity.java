@@ -48,7 +48,7 @@ public class MachineListActivity extends AppCompatActivity {
     private void initSearchView() {
         // Get the SearchView and set the searchable configuration
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = findViewById(R.id.machine_list_search);
+        final SearchView searchView = findViewById(R.id.machine_list_search);
         // Assumes current activity is the searchable activity
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
@@ -64,8 +64,8 @@ public class MachineListActivity extends AppCompatActivity {
                     setNewRecyclerViewMachine(machineMESList);
                 } else {
                     doMySearch(newText);
-
                 }
+                searchView.requestFocus();
                 return false;
             }
         });
@@ -98,7 +98,7 @@ public class MachineListActivity extends AppCompatActivity {
     }
 
     private void setNewRecyclerViewMachine(final ArrayList<Machine> machineList) {
-        MachineRecyclerAdapter machineRecyclerAdapter = new MachineRecyclerAdapter(machineList, new CustomItemClickListener() {
+        MachineRecyclerAdapter machineRecyclerAdapter = new MachineRecyclerAdapter(machineList, false, new CustomItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
                 machineViewModel.setCurrentMachine(machineList.get(position));

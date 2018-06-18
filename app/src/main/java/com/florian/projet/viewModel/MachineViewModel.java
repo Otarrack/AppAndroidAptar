@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class MachineViewModel {
     private static MachineViewModel instance;
     private Machine currentMachine;
-    private MESFileManager mesFileManager;
 
     public static MachineViewModel getInstance() {
         if(instance == null) {
@@ -18,7 +17,7 @@ public class MachineViewModel {
     }
 
     private MachineViewModel() {
-        mesFileManager = MESFileManager.getInstance();
+
     }
 
     public void setCurrentMachine(Machine machine) {
@@ -27,10 +26,6 @@ public class MachineViewModel {
 
     public void delCurrentMachine() {
         currentMachine = null;
-    }
-
-    public ArrayList<Machine> getAllMachineMES() {
-        return mesFileManager.getAllMachineMES();
     }
 
     public Machine getCurrentMachine() {

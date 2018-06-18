@@ -6,9 +6,9 @@ import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "machines")
 public class Machine {
-    @ColumnInfo(name = "id_question")
+    @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = true)
-    private int idQuestion;
+    private int id;
     @ColumnInfo(name = "name")
     private String machineName;
     @ColumnInfo(name = "max_time_openned")
@@ -55,17 +55,19 @@ public class Machine {
     private double qme;
     @ColumnInfo(name = "average_ome")
     private double averageOME;
+    @ColumnInfo(name = "favorite")
+    private boolean favorite;
 
     public Machine() {
-
+        setFavorite(false);
     }
 
-    public int getIdQuestion() {
-        return idQuestion;
+    public int getId() {
+        return id;
     }
 
-    public void setIdQuestion(int idQuestion) {
-        this.idQuestion = idQuestion;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getMachineName() {
@@ -250,5 +252,13 @@ public class Machine {
 
     public void setAverageOME(double averageOME) {
         this.averageOME = averageOME;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 }

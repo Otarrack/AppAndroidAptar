@@ -4,9 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.florian.projet.asyncTasks.ParseMESFileTask;
-import com.florian.projet.bdd.database.FavMachineDataBase;
 import com.florian.projet.model.Machine;
-import com.florian.projet.model.SiteEnum;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,18 +37,7 @@ public class MESFileManager {
                     if (machine.getMachineName().equals("Machine")) {
                         totalMachine = machine;
                     } else {
-
                         allMachineMESFilesList.add(machine);
-
-                        char siteChar = machine.getMachineName().charAt(0);
-
-                        for (SiteEnum siteEnum: SiteEnum.values()) {
-                            for (int num : siteEnum.getSiteNum()) {
-                                if (String.valueOf(siteChar).equals(String.valueOf(num))){
-                                    siteEnum.addMachineMESToList(machine);
-                                }
-                            }
-                        }
                     }
                 }
 
