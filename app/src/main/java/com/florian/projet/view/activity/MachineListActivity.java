@@ -9,16 +9,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.florian.projet.R;
-import com.florian.projet.model.Machine;
+import com.florian.projet.bdd.entity.Machine;
+import com.florian.projet.manager.MachineDatabaseManager;
 import com.florian.projet.model.SiteEnum;
 import com.florian.projet.tools.CustomItemClickListener;
 import com.florian.projet.view.adapter.MachineRecyclerAdapter;
 import com.florian.projet.viewModel.MachineViewModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MachineListActivity extends AppCompatActivity {
     RecyclerView recyclerViewMachine;
@@ -26,7 +30,7 @@ public class MachineListActivity extends AppCompatActivity {
 
     MachineViewModel machineViewModel;
 
-    ArrayList<Machine> machineMESList;
+    ArrayList<Machine> machineArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,14 +39,42 @@ public class MachineListActivity extends AppCompatActivity {
 
         machineViewModel = MachineViewModel.getInstance();
         initToolbar();
-        initSearchView();
 
         SiteEnum siteEnum = (SiteEnum) getIntent().getSerializableExtra("SiteEnum");
-        machineMESList = siteEnum.getMachineList();
+        List<Integer> siteList = new ArrayList<>();
 
-        setRecyclerViewMachine();
+        for (int i : siteEnum.getSiteNum()) {
+            siteList.add(i);
+        }
 
+        machineViewModel.getMachineBySite(siteList, new MachineDatabaseManager.GetBySiteTask.Callback() {
+            @Override
+            public void onSuccess(List<Machine> machineList) {
+                machineArrayList = new ArrayList<>(machineList);
+                initSearchView();
+                setRecyclerViewMachine();
+            }
 
+            @Override
+            public void onFailed(Exception e) {
+                Log.d("GET MACHINE SITE", e.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    private void initToolbar() {
+        toolbar = findViewById(R.id.machine_list_toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
     }
 
     private void initSearchView() {
@@ -61,7 +93,7 @@ public class MachineListActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (newText.isEmpty()) {
-                    setNewRecyclerViewMachine(machineMESList);
+                    setNewRecyclerViewMachine(machineArrayList);
                 } else {
                     doMySearch(newText);
                 }
@@ -72,19 +104,15 @@ public class MachineListActivity extends AppCompatActivity {
         searchView.clearFocus();
     }
 
-    private void initToolbar() {
-        toolbar = findViewById(R.id.machine_list_toolbar);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null){
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
+    private void doMySearch(String query) {
+        ArrayList<Machine> searchMachineList = new ArrayList<>();
+        for (Machine machineMES : machineArrayList) {
+            if (machineMES.getMachineName().toLowerCase().contains(query.toLowerCase())) {
+                searchMachineList.add(machineMES);
+            }
         }
-    }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
+        setNewRecyclerViewMachine(searchMachineList);
     }
 
     private void setRecyclerViewMachine() {
@@ -93,7 +121,7 @@ public class MachineListActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerViewMachine.setLayoutManager(layoutManager);
 
-        setNewRecyclerViewMachine(machineMESList);
+        setNewRecyclerViewMachine(machineArrayList);
 
     }
 
@@ -110,16 +138,5 @@ public class MachineListActivity extends AppCompatActivity {
 
         recyclerViewMachine.setAdapter(machineRecyclerAdapter);
         recyclerViewMachine.requestFocus();
-    }
-
-    private void doMySearch(String query) {
-        ArrayList<Machine> searchMachineList = new ArrayList<>();
-        for (Machine machineMES : machineMESList) {
-            if (machineMES.getMachineName().toLowerCase().contains(query.toLowerCase())) {
-                searchMachineList.add(machineMES);
-            }
-        }
-
-        setNewRecyclerViewMachine(searchMachineList);
     }
 }

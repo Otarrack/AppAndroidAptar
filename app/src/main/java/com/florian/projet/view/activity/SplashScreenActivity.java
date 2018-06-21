@@ -1,21 +1,27 @@
 package com.florian.projet.view.activity;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.dropbox.core.v2.users.FullAccount;
 import com.florian.projet.R;
-import com.florian.projet.asyncTasks.DropboxDownloadDataFileTask;
+import com.florian.projet.asyncTasks.DropboxDownloadFileTask;
 import com.florian.projet.asyncTasks.GetCurrentAccountTask;
-import com.florian.projet.asyncTasks.ParseMESFileTask;
-import com.florian.projet.manager.DatabaseManager;
-import com.florian.projet.model.Machine;
+import com.florian.projet.asyncTasks.ParseArticlePerfFileTask;
+import com.florian.projet.asyncTasks.ParseMachinePerfFileTask;
+import com.florian.projet.bdd.entity.Article;
+import com.florian.projet.manager.ApplicationManager;
+import com.florian.projet.manager.ArticleDatabaseManager;
+import com.florian.projet.manager.MachineDatabaseManager;
+import com.florian.projet.bdd.entity.Machine;
+import com.florian.projet.model.SiteEnum;
 import com.florian.projet.tools.SimpleCallback;
 import com.florian.projet.viewModel.SplashScreenViewModel;
 
@@ -25,10 +31,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SplashScreenActivity extends AppCompatActivity {
-    private static ProgressDialog dialog;
+    private TextView machineStepTextView;
+    private ImageView machineStep1;
+    private ImageView machineStep2;
+    private ImageView machineStep3;
+    private TextView articleStepTextView;
+    private ImageView articleStep1;
+    private ImageView articleStep2;
+    private ImageView articleStep3;
+
     private SplashScreenViewModel splashScreenViewModel;
 
     private ArrayList<Machine> allMachineInDatabase;
+    private ArrayList<Article> allArticleInDatabase;
+
+    private static FullAccount fullAccount;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,71 +55,136 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         splashScreenViewModel = SplashScreenViewModel.getInstance();
 
-        initProgressDialog();
-        getLocalData();
-
+        initProgress();
+        machineStep1.setBackgroundColor(getColor(R.color.aptar_bh_light_blue));
+        machineStepTextView.setText(R.string.splash_lib_step_1);
+        getMachineLocalData();
     }
 
-    private void initProgressDialog() {
-        dialog = new ProgressDialog(this);
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.setCancelable(false);
-        dialog.setMessage("Connexion...");
-        dialog.show();
+    private void initProgress() {
+        machineStepTextView = findViewById(R.id.machine_performance_step_lib);
+        machineStep1 = findViewById(R.id.machine_performance_step_1);
+        machineStep2 = findViewById(R.id.machine_performance_step_2);
+        machineStep3 = findViewById(R.id.machine_performance_step_3);
+        articleStepTextView = findViewById(R.id.article_performance_step_lib);
+        articleStep1 = findViewById(R.id.article_performance_step_1);
+        articleStep2 = findViewById(R.id.article_performance_step_2);
+        articleStep3 = findViewById(R.id.article_performance_step_3);
     }
 
-    private void getLocalData() {
-        splashScreenViewModel.getLocalData(new DatabaseManager.GetAllTask.Callback() {
+    private void getMachineLocalData() {
+        splashScreenViewModel.getMachineLocalData(new MachineDatabaseManager.GetAllTask.Callback() {
             @Override
             public void onSuccess(List<Machine> machineList) {
                 allMachineInDatabase = new ArrayList<>(machineList);
-                initApp();
+                getArticleLocalData();
             }
 
             @Override
             public void onFailed(Exception e) {
-                Log.d("Fail Get Local Data", e.getMessage());
+                Log.d("Get Local Machine", e.getMessage());
+                getArticleLocalData();
+            }
+        });
+    }
+
+    private void getArticleLocalData() {
+        splashScreenViewModel.getArticleLocalData(new ArticleDatabaseManager.GetAllTask.Callback() {
+            @Override
+            public void onSuccess(List<Article> articleList) {
+                allArticleInDatabase = new ArrayList<>(articleList);
                 initApp();
+
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+                Log.d("Get Local Article", e.getMessage());
+                initApp();
+
             }
         });
     }
 
     private void initApp() {
-        splashScreenViewModel.initApp(new GetCurrentAccountTask.Callback() {
-            @Override
-            public void onComplete(FullAccount fullAccount) {
-                downloadFile();
-            }
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false)
+                .setMessage("Voulez-vous télécharger les données en ligne ? (Le traitement peut prendre quelques minutes)")
+                .setPositiveButton("Télécharger", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        splashScreenViewModel.initApp(new GetCurrentAccountTask.Callback() {
+                            @Override
+                            public void onComplete(FullAccount fullAccount) {
+                                SplashScreenActivity.fullAccount = fullAccount;
+                                downloadFile(ApplicationManager.FILE_PERF_MACHINE_NAME);
+                            }
 
-            @Override
-            public void onError(Exception e) {
-                Log.d("ERREUR getFullAccount()", e.getMessage());
-                failLoadingMesFile();
-            }
-        });
+                            @Override
+                            public void onError(Exception e) {
+                                Log.d("GetFullAccount -> ", e.getMessage());
+                                failLoadingMachinePerfFile();
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton("Local", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (allArticleInDatabase == null && allMachineInDatabase == null) {
+                            failLoadingData();
+                        }
+                        startMainActivity();
+                    }
+                }).show();
+
     }
 
-    private void downloadFile() {
-        dialog.setMessage("Téléchargement du fichier...");
+    private void downloadFile(String fileName) {
+        //dialog.setMessage("Téléchargement du fichier...");
 
         File path = getFilesDir();
-        splashScreenViewModel.downloadDataFile(path, new DropboxDownloadDataFileTask.Callback() {
-            @Override
-            public void onSuccess(File file) {
-                if (file != null) {
-                    sendDownloadedFile(file);
-                    readFile(file);
-
-                } else {
-                    failLoadingMesFile();
+        if (fileName.equals(ApplicationManager.FILE_PERF_MACHINE_NAME)) {
+            splashScreenViewModel.downloadDataFile(path, fileName, new DropboxDownloadFileTask.Callback() {
+                @Override
+                public void onSuccess(File file) {
+                    if (file != null) {
+                        sendDownloadedFile(file);
+                        machineStep1.setBackgroundColor(getColor(R.color.green));
+                        machineStepTextView.setText(R.string.splash_lib_step_2);
+                        machineStep2.setBackgroundColor(getColor(R.color.aptar_bh_light_blue));
+                        readMachinePerformanceFile(file);
+                    } else {
+                        failLoadingMachinePerfFile();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailed(Exception e) {
-                failLoadingMesFile();
-            }
-        });
+                @Override
+                public void onFailed(Exception e) {
+                    failLoadingMachinePerfFile();
+                }
+            });
+        } else if (fileName.equals(ApplicationManager.FILE_PERF_ARTICLE_NAME)) {
+            splashScreenViewModel.downloadDataFile(path, fileName, new DropboxDownloadFileTask.Callback() {
+                @Override
+                public void onSuccess(File file) {
+                    if (file != null) {
+                        sendDownloadedFile(file);
+                        articleStep1.setBackgroundColor(getColor(R.color.green));
+                        articleStepTextView.setText(R.string.splash_lib_step_2);
+                        articleStep2.setBackgroundColor(getColor(R.color.aptar_bh_light_blue));
+                        readArticlePerformanceFile(file);
+                    } else {
+                        failLoadingArticlePerfFile();
+                    }
+                }
+
+                @Override
+                public void onFailed(Exception e) {
+                    failLoadingArticlePerfFile();
+                }
+            });
+        }
     }
 
     private void sendDownloadedFile(File file) {
@@ -111,105 +194,203 @@ public class SplashScreenActivity extends AppCompatActivity {
         sendBroadcast(intent);
     }
 
-    private void readFile(File file) {
+    private void readMachinePerformanceFile(File file) {
         try {
-            dialog.setMessage("Lecture du fichier...");
-            splashScreenViewModel.parseXlsFile(this, file, new ParseMESFileTask.Callback() {
+            splashScreenViewModel.parseMachinePerfXlsFile(file, new ParseMachinePerfFileTask.Callback() {
                 @Override
                 public void onSuccess(ArrayList<Machine> dataLineList) {
                     if (dataLineList.isEmpty()) {
-                        failLoadingMesFile();
+                        failLoadingMachinePerfFile();
                     } else {
 
-                        getMachineListWithFav(dataLineList);
+                        machineStep2.setBackgroundColor(getColor(R.color.green));
+                        machineStepTextView.setText(R.string.splash_lib_step_3);
+                        machineStep3.setBackgroundColor(getColor(R.color.aptar_bh_light_blue));
+                        getMachineListWithFavAndSite(dataLineList);
                     }
                 }
 
                 @Override
                 public void onFailed(Exception e) {
-                    failLoadingMesFile();
+                    failLoadingMachinePerfFile();
                 }
             });
         } catch (IOException e) {
-            Log.d("Catch Read File", "" + e.getMessage());
-            failLoadingMesFile();
+            Log.d("Read Machine File", e.getMessage());
+            failLoadingMachinePerfFile();
         }
     }
 
-    private void getMachineListWithFav(ArrayList<Machine> allMachineInMESFile) {
-        ArrayList<Machine> finalMachineList = splashScreenViewModel.initMachineListWithFav(allMachineInMESFile, allMachineInDatabase);
+    private void getMachineListWithFavAndSite(ArrayList<Machine> allMachineInFile) {
+        ArrayList<Machine> finalMachineList = splashScreenViewModel.initMachineListWithFav(allMachineInFile, allMachineInDatabase);
 
         refreshAllMachineInDatabase(finalMachineList);
     }
 
-    private void refreshAllMachineInDatabase(final ArrayList<Machine> machineArrayList) {
+    private void refreshAllMachineInDatabase(ArrayList<Machine> machineArrayList) {
         splashScreenViewModel.refreshAllMachineInDatabase(machineArrayList, new SimpleCallback() {
             @Override
             public void onSuccess() {
-                getLocalDataAfterRefresh();
+                machineStep3.setBackgroundColor(getColor(R.color.green));
+                articleStepTextView.setText(R.string.splash_lib_step_1);
+                articleStep1.setBackgroundColor(getColor(R.color.aptar_bh_light_blue));
+                downloadFile(ApplicationManager.FILE_PERF_ARTICLE_NAME);
             }
 
             @Override
             public void onFailed(Exception e) {
-                Log.d("POURQUOI ?", e.getMessage());
-                failLoadingData();
-            }
-        });
-    }
-    private void getLocalDataAfterRefresh() {
-        splashScreenViewModel.getLocalData(new DatabaseManager.GetAllTask.Callback() {
-            @Override
-            public void onSuccess(List<Machine> machineList) {
-                allMachineInDatabase = new ArrayList<>(machineList);
-                initSiteEnum(allMachineInDatabase);
-            }
-
-            @Override
-            public void onFailed(Exception e) {
-                Log.d("Fail Get Data Refresh", e.getMessage());
-                failLoadingData();
+                Log.d("Refresh Machine Data", e.getMessage());
+                allMachineInDatabase = null;
+                failLoadingMachinePerfFile();
             }
         });
     }
 
-    private void failLoadingMesFile() {
-        dialog.dismiss();
+    private void failLoadingMachinePerfFile() {
+        machineStepTextView.setText("");
+
         if (allMachineInDatabase != null) {
+            machineStep1.setBackgroundColor(getColor(R.color.yellow));
+            machineStep2.setBackgroundColor(getColor(R.color.yellow));
+            machineStep3.setBackgroundColor(getColor(R.color.yellow));
             new AlertDialog.Builder(this)
+                    .setMessage("Impossible de récupérer les données en ligne pour la performance machine, les données locales seront chargées.")
                     .setTitle("")
-                    .setMessage("Impossible de récupérer les données en ligne, les données locales seront chargées.")
                     .setCancelable(false)
                     .setPositiveButton("Continuer", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            SplashScreenActivity.dialog.setMessage("Chargement des données locales...");
-                            SplashScreenActivity.dialog.show();
-                            initSiteEnum(allMachineInDatabase);
+                            if (fullAccount == null) {
+                                failLoadingArticlePerfFile();
+                            } else {
+                                downloadFile(ApplicationManager.FILE_PERF_ARTICLE_NAME);
+                            }
                         }
                     }).show();
         } else {
-            failLoadingData();
+            machineStep1.setBackgroundColor(getColor(R.color.red));
+            machineStep2.setBackgroundColor(getColor(R.color.red));
+            machineStep3.setBackgroundColor(getColor(R.color.red));
+            ApplicationManager.failLoadingMachine = true;
+            if (fullAccount == null) {
+                failLoadingArticlePerfFile();
+            } else {
+                downloadFile(ApplicationManager.FILE_PERF_ARTICLE_NAME);
+            }
         }
     }
 
-    private void initSiteEnum(ArrayList<Machine> machineArrayList) {
-        splashScreenViewModel.initSiteEnum(machineArrayList);
+    private void readArticlePerformanceFile(File file) {
+        try {
+            splashScreenViewModel.parseArticlePerfXlsFile(file, new ParseArticlePerfFileTask.Callback() {
+                @Override
+                public void onSuccess(ArrayList<Article> articleArrayList) {
+                    if (articleArrayList.isEmpty()) {
+                        failLoadingArticlePerfFile();
+                    } else {
+                        articleStep2.setBackgroundColor(getColor(R.color.green));
+                        articleStepTextView.setText(R.string.splash_lib_step_3);
+                        articleStep3.setBackgroundColor(getColor(R.color.aptar_bh_light_blue));
+                        refreshAllArticleInDatabase(articleArrayList);
+                    }
+                }
 
-        startMainActivity();
+                @Override
+                public void onFailed(Exception e) {
+                    failLoadingArticlePerfFile();
+                }
+            });
+        } catch (IOException e) {
+            Log.d("Read Article File", e.getMessage());
+            failLoadingArticlePerfFile();
+        }
+    }
+
+    private void refreshAllArticleInDatabase(ArrayList<Article> articleArrayList) {
+        splashScreenViewModel.refreshAllArticleInDatabase(articleArrayList, new SimpleCallback() {
+            @Override
+            public void onSuccess() {
+                articleStep3.setBackgroundColor(getColor(R.color.green));
+                startMainActivity();
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+                Log.d("Refresh Machine Data", e.getMessage());
+                allArticleInDatabase = null;
+                failLoadingArticlePerfFile();
+            }
+        });
+    }
+
+    private void failLoadingArticlePerfFile() {
+        articleStepTextView.setText("");
+
+        if (allArticleInDatabase != null) {
+            articleStep1.setBackgroundColor(getColor(R.color.yellow));
+            articleStep2.setBackgroundColor(getColor(R.color.yellow));
+            articleStep3.setBackgroundColor(getColor(R.color.yellow));
+            new AlertDialog.Builder(this)
+                    .setMessage("Impossible de récupérer les données en ligne pour la performance article, les données locales seront chargées.")
+                    .setTitle("")
+                    .setCancelable(false)
+                    .setPositiveButton("Continuer", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startMainActivity();
+                        }
+                    }).show();
+        } else {
+            articleStep1.setBackgroundColor(getColor(R.color.red));
+            articleStep2.setBackgroundColor(getColor(R.color.red));
+            articleStep3.setBackgroundColor(getColor(R.color.red));
+            ApplicationManager.failLoadingArticle = true;
+            startMainActivity();
+        }
     }
 
     private void startMainActivity() {
-        dialog.dismiss();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Attention")
+                .setCancelable(false)
+                .setPositiveButton("Continuer", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        if (ApplicationManager.failLoadingArticle && ApplicationManager.failLoadingMachine) {
+            failLoadingData();
+        } else if (allArticleInDatabase == null) {
+            builder.setMessage("Aucune donnée trouvée pour la performance article, seule la performance machine sera disponible.").show();
+        } else if (allMachineInDatabase == null) {
+            builder.setMessage("Aucune donnée trouvée pour la performance machine, seule la performance article sera disponible.").show();
+        }
+
+        initSiteEnum();
+
         Intent intent = new Intent(this, MainActivity.class);
 
         startActivity(intent);
     }
 
+    private void initSiteEnum() {
+        for (Machine machine : allMachineInDatabase) {
+            for (SiteEnum siteEnum: SiteEnum.values()) {
+                for (int num : siteEnum.getSiteNum()) {
+                    if (machine.getSite() == num){
+                        siteEnum.addOneToMachineNumber();
+                    }
+                }
+            }
+        }
+    }
+
     private void failLoadingData() {
-        dialog.dismiss();
+        //dialog.dismiss();
         new AlertDialog.Builder(this)
                 .setTitle("Impossible de lancer l'application")
-                .setMessage("Chargement en ligne impossible et aucune données locales trouvées")
+                .setMessage("Aucune donnée trouvée")
                 .setCancelable(false)
                 .setPositiveButton("Fermer l'application", new DialogInterface.OnClickListener() {
                     @Override

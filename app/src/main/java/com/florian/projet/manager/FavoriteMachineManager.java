@@ -1,14 +1,14 @@
 package com.florian.projet.manager;
 
-import com.florian.projet.model.Machine;
+import com.florian.projet.bdd.entity.Machine;
 
 public class FavoriteMachineManager {
     private static FavoriteMachineManager instance;
 
-    private DatabaseManager databaseManager;
+    private MachineDatabaseManager machineDatabaseManager;
 
     private FavoriteMachineManager() {
-        databaseManager = DatabaseManager.getInstance();
+        machineDatabaseManager = MachineDatabaseManager.getInstance();
     }
 
     public static FavoriteMachineManager getInstance() {
@@ -19,10 +19,10 @@ public class FavoriteMachineManager {
     }
 
     public void update(Machine machine) {
-        databaseManager.updateMachine(machine);
+        machineDatabaseManager.updateMachine(machine);
     }
 
-    public void getAllFavMachine(DatabaseManager.GetAllFavTask.Callback callback) {
-        databaseManager.getAllFavMachine(callback);
+    public void getAllFavMachine(MachineDatabaseManager.GetAllFavTask.Callback callback) {
+        machineDatabaseManager.getAllFavMachine(callback);
     }
 }

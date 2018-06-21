@@ -7,7 +7,7 @@ import android.content.Context;
 
 import com.florian.projet.R;
 import com.florian.projet.bdd.dao.MachineDao;
-import com.florian.projet.model.Machine;
+import com.florian.projet.bdd.entity.Machine;
 
 @Database(entities = {Machine.class}, version = 2)
 public abstract class MachineDataBase extends RoomDatabase {
@@ -16,7 +16,7 @@ public abstract class MachineDataBase extends RoomDatabase {
     public abstract MachineDao machineDao();
 
     public static void setInstance(Context context) {
-        instance = Room.databaseBuilder(context, MachineDataBase.class, context.getString(R.string.database_name))
+        instance = Room.databaseBuilder(context, MachineDataBase.class, context.getString(R.string.machine_database_name))
                 .fallbackToDestructiveMigration()
                 .build();
     }

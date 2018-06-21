@@ -17,17 +17,17 @@ import com.florian.projet.view.activity.MachineListActivity;
 import com.florian.projet.view.adapter.SiteRecyclerAdapter;
 import com.florian.projet.viewModel.SiteViewModel;
 
-public class SiteListFragment extends Fragment {
+public class MachinePerformanceFragment extends Fragment {
     private SiteViewModel siteViewModel;
     private RecyclerView recyclerViewSite;
 
     private Context context;
 
-    public SiteListFragment() {
+    public MachinePerformanceFragment() {
     }
 
-    public static SiteListFragment newInstance() {
-        SiteListFragment fragment = new SiteListFragment();
+    public static MachinePerformanceFragment newInstance() {
+        MachinePerformanceFragment fragment = new MachinePerformanceFragment();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);

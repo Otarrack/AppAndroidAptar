@@ -1,16 +1,17 @@
 package com.florian.projet;
 
 import android.app.Application;
-import android.widget.Toast;
 
+import com.florian.projet.bdd.database.ArticleDataBase;
 import com.florian.projet.bdd.database.MachineDataBase;
-import com.florian.projet.manager.DatabaseManager;
-import com.florian.projet.tools.SimpleCallback;
+import com.florian.projet.manager.ArticleDatabaseManager;
+import com.florian.projet.manager.MachineDatabaseManager;
 
 
 public class MyApplication extends Application {
     private static MyApplication instance;
-    private DatabaseManager databaseManager;
+    private MachineDatabaseManager machineDatabaseManager;
+    private ArticleDatabaseManager articleDatabaseManager;
 
     public static MyApplication getInstance() {
         return instance;
@@ -22,11 +23,13 @@ public class MyApplication extends Application {
         instance = this;
 
         MachineDataBase.setInstance(getApplicationContext());
+        ArticleDataBase.setInstance(getApplicationContext());
 
-        databaseManager = DatabaseManager.getInstance();
+        machineDatabaseManager = MachineDatabaseManager.getInstance();
+        articleDatabaseManager = ArticleDatabaseManager.getInstance();
 
         /* //RESET DATABASE
-        databaseManager.deleteAllData(new SimpleCallback() {
+        machineDatabaseManager.deleteAllData(new SimpleCallback() {
             @Override
             public void onSuccess() {
 

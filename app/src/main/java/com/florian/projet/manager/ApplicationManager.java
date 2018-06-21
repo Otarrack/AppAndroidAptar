@@ -1,13 +1,14 @@
 package com.florian.projet.manager;
 
-import android.content.Context;
+import android.util.Log;
 
-import com.dropbox.core.v2.DbxClientV2;
 import com.florian.projet.MyApplication;
-import com.florian.projet.asyncTasks.DropboxDownloadDataFileTask;
+import com.florian.projet.asyncTasks.DropboxDownloadFileTask;
 import com.florian.projet.asyncTasks.GetCurrentAccountTask;
-import com.florian.projet.asyncTasks.ParseMESFileTask;
-import com.florian.projet.model.Machine;
+import com.florian.projet.asyncTasks.ParseArticlePerfFileTask;
+import com.florian.projet.asyncTasks.ParseMachinePerfFileTask;
+import com.florian.projet.bdd.entity.Article;
+import com.florian.projet.bdd.entity.Machine;
 import com.florian.projet.model.SiteEnum;
 import com.florian.projet.tools.SimpleCallback;
 
@@ -21,12 +22,17 @@ import java.util.List;
 public class ApplicationManager {
     private static ApplicationManager instance;
 
-    public static final String FILE_MES_NAME = "fichiermes.xls";
+    public static final String FILE_PERF_MACHINE_NAME = "fichiermes.xls";
+    public static final String FILE_PERF_ARTICLE_NAME = "test.xlsx";
+
+    public static boolean failLoadingMachine = false;
+    public static boolean failLoadingArticle = false;
 
     private MyApplication myApplication;
     private DropboxManager dropboxManager;
-    private MESFileManager dataMESFileManager;
-    private DatabaseManager databaseManager;
+    private XlsFileManager xlsFileManager;
+    private MachineDatabaseManager machineDatabaseManager;
+    private ArticleDatabaseManager articleDatabaseManager;
 
     private Calendar calendar;
     private Date defaultDate;
@@ -36,8 +42,9 @@ public class ApplicationManager {
     private ApplicationManager() {
         myApplication = MyApplication.getInstance();
         calendar = Calendar.getInstance();
-        dataMESFileManager = MESFileManager.getInstance();
-        databaseManager = DatabaseManager.getInstance();
+        xlsFileManager = XlsFileManager.getInstance();
+        machineDatabaseManager = MachineDatabaseManager.getInstance();
+        articleDatabaseManager = ArticleDatabaseManager.getInstance();
     }
 
     public static ApplicationManager getInstance() {
@@ -45,81 +52,6 @@ public class ApplicationManager {
             instance = new ApplicationManager();
         }
         return instance;
-    }
-
-
-    public void getAllMachine(DatabaseManager.GetAllTask.Callback callback) {
-        databaseManager.getAllMachine(callback);
-    }
-
-    public void init(GetCurrentAccountTask.Callback callback) {
-        dropboxManager = DropboxManager.getInstance();
-        dropboxManager.init(callback);
-
-        setDefaultDate();
-    }
-
-    private DbxClientV2 getDbxClient() {
-        return dropboxManager.getClient();
-    }
-
-    public void downloadDataFile(File path, DropboxDownloadDataFileTask.Callback callback) {
-        dropboxManager.downloadFile(path, callback);
-    }
-
-    public void parseXLSFile(Context context, File file, final ParseMESFileTask.Callback callback) throws IOException {
-        if (file.getName().equals(FILE_MES_NAME)) {
-            dataMESFileManager.parseXLSFile(context, file, callback);
-        }
-    }
-
-    public ArrayList<Machine> getMachineListWithFav(ArrayList<Machine> allMachineInMESFile, ArrayList<Machine> allMachineInDatabase) {
-
-        ArrayList<String> machineFavNameList = getMachineFavNameList(allMachineInDatabase);
-        ArrayList<Machine> finalMachineList = new ArrayList<>();
-
-        for (Machine machine : allMachineInMESFile) {
-            if (machineFavNameList.contains(machine.getMachineName())) {
-                machine.setFavorite(true);
-            }
-
-            finalMachineList.add(machine);
-        }
-
-        return finalMachineList;
-
-    }
-
-    private ArrayList<String> getMachineFavNameList(List<Machine> machineList) {
-        ArrayList<String> machineFavNameList = new ArrayList<>();
-
-        if (machineList != null) {
-            for (Machine machine : machineList) {
-                if (machine.isFavorite()) {
-                    machineFavNameList.add(machine.getMachineName());
-                }
-            }
-        }
-
-        return  machineFavNameList;
-    }
-
-    public void initSiteEnum(ArrayList<Machine> machineArrayList) {
-        for (Machine machine : machineArrayList) {
-            char siteChar = machine.getMachineName().charAt(0);
-
-            for (SiteEnum siteEnum: SiteEnum.values()) {
-                for (int num : siteEnum.getSiteNum()) {
-                    if (String.valueOf(siteChar).equals(String.valueOf(num))){
-                        siteEnum.addMachineToList(machine);
-                    }
-                }
-            }
-        }
-    }
-
-    public void refreshAllMachine(ArrayList<Machine> machineArrayList, SimpleCallback callback) {
-        databaseManager.refreshAllMachine(machineArrayList, callback);
     }
 
     private Date getDefaultDate() {
@@ -161,23 +93,73 @@ public class ApplicationManager {
         this.toDate = toDate;
     }
 
-/*    public static class InitFavMachineList extends AsyncTask<Void, Void, Void> {
+    public void getAllMachine(MachineDatabaseManager.GetAllTask.Callback callback) {
+        machineDatabaseManager.getAllMachine(callback);
+    }
 
-        @Override
-        protected Void doInBackground(Void... voids) {
-            DatabaseManager.getInstance().getAllFavMachine(new DatabaseManager.GetAllFavTask.Callback() {
-                @Override
-                public void onSuccess(List<Machine> machineList) {
-                    SiteEnum.FAV.setMachineList(new ArrayList<>(machineList));
-                }
+    public void getAllArticle(ArticleDatabaseManager.GetAllTask.Callback callback) {
+        articleDatabaseManager.getAllArticle(callback);
+    }
 
-                @Override
-                public void onFailed(Exception e) {
-                    Log.d("FAIL Load Fav", e.getMessage());
-                }
-            });
-            return null;
+    public void init(GetCurrentAccountTask.Callback callback) {
+        dropboxManager = DropboxManager.getInstance();
+        dropboxManager.init(callback);
+
+        setDefaultDate();
+    }
+
+    public void downloadDataFile(File path, String fileName, DropboxDownloadFileTask.Callback callback) {
+        dropboxManager.downloadFile(path, fileName, callback);
+    }
+
+    public void parseMachinePerfXlsFile(File file, final ParseMachinePerfFileTask.Callback callback) throws IOException {
+        xlsFileManager.parseMachinePerfXlsFile(file, callback);
+    }
+
+    public void parseArticlePerfXlsFile(File file, final ParseArticlePerfFileTask.Callback callback) throws IOException {
+        xlsFileManager.parseArticlePerfXlsFile(file, callback);
+    }
+
+    public ArrayList<Machine> getMachineListWithFavAndSite(ArrayList<Machine> allMachineInMESFile, ArrayList<Machine> allMachineInDatabase) {
+
+        ArrayList<String> machineFavNameList = getMachineFavNameList(allMachineInDatabase);
+        ArrayList<Machine> finalMachineList = new ArrayList<>();
+
+        for (Machine machine : allMachineInMESFile) {
+            if (machineFavNameList.contains(machine.getMachineName())) {
+                machine.setFavorite(true);
+            }
+
+            char siteChar = machine.getMachineName().charAt(0);
+
+            machine.setSite(Integer.parseInt(String.valueOf(siteChar)));
+
+            finalMachineList.add(machine);
         }
-    }*/
 
+        return finalMachineList;
+
+    }
+
+    private ArrayList<String> getMachineFavNameList(List<Machine> machineList) {
+        ArrayList<String> machineFavNameList = new ArrayList<>();
+
+        if (machineList != null) {
+            for (Machine machine : machineList) {
+                if (machine.isFavorite()) {
+                    machineFavNameList.add(machine.getMachineName());
+                }
+            }
+        }
+
+        return  machineFavNameList;
+    }
+
+    public void refreshAllMachine(ArrayList<Machine> machineArrayList, SimpleCallback callback) {
+        machineDatabaseManager.refreshAllMachine(machineArrayList, callback);
+    }
+
+    public void refreshAllArticle(ArrayList<Article> articleArrayList, SimpleCallback callback) {
+        articleDatabaseManager.refreshAllArticle(articleArrayList, callback);
+    }
 }

@@ -10,14 +10,12 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.florian.projet.R;
-import com.florian.projet.model.Machine;
+import com.florian.projet.bdd.entity.Machine;
 import com.florian.projet.tools.CustomItemClickListener;
 import com.florian.projet.viewModel.FavorisViewModel;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
-
-import javax.crypto.Mac;
 
 public class MachineRecyclerAdapter extends RecyclerView.Adapter<MachineRecyclerAdapter.MyHolder> {
     private ArrayList<Machine> machineMESList;

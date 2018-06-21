@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.dropbox.core.DbxDownloader;
-import com.dropbox.core.DbxException;
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.files.FileMetadata;
 import com.dropbox.core.v2.files.ListFolderResult;
@@ -13,11 +12,10 @@ import com.florian.projet.manager.ApplicationManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.OutputStream;
 
-public class DropboxDownloadDataFileTask extends AsyncTask<String, Void, File> {
+public class DropboxDownloadFileTask extends AsyncTask<String, Void, File> {
 
-    private final DropboxDownloadDataFileTask.Callback mCallback;
+    private final DropboxDownloadFileTask.Callback mCallback;
     private File path;
     private DbxClientV2 dbxClientV2;
     private Exception mException;
@@ -28,7 +26,7 @@ public class DropboxDownloadDataFileTask extends AsyncTask<String, Void, File> {
         void onFailed(Exception e);
     }
 
-    public DropboxDownloadDataFileTask(DbxClientV2 dbxClientV2, File path, DropboxDownloadDataFileTask.Callback callback) {
+    public DropboxDownloadFileTask(DbxClientV2 dbxClientV2, File path, DropboxDownloadFileTask.Callback callback) {
         this.dbxClientV2 = dbxClientV2;
         this.path = path;
         this.mCallback = callback;
@@ -37,16 +35,16 @@ public class DropboxDownloadDataFileTask extends AsyncTask<String, Void, File> {
     @Override
     protected File doInBackground(String... strings) {
         ListFolderResult result;
-        File file = new File(path.getAbsolutePath(), ApplicationManager.FILE_MES_NAME);
+        File file = new File(path.getAbsolutePath(), strings[0]);
         try {
             result = dbxClientV2.files().listFolder("");
 
             while (true) {
                 for (Metadata metadata : result.getEntries()) {
 
-                    if (metadata.getPathLower().equals("/" + ApplicationManager.FILE_MES_NAME)) {
+                    if (metadata.getPathLower().equals("/" + strings[0])) {
 
-                        DbxDownloader<FileMetadata> downloader = dbxClientV2.files().download("/" + ApplicationManager.FILE_MES_NAME);
+                        DbxDownloader<FileMetadata> downloader = dbxClientV2.files().download("/" + strings[0]);
 
                         FileOutputStream out = new FileOutputStream(file);
                         downloader.download(out);
@@ -60,7 +58,7 @@ public class DropboxDownloadDataFileTask extends AsyncTask<String, Void, File> {
                 }
             }
         } catch (Exception e) {
-            Log.d("ESXAZK", e.getMessage());
+            Log.d("Download task", e.getMessage());
             mException = e;
         }
 

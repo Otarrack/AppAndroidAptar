@@ -11,7 +11,7 @@ import android.view.MenuItem;
 
 import com.florian.projet.R;
 import com.florian.projet.view.fragment.FavoriteListFragment;
-import com.florian.projet.view.fragment.SiteListFragment;
+import com.florian.projet.view.fragment.MachinePerformanceFragment;
 
 public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedListener {
     private AppCompatActivity activity;
@@ -27,7 +27,7 @@ public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedList
     private void initMenu() {
         NavigationView navigationView = activity.findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_site));
+        onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_perf_machine));
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -39,9 +39,9 @@ public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedList
         Fragment fragment = new Fragment();
 
 
-        if (id == R.id.nav_site) {
-            fragment = SiteListFragment.newInstance();
-            activity.setTitle(R.string.menu_site_title);
+        if (id == R.id.nav_perf_machine) {
+            fragment = MachinePerformanceFragment.newInstance();
+            activity.setTitle(R.string.menu_perf_machine_title);
 
         } else if (id == R.id.nav_favorite) {
             fragment = FavoriteListFragment.newInstance();

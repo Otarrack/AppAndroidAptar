@@ -1,7 +1,5 @@
 package com.florian.projet.model;
 
-import java.util.ArrayList;
-
 public enum SiteEnum {
     ALL(new int[]{1, 2, 3, 4}, "Tous"),
     OYO(new int[]{1}, "Oyo - 1"),
@@ -15,12 +13,12 @@ public enum SiteEnum {
 
     private int siteNum[];
     private String name;
-    private ArrayList<Machine> machineList;
+    private int machineNumber;
 
     SiteEnum(int siteNum[], String name) {
         this.siteNum = siteNum;
         this.name = name;
-        this.machineList = new ArrayList<>();
+        this.machineNumber = 0;
     }
 
     public int[] getSiteNum() {
@@ -31,20 +29,11 @@ public enum SiteEnum {
         return name;
     }
 
-    public void setMachineList(ArrayList<Machine> machineList) {
-        this.machineList = machineList;
+    public void addOneToMachineNumber() {
+        machineNumber++;
     }
 
-    public ArrayList<Machine> getMachineList() {
-        return machineList;
-    }
-
-    public void addMachineToList(Machine machine) {
-        this.machineList.add(machine);
-    }
-
-    @Override
-    public String toString() {
-        return name;
+    public int getMachineNumber() {
+        return machineNumber;
     }
 }

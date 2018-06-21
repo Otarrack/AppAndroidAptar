@@ -7,24 +7,24 @@ import android.widget.Toast;
 import com.florian.projet.MyApplication;
 import com.florian.projet.R;
 import com.florian.projet.bdd.database.MachineDataBase;
-import com.florian.projet.model.Machine;
+import com.florian.projet.bdd.entity.Machine;
 import com.florian.projet.tools.SimpleCallback;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DatabaseManager {
-    private static DatabaseManager instance;
+public class MachineDatabaseManager {
+    private static MachineDatabaseManager instance;
     MachineDataBase db;
 
-    public DatabaseManager() {
+    public MachineDatabaseManager() {
         this.db = MachineDataBase.getInstance();
     }
 
-    public static DatabaseManager getInstance() {
+    public static MachineDatabaseManager getInstance() {
         if (instance == null) {
-            instance = new DatabaseManager();
+            instance = new MachineDatabaseManager();
         }
 
         return instance;
@@ -103,6 +103,15 @@ public class DatabaseManager {
         }
     }
 
+    public void getMachineBySite(List<Integer> siteList, GetBySiteTask.Callback callback) {
+        try {
+            new GetBySiteTask(db, callback).execute(siteList.toArray(new Integer[siteList.size()]));
+
+        } catch (Exception e) {
+            Log.d("Exception Get All", e.getMessage());
+        }
+    }
+
     public void getAllFavMachine(GetAllFavTask.Callback callback) {
         try {
             new GetAllFavTask(db, callback).execute();
@@ -167,11 +176,11 @@ public class DatabaseManager {
 
             if (result > 0) {
                 Toast.makeText(MyApplication.getInstance().getApplicationContext(),
-                        R.string.add_one_machine_success,
+                        R.string.machine_add_one_success,
                         Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(MyApplication.getInstance().getApplicationContext(),
-                        R.string.add_one_machine_error,
+                        R.string.machine_add_one_error,
                         Toast.LENGTH_SHORT).show();
             }
         }
@@ -208,12 +217,12 @@ public class DatabaseManager {
             } else if (result.size() > 0) {
                 callback.onSuccess();
                 Toast.makeText(MyApplication.getInstance().getApplicationContext(),
-                        R.string.add_all_machine_success,
+                        R.string.machine_add_all_success,
                         Toast.LENGTH_SHORT).show();
             } else {
                 callback.onFailed(new Exception("Aucune machine ajoutée"));
                 Toast.makeText(MyApplication.getInstance().getApplicationContext(),
-                        R.string.add_all_machine_error,
+                        R.string.machine_add_all_error,
                         Toast.LENGTH_SHORT).show();
             }
         }
@@ -266,11 +275,11 @@ public class DatabaseManager {
 
             if (result > 0) {
                 Toast.makeText(MyApplication.getInstance().getApplicationContext(),
-                        R.string.del_one_machine_success,
+                        R.string.machine_del_one_success,
                         Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(MyApplication.getInstance().getApplicationContext(),
-                        R.string.del_one_machine_error,
+                        R.string.machine_del_one_error,
                         Toast.LENGTH_SHORT).show();
             }
         }
@@ -350,6 +359,46 @@ public class DatabaseManager {
                 callback.onFailed(exception);
             } else {
                 callback.onSuccess(machine);
+            }
+        }
+    }
+
+    public static class GetBySiteTask extends AsyncTask<Integer, Void, List<Machine>> {
+
+        private final GetBySiteTask.Callback callback;
+        private final MachineDataBase db;
+        private Exception exception;
+
+        public interface Callback {
+            void onSuccess(List<Machine> machineList);
+
+            void onFailed(Exception e);
+        }
+
+        GetBySiteTask(MachineDataBase db, GetBySiteTask.Callback callback) {
+            this.db = db;
+            this.callback = callback;
+        }
+
+        @Override
+        protected List<Machine> doInBackground(Integer... integers) {
+            try {
+                return db.machineDao().getBySite(Arrays.asList(integers));
+
+            } catch (Exception e) {
+                exception = e;
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(List<Machine> machineList) {
+            super.onPostExecute(machineList);
+
+            if (exception != null) {
+                callback.onFailed(exception);
+            } else {
+                callback.onSuccess(machineList);
             }
         }
     }

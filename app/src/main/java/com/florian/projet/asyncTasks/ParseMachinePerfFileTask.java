@@ -1,10 +1,9 @@
 package com.florian.projet.asyncTasks;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.florian.projet.model.Machine;
+import com.florian.projet.bdd.entity.Machine;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -19,9 +18,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 
-public class ParseMESFileTask extends AsyncTask<File, Void, ArrayList<Machine>> {
+public class ParseMachinePerfFileTask extends AsyncTask<File, Void, ArrayList<Machine>> {
     private Callback callback;
-    private Context context;
     private Exception mException;
 
     public interface Callback {
@@ -29,9 +27,8 @@ public class ParseMESFileTask extends AsyncTask<File, Void, ArrayList<Machine>> 
         void onFailed(Exception e);
     }
 
-    public ParseMESFileTask(Context context, Callback callback) {
+    public ParseMachinePerfFileTask(Callback callback) {
         this.callback = callback;
-        this.context = context;
     }
 
     @Override
@@ -56,22 +53,17 @@ public class ParseMESFileTask extends AsyncTask<File, Void, ArrayList<Machine>> 
                 Iterator cells = row.cellIterator();
                 machine = new Machine();
 
-                if (row.getRowNum() >= 9) {
+                if (row.getRowNum() >= 10) {
                     while (cells.hasNext()) {
                         cell = (HSSFCell) cells.next();
 
                         if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
-                            Log.d("[1] CELL : [" + cell.getColumnIndex() + ";" + cell.getRowIndex() + "] ", cell.getStringCellValue() + " ");
-
                             addStringValue(cell, machine);
 
                         } else if (cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) {
-                            Log.d("[2] CELL : [" + cell.getColumnIndex() + ";" + cell.getRowIndex() + "] ", cell.getNumericCellValue() + " ");
-
                             addNumericalValue(cell, machine);
 
                         } else {
-                            Log.d("AUTRE CELL : [" + cell.getColumnIndex() + ";" + cell.getRowIndex() + "] ", cell.getNumericCellValue() + " ");
                             //U Can Handel Boolean, Formula, Errors
                         }
                     }

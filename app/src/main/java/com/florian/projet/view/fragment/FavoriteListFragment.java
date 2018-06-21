@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.florian.projet.R;
-import com.florian.projet.manager.DatabaseManager;
-import com.florian.projet.model.Machine;
+import com.florian.projet.manager.MachineDatabaseManager;
+import com.florian.projet.bdd.entity.Machine;
 import com.florian.projet.tools.CustomItemClickListener;
 import com.florian.projet.view.activity.MachineDetailActivity;
 import com.florian.projet.view.adapter.MachineRecyclerAdapter;
@@ -54,7 +54,7 @@ public class FavoriteListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_favorite, container, false);
 
-        favorisViewModel.getAllFavMachine(new DatabaseManager.GetAllFavTask.Callback() {
+        favorisViewModel.getAllFavMachine(new MachineDatabaseManager.GetAllFavTask.Callback() {
             @Override
             public void onSuccess(List<Machine> machineList) {
                 setRecyclerViewMachine(view, new ArrayList<>(machineList));
@@ -63,7 +63,7 @@ public class FavoriteListFragment extends Fragment {
             @Override
             public void onFailed(Exception e) {
                 Toast.makeText(getContext(),
-                        R.string.get_fav_error,
+                        R.string.machine_get_fav_error,
                         Toast.LENGTH_SHORT).show();
             }
         });

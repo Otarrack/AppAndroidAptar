@@ -9,14 +9,15 @@
     /* Key Strings */
     <string name="key_position">position</string>
 
-    /* Strings for MainActivity */
-    <string name="main_action_settings">Settings</string>
+    /* Menu Strings */
+    <string name="menu_perf_machine_title">Performance Machine</string>
+    <string name="menu_perf_article_title">Performance Article</string>
+    <string name="menu_favorite_title">Favoris</string>
 
     /* Strings for PeriodActivity */
-    <string name="period_text_start">Période du * :</string>
+    <string name="period_text_start">Période du :</string>
     <string name="period_text_end">Au :</string>
     <string name="period_text_title">Période sélectionnée pour les calculs</string>
-    <string name="period_text_asterisk">* Si seul la première date est renseignée, la période prendra en compte toute la journée, de 0h00 à 0h00. Sinon, la période commencera à 0h00 de la première date, jusqu\'à 0h00 de la deuxième date</string>
 
     /* Strings for ArticleFrangment */
     <string name="menu_article_title">Article</string>
@@ -25,7 +26,6 @@
     <string name="menu_machine_title">Machine</string>
 
     /* Strings for SiteFragment */
-    <string name="menu_site_title">Site</string>
     <string name="recycler_site_nb_machine">#</string>
 
     <string name="main_recycler_item_volume">Volume</string>
@@ -66,32 +66,33 @@
     <string name="key_num">num</string>
     <string name="article_of_item_asked_qt">Quantité prévue</string>
 
-    /* Strings for ArticleProductivityFragment */
-
+    /* Strings for MachineDétailActivity */
+    <string name="machine_pager_mcu">MCU</string>
+    <string name="machine_pager_ome">OME</string>
 
     /* Dropbox */
     <!-- Change this to your app key -->
     <string name="app_key">epzhp1cvwybijfw</string>
 
-    <string name="title_activity_files">Files</string>
-    <string name="title_activity_openwith">Open With</string>
+    /* Room Machine Database */
+    <string name="machine_database_name">MachineDatabase</string>
+    <string name="machine_add_one_success">Impossible d\'ajouter la machine</string>
+    <string name="machine_add_one_error">La machine a été ajoutée</string>
+    <string name="machine_add_all_success">Les machines ont été ajoutées</string>
+    <string name="machine_add_all_error">Impossible d\'ajouter les machines</string>
+    <string name="machine_del_one_success">La machine a été supprimée</string>
+    <string name="machine_del_one_error">Impossible de supprimer la machine</string>
+    <string name="machine_add_one_fav_success">La machine a été ajoutée aux favoris</string>
+    <string name="machine_add_one_fav_error">Impossible d\'ajouter la machine aux favoris</string>
+    <string name="machine_del_one_fav_success">La machine a été retirée des favoris</string>
+    <string name="machine_del_one_fav_error">Impossible de retirer la machine des favoris</string>
+    <string name="machine_get_fav_error">Impossible de récupérer les favoris</string>
 
-    <string name="machine_pager_mcu">MCU</string>
-    <string name="machine_pager_ome">OME</string>
+    /* Room Article Database */
+    <string name="article_database_name">article_database</string>
+    <string name="splash_lib_step_1">Téléchargement...</string>
+    <string name="splash_lib_step_2">Lecture...</string>
+    <string name="splash_lib_step_3">Enregistrement...</string>
 
-    <string name="menu_favorite_title">Favoris</string>
 
-    <string name="database_name">MachineDatabase</string>
-
-    <string name="add_one_machine_success">Impossible d\'ajouter la machine</string>
-    <string name="add_one_machine_error">La machine a été ajoutée</string>
-    <string name="add_all_machine_success">Les machines ont été ajoutées</string>
-    <string name="add_all_machine_error">Impossible d\'ajouter les machines</string>
-    <string name="del_one_machine_success">La machine a été supprimée</string>
-    <string name="del_one_machine_error">Impossible de supprimer la machine</string>
-    <string name="add_one_fav_success">La machine a été ajoutée aux favoris</string>
-    <string name="add_one_fav_error">Impossible d\'ajouter la machine aux favoris</string>
-    <string name="del_one_fav_success">La machine a été retirée des favoris</string>
-    <string name="del_one_fav_error">Impossible de retirer la machine des favoris</string>
-    <string name="get_fav_error">Impossible de récupérer les favoris</string>
 </resources>

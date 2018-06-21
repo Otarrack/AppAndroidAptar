@@ -24,12 +24,4 @@ public class SiteManager {
         return siteList;
     }
 
-    public SiteEnum getSiteAt(int position) {
-        if (position < siteList.size()) {
-            return siteList.get(position);
-        } else {
-            return null;
-        }
-    }
-
 }

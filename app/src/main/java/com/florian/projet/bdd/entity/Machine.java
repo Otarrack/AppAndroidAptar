@@ -1,4 +1,4 @@
-package com.florian.projet.model;
+package com.florian.projet.bdd.entity;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
@@ -11,6 +11,8 @@ public class Machine {
     private int id;
     @ColumnInfo(name = "name")
     private String machineName;
+    @ColumnInfo(name = "site")
+    private int site;
     @ColumnInfo(name = "max_time_openned")
     private String maxTimeOpenned;
     @ColumnInfo(name = "holidays")
@@ -76,6 +78,14 @@ public class Machine {
 
     public void setMachineName(String machineName) {
         this.machineName = machineName;
+    }
+
+    public int getSite() {
+        return site;
+    }
+
+    public void setSite(int site) {
+        this.site = site;
     }
 
     public String getMaxTimeOpenned() {

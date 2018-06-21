@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.florian.projet.R;
-import com.florian.projet.model.Machine;
+import com.florian.projet.bdd.entity.Machine;
 import com.florian.projet.viewModel.MachineViewModel;
 
 import java.text.NumberFormat;

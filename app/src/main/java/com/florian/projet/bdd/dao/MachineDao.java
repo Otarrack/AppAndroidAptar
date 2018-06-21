@@ -6,7 +6,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.florian.projet.model.Machine;
+import com.florian.projet.bdd.entity.Machine;
 
 import java.util.List;
 
@@ -30,6 +30,9 @@ public interface MachineDao {
 
     @Query("SELECT * FROM machines WHERE name LIKE :name LIMIT 1")
     Machine getByName(String name);
+
+    @Query("SELECT * FROM machines WHERE site IN(:siteList)")
+    List<Machine> getBySite(List<Integer> siteList);
 
     @Query("SELECT * FROM machines WHERE favorite = 1")
     List<Machine> getAllFav();
