@@ -21,7 +21,6 @@ import com.florian.projet.view.adapter.MachineRecyclerAdapter;
 import com.florian.projet.viewModel.MachineViewModel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MachineListActivity extends AppCompatActivity {

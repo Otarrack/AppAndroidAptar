@@ -35,11 +35,11 @@ public class PeriodViewModel {
         applicationManager.resetToDateToDefault();
     }
 
-    public void setFromDateToDefault(Date fromDate) {
+    public void setFromDate(Date fromDate) {
         applicationManager.setFromDate(fromDate);
     }
 
-    public void setToDateToDefault(Date toDate) {
+    public void setToDate(Date toDate) {
         applicationManager.setToDate(toDate);
     }
 }

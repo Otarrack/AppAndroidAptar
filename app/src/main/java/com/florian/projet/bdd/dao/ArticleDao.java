@@ -9,6 +9,7 @@ import android.arch.persistence.room.Update;
 import com.florian.projet.bdd.entity.Article;
 import com.florian.projet.bdd.entity.Machine;
 
+import java.util.Date;
 import java.util.List;
 
 @Dao
@@ -31,4 +32,10 @@ public interface ArticleDao {
 
     @Query("SELECT * FROM articles WHERE name LIKE :name")
     List<Article> getByName(String name);
+
+    @Query("SELECT * FROM articles WHERE date BETWEEN :startDate AND :endDate")
+    List<Article> getByPeriod(Date startDate, Date endDate);
+
+    @Query("SELECT * FROM articles WHERE favorite = 1")
+    List<Article> getAllFav();
 }

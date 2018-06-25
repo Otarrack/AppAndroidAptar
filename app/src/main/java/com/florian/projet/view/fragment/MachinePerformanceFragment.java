@@ -43,7 +43,7 @@ public class MachinePerformanceFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_site, container, false);
+        View view = inflater.inflate(R.layout.fragment_machine_perf, container, false);
 
         setRecyclerViewSite(view);
 

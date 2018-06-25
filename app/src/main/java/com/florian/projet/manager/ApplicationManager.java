@@ -45,6 +45,8 @@ public class ApplicationManager {
         xlsFileManager = XlsFileManager.getInstance();
         machineDatabaseManager = MachineDatabaseManager.getInstance();
         articleDatabaseManager = ArticleDatabaseManager.getInstance();
+
+        setDefaultDate();
     }
 
     public static ApplicationManager getInstance() {
@@ -82,6 +84,11 @@ public class ApplicationManager {
     }
 
     public void setFromDate(Date fromDate) {
+        calendar.setTime(fromDate);
+        calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DATE),0,0,0);
+        fromDate = calendar.getTime();
+        calendar.clear();
+
         this.fromDate = fromDate;
     }
 
@@ -90,6 +97,11 @@ public class ApplicationManager {
     }
 
     public void setToDate(Date toDate) {
+        calendar.setTime(toDate);
+        calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DATE),23,59,59);
+        toDate = calendar.getTime();
+        calendar.clear();
+
         this.toDate = toDate;
     }
 
@@ -152,7 +164,36 @@ public class ApplicationManager {
             }
         }
 
-        return  machineFavNameList;
+        return machineFavNameList;
+    }
+
+    public ArrayList<Article> getArticleListWithFav(ArrayList<Article> allArticleInFile, ArrayList<Article> allArticleInDatabase) {
+        ArrayList<String> articleFavNameList = getArticleFavNameList(allArticleInDatabase);
+        ArrayList<Article> finalArticleList = new ArrayList<>();
+
+        for (Article article : allArticleInFile) {
+            if (articleFavNameList.contains(article.getName())) {
+                article.setFavorite(true);
+            }
+
+            finalArticleList.add(article);
+        }
+
+        return finalArticleList;
+    }
+
+    private ArrayList<String> getArticleFavNameList(List<Article> articleList) {
+        ArrayList<String> articleFavNameList = new ArrayList<>();
+
+        if (articleList != null) {
+            for (Article article : articleList) {
+                if (article.isFavorite()) {
+                    articleFavNameList.add(article.getName());
+                }
+            }
+        }
+
+        return articleFavNameList;
     }
 
     public void refreshAllMachine(ArrayList<Machine> machineArrayList, SimpleCallback callback) {

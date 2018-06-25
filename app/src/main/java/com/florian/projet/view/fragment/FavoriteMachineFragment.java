@@ -24,18 +24,17 @@ import com.florian.projet.viewModel.MachineViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavoriteListFragment extends Fragment {
+public class FavoriteMachineFragment extends Fragment {
     private FavorisViewModel favorisViewModel;
     private MachineViewModel machineViewModel;
-    private RecyclerView recyclerViewMachine;
 
     private Context context;
 
-    public FavoriteListFragment() {
+    public FavoriteMachineFragment() {
     }
 
-    public static FavoriteListFragment newInstance() {
-        FavoriteListFragment fragment = new FavoriteListFragment();
+    public static FavoriteMachineFragment newInstance() {
+        FavoriteMachineFragment fragment = new FavoriteMachineFragment();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
@@ -52,7 +51,7 @@ public class FavoriteListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_favorite, container, false);
+        final View view = inflater.inflate(R.layout.fragment_favorites_machine, container, false);
 
         favorisViewModel.getAllFavMachine(new MachineDatabaseManager.GetAllFavTask.Callback() {
             @Override
@@ -79,7 +78,7 @@ public class FavoriteListFragment extends Fragment {
     }
 
     private void setRecyclerViewMachine(View view, final ArrayList<Machine> machineList) {
-        recyclerViewMachine = view.findViewById(R.id.favorite_list_recycler);
+        RecyclerView recyclerViewMachine = view.findViewById(R.id.favorites_machine_recycler);
         recyclerViewMachine.setNestedScrollingEnabled(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerViewMachine.setLayoutManager(layoutManager);

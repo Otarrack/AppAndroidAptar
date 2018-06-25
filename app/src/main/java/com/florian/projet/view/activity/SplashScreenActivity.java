@@ -134,7 +134,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                         if (allArticleInDatabase == null && allMachineInDatabase == null) {
                             failLoadingData();
                         }
-                        startMainActivity();
+                        startFirstActivity();
                     }
                 }).show();
 
@@ -291,7 +291,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                         articleStep2.setBackgroundColor(getColor(R.color.green));
                         articleStepTextView.setText(R.string.splash_lib_step_3);
                         articleStep3.setBackgroundColor(getColor(R.color.aptar_bh_light_blue));
-                        refreshAllArticleInDatabase(articleArrayList);
+                        getArticleListWithFav(articleArrayList);
                     }
                 }
 
@@ -306,12 +306,18 @@ public class SplashScreenActivity extends AppCompatActivity {
         }
     }
 
+    private void getArticleListWithFav(ArrayList<Article> allArticleInFile) {
+        ArrayList<Article> finalArticleList = splashScreenViewModel.initArticleListWithFav(allArticleInFile, allArticleInDatabase);
+
+        refreshAllArticleInDatabase(finalArticleList);
+    }
+
     private void refreshAllArticleInDatabase(ArrayList<Article> articleArrayList) {
         splashScreenViewModel.refreshAllArticleInDatabase(articleArrayList, new SimpleCallback() {
             @Override
             public void onSuccess() {
                 articleStep3.setBackgroundColor(getColor(R.color.green));
-                startMainActivity();
+                startFirstActivity();
             }
 
             @Override
@@ -337,7 +343,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                     .setPositiveButton("Continuer", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            startMainActivity();
+                            startFirstActivity();
                         }
                     }).show();
         } else {
@@ -345,18 +351,22 @@ public class SplashScreenActivity extends AppCompatActivity {
             articleStep2.setBackgroundColor(getColor(R.color.red));
             articleStep3.setBackgroundColor(getColor(R.color.red));
             ApplicationManager.failLoadingArticle = true;
-            startMainActivity();
+            startFirstActivity();
         }
     }
 
-    private void startMainActivity() {
+    private void startFirstActivity() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Attention")
                 .setCancelable(false)
                 .setPositiveButton("Continuer", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        initSiteEnum();
 
+                        Intent intent = new Intent(getBaseContext(), MainActivity.class);
+
+                        startActivity(intent);
                     }
                 });
         if (ApplicationManager.failLoadingArticle && ApplicationManager.failLoadingMachine) {
@@ -365,13 +375,13 @@ public class SplashScreenActivity extends AppCompatActivity {
             builder.setMessage("Aucune donnée trouvée pour la performance article, seule la performance machine sera disponible.").show();
         } else if (allMachineInDatabase == null) {
             builder.setMessage("Aucune donnée trouvée pour la performance machine, seule la performance article sera disponible.").show();
+        } else {
+            initSiteEnum();
+
+            Intent intent = new Intent(this, MainActivity.class);
+
+            startActivity(intent);
         }
-
-        initSiteEnum();
-
-        Intent intent = new Intent(this, MainActivity.class);
-
-        startActivity(intent);
     }
 
     private void initSiteEnum() {

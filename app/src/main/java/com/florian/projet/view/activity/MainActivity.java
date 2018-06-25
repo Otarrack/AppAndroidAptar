@@ -23,9 +23,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void initDrawerMenu() {
-        this.myDrawerMenu = new MyDrawerMenu(this);
+        myDrawerMenu = new MyDrawerMenu(this);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -36,12 +36,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
     }
-
-
 }

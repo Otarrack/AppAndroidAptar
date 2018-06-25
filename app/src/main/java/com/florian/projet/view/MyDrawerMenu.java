@@ -10,7 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.florian.projet.R;
-import com.florian.projet.view.fragment.FavoriteListFragment;
+import com.florian.projet.view.fragment.ArticlePerformanceFragment;
+import com.florian.projet.view.fragment.FavoriteArticleFragment;
+import com.florian.projet.view.fragment.FavoriteMachineFragment;
 import com.florian.projet.view.fragment.MachinePerformanceFragment;
 
 public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedListener {
@@ -25,7 +27,7 @@ public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedList
     }
 
     private void initMenu() {
-        NavigationView navigationView = activity.findViewById(R.id.nav_view);
+        NavigationView navigationView = activity.findViewById(R.id.main_nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_perf_machine));
     }
@@ -39,17 +41,21 @@ public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedList
         Fragment fragment = new Fragment();
 
 
-        if (id == R.id.nav_perf_machine) {
+        if (id == R.id.nav_favorites_machine) {
+            fragment = FavoriteMachineFragment.newInstance();
+            activity.setTitle(R.string.menu_favorite_machine_title);
+
+        } else if (id == R.id.nav_favorites_article) {
+            fragment = FavoriteArticleFragment.newInstance();
+            activity.setTitle(R.string.menu_favorite_article_title);
+
+        } else if (id == R.id.nav_perf_machine) {
             fragment = MachinePerformanceFragment.newInstance();
             activity.setTitle(R.string.menu_perf_machine_title);
 
-        } else if (id == R.id.nav_favorite) {
-            fragment = FavoriteListFragment.newInstance();
-            activity.setTitle(R.string.menu_favorite_title);
-
-//        } else if (id == R.id.nav_article) {
-//            fragment = ArticleFragment.newInstance();
-//            activity.setTitle(R.string.menu_article_title);
+        } else if (id == R.id.nav_perf_article) {
+            fragment = ArticlePerformanceFragment.newInstance();
+            activity.setTitle(R.string.menu_perf_article_title);
         }
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -60,5 +66,4 @@ public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedList
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 }

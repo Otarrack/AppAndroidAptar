@@ -7,19 +7,29 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.florian.projet.R;
-import com.florian.projet.tools.CustomItemClickListener;
-import com.florian.projet.view.activity.MachineListActivity;
-import com.florian.projet.view.adapter.SiteRecyclerAdapter;
-import com.florian.projet.viewModel.SiteViewModel;
+import com.florian.projet.bdd.entity.Article;
+import com.florian.projet.tools.ArticleListCallback;
+import com.florian.projet.view.activity.PeriodActivity;
+import com.florian.projet.view.adapter.ArticleRecyclerAdapter;
+import com.florian.projet.viewModel.ArticleViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ArticlePerformanceFragment extends Fragment {
-    private SiteViewModel siteViewModel;
-    private RecyclerView recyclerViewSite;
+    private ArticleViewModel articleViewModel;
+    private RecyclerView recyclerViewArticle;
+
+    ArrayList<Article> articleArrayList;
 
     private Context context;
 
@@ -38,16 +48,61 @@ public class ArticlePerformanceFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        siteViewModel = SiteViewModel.getInstance();
+        articleViewModel = ArticleViewModel.getInstance();
+        articleArrayList = new ArrayList<>();
+
+        setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_site, container, false);
+        final View view = inflater.inflate(R.layout.fragment_article_perf, container, false);
 
-        setRecyclerViewSite(view);
+        setRecyclerViewArticle(view);
+        refreshData();
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.details_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_period:
+                Intent intent = new Intent(context, PeriodActivity.class);
+
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        refreshData();
+    }
+
+    private void refreshData() {
+        articleViewModel.getArticleByPeriod(new ArticleListCallback() {
+            @Override
+            public void onSuccess(List<Article> articleList) {
+                articleArrayList = new ArrayList<>(articleList);
+                setNewRecyclerAdapterArticle(articleArrayList);
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+                Log.d("Get Article Fragment", "Msg -> " + e.getMessage());
+            }
+        });
     }
 
     @Override
@@ -57,25 +112,18 @@ public class ArticlePerformanceFragment extends Fragment {
         super.onAttach(context);
     }
 
-    private void setRecyclerViewSite(View view) {
-        recyclerViewSite = view.findViewById(R.id.site_list_recycler);
-        recyclerViewSite.setNestedScrollingEnabled(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+    private void setRecyclerViewArticle(View view) {
+        recyclerViewArticle = view.findViewById(R.id.article_perf_recycler);
+        recyclerViewArticle.setNestedScrollingEnabled(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+        recyclerViewArticle.setLayoutManager(layoutManager);
 
-        if (siteViewModel.getSiteList().size() > 0) {
-            SiteRecyclerAdapter siteRecyclerAdapter = new SiteRecyclerAdapter(context, siteViewModel.getSiteList(), new CustomItemClickListener() {
-                @Override
-                public void onItemClick(View v, int position) {
-                    Intent intent = new Intent(getContext(),MachineListActivity.class);
+    }
 
-                    intent.putExtra("SiteEnum", siteViewModel.getSiteList().get(position));
+    private void setNewRecyclerAdapterArticle(final ArrayList<Article> articleList) {
+        ArticleRecyclerAdapter articleRecyclerAdapter = new ArticleRecyclerAdapter(articleList, false);
 
-                    startActivity(intent);
-                }
-            });
-
-            recyclerViewSite.setAdapter(siteRecyclerAdapter);
-        }
-        recyclerViewSite.setLayoutManager(layoutManager);
+        recyclerViewArticle.setAdapter(articleRecyclerAdapter);
+        recyclerViewArticle.requestFocus();
     }
 }

@@ -10,10 +10,12 @@ import com.florian.projet.bdd.database.ArticleDataBase;
 import com.florian.projet.bdd.database.MachineDataBase;
 import com.florian.projet.bdd.entity.Article;
 import com.florian.projet.bdd.entity.Machine;
+import com.florian.projet.tools.ArticleListCallback;
 import com.florian.projet.tools.SimpleCallback;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class ArticleDatabaseManager {
@@ -101,6 +103,24 @@ public class ArticleDatabaseManager {
 
         } catch (Exception e) {
             Log.d("Article Get Name", e.getMessage());
+        }
+    }
+
+    public void getArticleByPeriod(Date startDate, Date endDate, ArticleListCallback callback) {
+        try {
+            new GetByPeriodTask(db, callback).execute(startDate, endDate);
+
+        } catch (Exception e) {
+            Log.d("Article Get Name", e.getMessage());
+        }
+    }
+
+    public void getAllArticleFav(ArticleListCallback callback) {
+        try {
+            new GetAllFavTask(db, callback).execute();
+
+        } catch (Exception e) {
+            Log.d("Article Get Fav", e.getMessage());
         }
     }
 
@@ -328,6 +348,72 @@ public class ArticleDatabaseManager {
         protected List<Article> doInBackground(String... strings) {
             try {
                 return db.articleDao().getByName(strings[0]);
+            } catch (Exception e) {
+                exception = e;
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(List<Article> articleList) {
+            super.onPostExecute(articleList);
+
+            if (exception != null) {
+                callback.onFailed(exception);
+            } else {
+                callback.onSuccess(articleList);
+            }
+        }
+    }
+
+    public static class GetByPeriodTask extends AsyncTask<Date, Void, List<Article>> {
+
+        private final ArticleListCallback callback;
+        private final ArticleDataBase db;
+        private Exception exception;
+
+        GetByPeriodTask(ArticleDataBase db, ArticleListCallback callback) {
+            this.db = db;
+            this.callback = callback;
+        }
+
+        @Override
+        protected List<Article> doInBackground(Date... dates) {
+            try {
+                return db.articleDao().getByPeriod(dates[0], dates[1]);
+            } catch (Exception e) {
+                exception = e;
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(List<Article> articleList) {
+            super.onPostExecute(articleList);
+
+            if (exception != null) {
+                callback.onFailed(exception);
+            } else {
+                callback.onSuccess(articleList);
+            }
+        }
+    }
+
+    public static class GetAllFavTask extends AsyncTask<Void, Void, List<Article>> {
+
+        private final ArticleListCallback callback;
+        private final ArticleDataBase db;
+        private Exception exception;
+
+        GetAllFavTask(ArticleDataBase db, ArticleListCallback callback) {
+            this.db = db;
+            this.callback = callback;
+        }
+
+        @Override
+        protected List<Article> doInBackground(Void... voids) {
+            try {
+                return db.articleDao().getAllFav();
             } catch (Exception e) {
                 exception = e;
                 return null;

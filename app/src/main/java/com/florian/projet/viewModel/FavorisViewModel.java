@@ -2,13 +2,16 @@ package com.florian.projet.viewModel;
 
 import android.util.Log;
 
+import com.florian.projet.bdd.entity.Article;
+import com.florian.projet.manager.ArticleDatabaseManager;
 import com.florian.projet.manager.MachineDatabaseManager;
-import com.florian.projet.manager.FavoriteMachineManager;
 import com.florian.projet.bdd.entity.Machine;
+import com.florian.projet.tools.ArticleListCallback;
 
 public class FavorisViewModel {
     private static FavorisViewModel instance;
-    private FavoriteMachineManager favoriteMachineManager;
+    private MachineDatabaseManager machineDatabaseManager;
+    private ArticleDatabaseManager articleDatabaseManager;
 
     public static FavorisViewModel getInstance() {
         if(instance == null) {
@@ -18,18 +21,31 @@ public class FavorisViewModel {
     }
 
     private FavorisViewModel() {
-        favoriteMachineManager = FavoriteMachineManager.getInstance();
+        machineDatabaseManager = MachineDatabaseManager.getInstance();
+        articleDatabaseManager = ArticleDatabaseManager.getInstance();
     }
 
     public void updateFavMachine(Machine machine) {
         try {
-            favoriteMachineManager.update(machine);
+            machineDatabaseManager.updateMachine(machine);
         } catch (Exception e) {
-            Log.d("Insert Fav View Model", e.getMessage());
+            Log.d("Fav Machine View Model", e.getMessage());
+        }
+    }
+
+    public void updateFavArticle(Article article) {
+        try {
+            articleDatabaseManager.updateArticle(article);
+        } catch (Exception e) {
+            Log.d("Fav Article View Model", e.getMessage());
         }
     }
 
     public void getAllFavMachine(MachineDatabaseManager.GetAllFavTask.Callback callback) {
-        favoriteMachineManager.getAllFavMachine(callback);
+        machineDatabaseManager.getAllMachineFav(callback);
+    }
+
+    public void getAllFavArticle(ArticleListCallback callback) {
+        articleDatabaseManager.getAllArticleFav(callback);
     }
 }

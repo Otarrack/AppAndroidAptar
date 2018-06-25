@@ -12,7 +12,8 @@
     /* Menu Strings */
     <string name="menu_perf_machine_title">Performance Machine</string>
     <string name="menu_perf_article_title">Performance Article</string>
-    <string name="menu_favorite_title">Favoris</string>
+    <string name="menu_favorite_machine_title">Favoris Machine</string>
+    <string name="menu_favorite_article_title">Favoris Article</string>
 
     /* Strings for PeriodActivity */
     <string name="period_text_start">Période du :</string>
@@ -90,9 +91,9 @@
 
     /* Room Article Database */
     <string name="article_database_name">article_database</string>
-    <string name="splash_lib_step_1">Téléchargement...</string>
-    <string name="splash_lib_step_2">Lecture...</string>
-    <string name="splash_lib_step_3">Enregistrement...</string>
+    <string name="splash_lib_step_1">Téléchargement…</string>
+    <string name="splash_lib_step_2">Lecture…</string>
+    <string name="splash_lib_step_3">Enregistrement…</string>
 
 
 </resources>

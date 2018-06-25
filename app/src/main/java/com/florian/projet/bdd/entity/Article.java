@@ -17,6 +17,8 @@ public class Article {
     private Date date;
     @ColumnInfo(name = "quantity")
     private double quantity;
+    @ColumnInfo(name = "favorite")
+    private boolean favorite;
 
     public int getId() {
         return id;
@@ -48,5 +50,13 @@ public class Article {
 
     public void setQuantity(double quantity) {
         this.quantity = quantity;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 }

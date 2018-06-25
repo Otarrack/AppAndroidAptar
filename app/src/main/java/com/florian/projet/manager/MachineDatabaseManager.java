@@ -112,7 +112,7 @@ public class MachineDatabaseManager {
         }
     }
 
-    public void getAllFavMachine(GetAllFavTask.Callback callback) {
+    public void getAllMachineFav(GetAllFavTask.Callback callback) {
         try {
             new GetAllFavTask(db, callback).execute();
 

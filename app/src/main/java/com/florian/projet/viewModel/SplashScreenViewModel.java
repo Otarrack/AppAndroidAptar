@@ -50,6 +50,10 @@ public class SplashScreenViewModel {
         return applicationManager.getMachineListWithFavAndSite(allMachineInMESFile, allMachineInDatabase);
     }
 
+    public ArrayList<Article> initArticleListWithFav(ArrayList<Article> allArticleInFile, ArrayList<Article> allArticleInDatabase) {
+        return applicationManager.getArticleListWithFav(allArticleInFile, allArticleInDatabase);
+    }
+
     public void refreshAllMachineInDatabase(ArrayList<Machine> machineArrayList, SimpleCallback callback) {
         applicationManager.refreshAllMachine(machineArrayList, callback);
     }

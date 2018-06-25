@@ -19,7 +19,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import static android.app.DatePickerDialog.*;
-import static android.view.View.*;
 import static android.view.View.OnClickListener;
 
 public class PeriodActivity extends AppCompatActivity implements OnClickListener {
@@ -40,11 +39,11 @@ public class PeriodActivity extends AppCompatActivity implements OnClickListener
 
         df = SimpleDateFormat.getDateInstance();
 
-        fromDateEditText = (EditText) findViewById(R.id.period_edit_start_date);
+        fromDateEditText = findViewById(R.id.period_edit_start_date);
         fromDateEditText.setInputType(InputType.TYPE_NULL);
         fromDateEditText.requestFocus();
 
-        toDateEditText = (EditText) findViewById(R.id.period_edit_end_date);
+        toDateEditText = findViewById(R.id.period_edit_end_date);
         toDateEditText.setInputType(InputType.TYPE_NULL);
 
         fromDateEditText.setText(df.format(periodViewModel.getFromDate().getTime()));
@@ -87,7 +86,7 @@ public class PeriodActivity extends AppCompatActivity implements OnClickListener
                 }
 
                 fromDateEditText.setText(df.format(fromDateCalendar.getTime()));
-                periodViewModel.setFromDateToDefault(fromDateCalendar.getTime());
+                periodViewModel.setFromDate(fromDateCalendar.getTime());
 
             }
 
@@ -127,7 +126,7 @@ public class PeriodActivity extends AppCompatActivity implements OnClickListener
                 }
 
                 toDateEditText.setText(df.format(toDateCalendar.getTime()));
-                periodViewModel.setToDateToDefault(toDateCalendar.getTime());
+                periodViewModel.setToDate(toDateCalendar.getTime());
             }
 
         },calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
