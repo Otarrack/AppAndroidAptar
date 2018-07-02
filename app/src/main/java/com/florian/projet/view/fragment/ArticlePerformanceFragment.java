@@ -1,5 +1,6 @@
 package com.florian.projet.view.fragment;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,7 +19,10 @@ import android.view.ViewGroup;
 
 import com.florian.projet.R;
 import com.florian.projet.bdd.entity.Article;
-import com.florian.projet.tools.ArticleListCallback;
+import com.florian.projet.bdd.relation.ArticleWithData;
+import com.florian.projet.tools.ArticleWithDataCallback;
+import com.florian.projet.tools.CustomItemClickListener;
+import com.florian.projet.view.activity.ArticleDetailActivity;
 import com.florian.projet.view.activity.PeriodActivity;
 import com.florian.projet.view.adapter.ArticleRecyclerAdapter;
 import com.florian.projet.viewModel.ArticleViewModel;
@@ -29,8 +34,7 @@ public class ArticlePerformanceFragment extends Fragment {
     private ArticleViewModel articleViewModel;
     private RecyclerView recyclerViewArticle;
 
-    ArrayList<Article> articleArrayList;
-
+    private ArrayList<ArticleWithData> articleWithDataArrayList;
     private Context context;
 
     public ArticlePerformanceFragment() {
@@ -49,7 +53,6 @@ public class ArticlePerformanceFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         articleViewModel = ArticleViewModel.getInstance();
-        articleArrayList = new ArrayList<>();
 
         setHasOptionsMenu(true);
     }
@@ -59,7 +62,7 @@ public class ArticlePerformanceFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_article_perf, container, false);
 
         setRecyclerViewArticle(view);
-        refreshData();
+        initSearchView(view);
 
         return view;
     }
@@ -91,11 +94,11 @@ public class ArticlePerformanceFragment extends Fragment {
     }
 
     private void refreshData() {
-        articleViewModel.getArticleByPeriod(new ArticleListCallback() {
+        articleViewModel.getAllArticleByPeriod(new ArticleWithDataCallback() {
             @Override
-            public void onSuccess(List<Article> articleList) {
-                articleArrayList = new ArrayList<>(articleList);
-                setNewRecyclerAdapterArticle(articleArrayList);
+            public void onSuccess(List<ArticleWithData> articleList) {
+                articleWithDataArrayList = new ArrayList<>(articleList);
+                setNewRecyclerAdapterArticle(new ArrayList<>(articleList));
             }
 
             @Override
@@ -112,6 +115,49 @@ public class ArticlePerformanceFragment extends Fragment {
         super.onAttach(context);
     }
 
+    private void initSearchView(View view) {
+        // Get the SearchView and set the searchable configuration
+        if (getActivity() != null) {
+            SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+            final SearchView searchView = view.findViewById(R.id.article_perf_list_search);
+            // Assumes current activity is the searchable activity
+            if (searchManager != null) {
+                searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+                searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        if (newText.isEmpty()) {
+                            setNewRecyclerAdapterArticle(articleWithDataArrayList);
+                        } else {
+                            doMySearch(newText);
+                        }
+                        searchView.requestFocus();
+                        return false;
+                    }
+                });
+                searchView.clearFocus();
+            }
+        }
+
+    }
+
+    private void doMySearch(String query) {
+        ArrayList<ArticleWithData> searchArticleWithDataList = new ArrayList<>();
+        for (ArticleWithData articleWithData : articleWithDataArrayList) {
+            if (articleWithData.getArticle().getName().toLowerCase().contains(query.toLowerCase()) || articleWithData.getArticle().getCustomer().toLowerCase().contains(query.toLowerCase())) {
+                searchArticleWithDataList.add(articleWithData);
+            }
+        }
+
+        setNewRecyclerAdapterArticle(searchArticleWithDataList);
+    }
+
     private void setRecyclerViewArticle(View view) {
         recyclerViewArticle = view.findViewById(R.id.article_perf_recycler);
         recyclerViewArticle.setNestedScrollingEnabled(true);
@@ -120,8 +166,16 @@ public class ArticlePerformanceFragment extends Fragment {
 
     }
 
-    private void setNewRecyclerAdapterArticle(final ArrayList<Article> articleList) {
-        ArticleRecyclerAdapter articleRecyclerAdapter = new ArticleRecyclerAdapter(articleList, false);
+    private void setNewRecyclerAdapterArticle(final ArrayList<ArticleWithData> articleList) {
+        ArticleRecyclerAdapter articleRecyclerAdapter = new ArticleRecyclerAdapter(articleList, false, new CustomItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                articleViewModel.setCurrentArticle(articleList.get(position));
+
+                Intent intent = new Intent(context, ArticleDetailActivity.class);
+                startActivity(intent);
+            }
+        });
 
         recyclerViewArticle.setAdapter(articleRecyclerAdapter);
         recyclerViewArticle.requestFocus();

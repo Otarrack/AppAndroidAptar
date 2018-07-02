@@ -5,10 +5,13 @@ import com.florian.projet.asyncTasks.GetCurrentAccountTask;
 import com.florian.projet.asyncTasks.ParseArticlePerfFileTask;
 import com.florian.projet.asyncTasks.ParseMachinePerfFileTask;
 import com.florian.projet.bdd.entity.Article;
+import com.florian.projet.bdd.relation.ArticleWithData;
 import com.florian.projet.manager.ApplicationManager;
 import com.florian.projet.manager.ArticleDatabaseManager;
 import com.florian.projet.manager.MachineDatabaseManager;
 import com.florian.projet.bdd.entity.Machine;
+import com.florian.projet.model.ArticleLine;
+import com.florian.projet.tools.ArticleWithDataCallback;
 import com.florian.projet.tools.SimpleCallback;
 
 import java.io.File;
@@ -50,7 +53,7 @@ public class SplashScreenViewModel {
         return applicationManager.getMachineListWithFavAndSite(allMachineInMESFile, allMachineInDatabase);
     }
 
-    public ArrayList<Article> initArticleListWithFav(ArrayList<Article> allArticleInFile, ArrayList<Article> allArticleInDatabase) {
+    public ArrayList<ArticleWithData> initArticleListWithFav(ArrayList<ArticleWithData> allArticleInFile, ArrayList<ArticleWithData> allArticleInDatabase) {
         return applicationManager.getArticleListWithFav(allArticleInFile, allArticleInDatabase);
     }
 
@@ -58,7 +61,7 @@ public class SplashScreenViewModel {
         applicationManager.refreshAllMachine(machineArrayList, callback);
     }
 
-    public void refreshAllArticleInDatabase(ArrayList<Article> articleArrayList, SimpleCallback callback) {
+    public void refreshAllArticleInDatabase(ArrayList<ArticleWithData> articleArrayList, SimpleCallback callback) {
         applicationManager.refreshAllArticle(articleArrayList, callback);
     }
 
@@ -66,7 +69,7 @@ public class SplashScreenViewModel {
         applicationManager.getAllMachine(callback);
     }
 
-    public void getArticleLocalData(ArticleDatabaseManager.GetAllTask.Callback callback) {
+    public void getArticleLocalData(ArticleWithDataCallback callback) {
         applicationManager.getAllArticle(callback);
     }
 }

@@ -8,27 +8,30 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.florian.projet.R;
 import com.florian.projet.bdd.entity.Article;
-import com.florian.projet.bdd.entity.Machine;
-import com.florian.projet.manager.MachineDatabaseManager;
-import com.florian.projet.tools.ArticleListCallback;
+import com.florian.projet.bdd.relation.ArticleWithData;
+import com.florian.projet.tools.ArticleWithDataCallback;
 import com.florian.projet.tools.CustomItemClickListener;
-import com.florian.projet.view.activity.MachineDetailActivity;
+import com.florian.projet.view.activity.ArticleDetailActivity;
+import com.florian.projet.view.activity.PeriodActivity;
 import com.florian.projet.view.adapter.ArticleRecyclerAdapter;
-import com.florian.projet.view.adapter.MachineRecyclerAdapter;
+import com.florian.projet.viewModel.ArticleViewModel;
 import com.florian.projet.viewModel.FavorisViewModel;
-import com.florian.projet.viewModel.MachineViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FavoriteArticleFragment extends Fragment {
-    private FavorisViewModel favorisViewModel;
+    private ArticleViewModel articleViewModel;
+    RecyclerView recyclerViewArticle;
 
     private Context context;
 
@@ -47,26 +50,16 @@ public class FavoriteArticleFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        favorisViewModel = FavorisViewModel.getInstance();
+        articleViewModel = ArticleViewModel.getInstance();
+
+        setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_favorites_article, container, false);
 
-        favorisViewModel.getAllFavArticle(new ArticleListCallback() {
-            @Override
-            public void onSuccess(List<Article> articleList) {
-                setRecyclerViewArticle(view, new ArrayList<>(articleList));
-            }
-
-            @Override
-            public void onFailed(Exception e) {
-                Toast.makeText(getContext(),
-                        R.string.machine_get_fav_error,
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+        setRecyclerViewArticle(view);
 
         return view;
     }
@@ -78,16 +71,69 @@ public class FavoriteArticleFragment extends Fragment {
         super.onAttach(context);
     }
 
-    private void setRecyclerViewArticle(View view, final ArrayList<Article> articleArrayList) {
-        RecyclerView recyclerViewArticle = view.findViewById(R.id.favorites_article_recycler);
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.details_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_period:
+                Intent intent = new Intent(context, PeriodActivity.class);
+
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        refreshData();
+    }
+
+    private void refreshData() {
+        articleViewModel.getAllFavArticleByPeriod(new ArticleWithDataCallback() {
+            @Override
+            public void onSuccess(List<ArticleWithData> articleList) {
+                setNewRecyclerAdapterArticle(new ArrayList<>(articleList));
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+                Toast.makeText(getContext(),
+                        R.string.machine_get_fav_error,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setRecyclerViewArticle(View view) {
+        recyclerViewArticle = view.findViewById(R.id.favorites_article_recycler);
         recyclerViewArticle.setNestedScrollingEnabled(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerViewArticle.setLayoutManager(layoutManager);
 
-        ArticleRecyclerAdapter articleRecyclerAdapter = new ArticleRecyclerAdapter(articleArrayList, true);
+    }
+
+    private void setNewRecyclerAdapterArticle(final ArrayList<ArticleWithData> articleList) {
+        ArticleRecyclerAdapter articleRecyclerAdapter = new ArticleRecyclerAdapter(articleList, true, new CustomItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                articleViewModel.setCurrentArticle(articleList.get(position));
+
+                Intent intent = new Intent(context, ArticleDetailActivity.class);
+                startActivity(intent);
+            }
+        });
 
         recyclerViewArticle.setAdapter(articleRecyclerAdapter);
         recyclerViewArticle.requestFocus();
-
     }
 }

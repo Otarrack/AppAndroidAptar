@@ -1,7 +1,5 @@
 package com.florian.projet.manager;
 
-import android.util.Log;
-
 import com.florian.projet.MyApplication;
 import com.florian.projet.asyncTasks.DropboxDownloadFileTask;
 import com.florian.projet.asyncTasks.GetCurrentAccountTask;
@@ -9,7 +7,9 @@ import com.florian.projet.asyncTasks.ParseArticlePerfFileTask;
 import com.florian.projet.asyncTasks.ParseMachinePerfFileTask;
 import com.florian.projet.bdd.entity.Article;
 import com.florian.projet.bdd.entity.Machine;
-import com.florian.projet.model.SiteEnum;
+import com.florian.projet.bdd.relation.ArticleWithData;
+import com.florian.projet.model.ArticleLine;
+import com.florian.projet.tools.ArticleWithDataCallback;
 import com.florian.projet.tools.SimpleCallback;
 
 import java.io.File;
@@ -23,7 +23,7 @@ public class ApplicationManager {
     private static ApplicationManager instance;
 
     public static final String FILE_PERF_MACHINE_NAME = "fichiermes.xls";
-    public static final String FILE_PERF_ARTICLE_NAME = "test.xlsx";
+    public static final String FILE_PERF_ARTICLE_NAME = "par site valorisation des produits finis et semi-finis produits.csv";
 
     public static boolean failLoadingMachine = false;
     public static boolean failLoadingArticle = false;
@@ -109,7 +109,7 @@ public class ApplicationManager {
         machineDatabaseManager.getAllMachine(callback);
     }
 
-    public void getAllArticle(ArticleDatabaseManager.GetAllTask.Callback callback) {
+    public void getAllArticle(ArticleWithDataCallback callback) {
         articleDatabaseManager.getAllArticle(callback);
     }
 
@@ -167,28 +167,25 @@ public class ApplicationManager {
         return machineFavNameList;
     }
 
-    public ArrayList<Article> getArticleListWithFav(ArrayList<Article> allArticleInFile, ArrayList<Article> allArticleInDatabase) {
+    public ArrayList<ArticleWithData> getArticleListWithFav(ArrayList<ArticleWithData> allArticleInFile, ArrayList<ArticleWithData> allArticleInDatabase) {
         ArrayList<String> articleFavNameList = getArticleFavNameList(allArticleInDatabase);
-        ArrayList<Article> finalArticleList = new ArrayList<>();
 
-        for (Article article : allArticleInFile) {
-            if (articleFavNameList.contains(article.getName())) {
-                article.setFavorite(true);
+        for (ArticleWithData articleWithData : allArticleInFile) {
+            if (articleFavNameList.contains(articleWithData.getArticle().getName())) {
+                articleWithData.getArticle().setFavorite(true);
             }
-
-            finalArticleList.add(article);
         }
 
-        return finalArticleList;
+        return allArticleInFile;
     }
 
-    private ArrayList<String> getArticleFavNameList(List<Article> articleList) {
+    private ArrayList<String> getArticleFavNameList(List<ArticleWithData> articleList) {
         ArrayList<String> articleFavNameList = new ArrayList<>();
 
         if (articleList != null) {
-            for (Article article : articleList) {
-                if (article.isFavorite()) {
-                    articleFavNameList.add(article.getName());
+            for (ArticleWithData articleWithData : articleList) {
+                if (articleWithData.getArticle().isFavorite()) {
+                    articleFavNameList.add(articleWithData.getArticle().getName());
                 }
             }
         }
@@ -200,7 +197,7 @@ public class ApplicationManager {
         machineDatabaseManager.refreshAllMachine(machineArrayList, callback);
     }
 
-    public void refreshAllArticle(ArrayList<Article> articleArrayList, SimpleCallback callback) {
+    public void refreshAllArticle(ArrayList<ArticleWithData> articleArrayList, SimpleCallback callback) {
         articleDatabaseManager.refreshAllArticle(articleArrayList, callback);
     }
 }

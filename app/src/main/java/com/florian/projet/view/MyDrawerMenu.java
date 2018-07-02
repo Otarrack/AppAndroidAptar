@@ -29,7 +29,7 @@ public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedList
     private void initMenu() {
         NavigationView navigationView = activity.findViewById(R.id.main_nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_perf_machine));
+        onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_favorites_machine));
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

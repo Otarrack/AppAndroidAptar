@@ -3,21 +3,26 @@ package com.florian.projet.viewModel;
 import android.util.Log;
 
 import com.florian.projet.bdd.entity.Article;
+import com.florian.projet.bdd.entity.ArticleData;
+import com.florian.projet.bdd.relation.ArticleWithData;
 import com.florian.projet.manager.ApplicationManager;
 import com.florian.projet.manager.ArticleDatabaseManager;
-import com.florian.projet.tools.ArticleListCallback;
+import com.florian.projet.tools.ArticleWithDataCallback;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.ConcurrentModificationException;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 public class ArticleViewModel {
     private static ArticleViewModel instance;
 
     private ArticleDatabaseManager articleDatabaseManager;
     private ApplicationManager applicationManager;
+
+    private ArticleWithData currentArticle;
 
     public static ArticleViewModel getInstance() {
         if(instance == null) {
@@ -31,43 +36,13 @@ public class ArticleViewModel {
         applicationManager = ApplicationManager.getInstance();
     }
 
-    public void getArticleByPeriod(final ArticleListCallback callback) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(applicationManager.getFromDate());
-        calendar.add(Calendar.SECOND, -1);
+    public void getAllFavArticleByPeriod(final ArticleWithDataCallback callback) {
 
-
-        Date fromDate = calendar.getTime();
-        Date toDate = applicationManager.getToDate();
-
-        calendar.clear();
-
-        articleDatabaseManager.getArticleByPeriod(fromDate, toDate, new ArticleListCallback() {
+        articleDatabaseManager.getAllArticleFav(new ArticleWithDataCallback() {
             @Override
-            public void onSuccess(List<Article> articleList) {
-                List<Article> finalArticleList = new ArrayList<>();
-                boolean add = false;
+            public void onSuccess(List<ArticleWithData> articleList) {
 
-                for (Article article : articleList) {
-                    Log.d("Date -> " + article.getName(), article.getDate().toString());
-                    Log.d("FAV -> " + article.getName(), article.isFavorite() + "");
-                    if (finalArticleList.size() > 0) {
-                        for (Article articleInFinalList : finalArticleList) {
-                            if (articleInFinalList.getName().equals(article.getName())) {
-                                articleInFinalList.setQuantity(articleInFinalList.getQuantity() + article.getQuantity());
-                                add = true;
-                            }
-                        }
-                    }
-
-                    if (add) {
-                        add = false;
-                    } else {
-                        finalArticleList.add(article);
-                    }
-                }
-
-                callback.onSuccess(finalArticleList);
+                callback.onSuccess(getArticleByPeriod(articleList,false));
             }
 
             @Override
@@ -77,4 +52,62 @@ public class ArticleViewModel {
         });
     }
 
+    public void getAllArticleByPeriod(final ArticleWithDataCallback callback) {
+
+
+        articleDatabaseManager.getAllArticle(new ArticleWithDataCallback() {
+            @Override
+            public void onSuccess(List<ArticleWithData> articleList) {
+
+                callback.onSuccess(getArticleByPeriod(articleList, true));
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+                callback.onFailed(e);
+            }
+        });
+    }
+
+    private List<ArticleWithData> getArticleByPeriod(List<ArticleWithData> articleList, boolean removeArticleIfNoData) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(applicationManager.getFromDate());
+        calendar.add(Calendar.SECOND, -1);
+
+
+        final Date fromDate = calendar.getTime();
+        final Date toDate = applicationManager.getToDate();
+
+        calendar.clear();
+
+        for (Iterator<ArticleWithData> iteratorAWD = articleList.iterator(); iteratorAWD.hasNext();) {
+            ArticleWithData articleWithData = iteratorAWD.next();
+
+            for (Iterator<ArticleData> iteratorArticleData = articleWithData.getDataList().iterator(); iteratorArticleData.hasNext();) {
+                ArticleData articleData = iteratorArticleData.next();
+
+                if (!(articleData.getDate().compareTo(fromDate) >= 0 && articleData.getDate().compareTo(toDate) <= 0)) {
+                    iteratorArticleData.remove();
+                }
+            }
+
+            if (articleWithData.getDataList().size() == 0 && removeArticleIfNoData) {
+                iteratorAWD.remove();
+            }
+        }
+
+        return articleList;
+    }
+
+    public ArticleWithData getCurrentArticle() {
+        return currentArticle;
+    }
+
+    public void setCurrentArticle(ArticleWithData currentArticle) {
+        this.currentArticle = currentArticle;
+    }
+
+    public void delCurrentArticle() {
+        currentArticle = null;
+    }
 }

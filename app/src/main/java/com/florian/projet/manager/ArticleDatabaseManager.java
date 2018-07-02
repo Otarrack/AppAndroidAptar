@@ -2,19 +2,15 @@ package com.florian.projet.manager;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.florian.projet.MyApplication;
-import com.florian.projet.R;
 import com.florian.projet.bdd.database.ArticleDataBase;
-import com.florian.projet.bdd.database.MachineDataBase;
 import com.florian.projet.bdd.entity.Article;
-import com.florian.projet.bdd.entity.Machine;
-import com.florian.projet.tools.ArticleListCallback;
+import com.florian.projet.bdd.entity.ArticleData;
+import com.florian.projet.bdd.relation.ArticleWithData;
+import com.florian.projet.tools.ArticleWithDataCallback;
 import com.florian.projet.tools.SimpleCallback;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -34,11 +30,11 @@ public class ArticleDatabaseManager {
         return instance;
     }
 
-    public void refreshAllArticle(final ArrayList<Article> articleArrayList, final SimpleCallback insertCallback) {
+    public void refreshAllArticle(final ArrayList<ArticleWithData> articleWithDataArrayList, final SimpleCallback insertCallback) {
         deleteAllData(new SimpleCallback() {
             @Override
             public void onSuccess() {
-                insertAllArticle(articleArrayList, insertCallback);
+                insertAllArticle(articleWithDataArrayList, insertCallback);
             }
 
             @Override
@@ -48,18 +44,10 @@ public class ArticleDatabaseManager {
         });
     }
 
-    public void insertArticle(Article article) {
+    public void insertAllArticle(List<ArticleWithData> articleList, SimpleCallback callback) {
         try {
-            new InsertTask(db).execute(article);
-
-        } catch (Exception e) {
-            Log.d("Article Insert", e.getMessage());
-        }
-    }
-
-    public void insertAllArticle(List<Article> articleList, SimpleCallback callback) {
-        try {
-            new InsertAllTask(db, callback).execute(articleList.toArray(new Article[articleList.size()]));
+            Log.d("NOAOPMEAPKEA", articleList.size() + "");
+            new InsertAllTask(db, callback).execute(articleList.toArray(new ArticleWithData[articleList.size()]));
 
         } catch (Exception e) {
             Log.d("Article Insert All", e.getMessage());
@@ -68,19 +56,19 @@ public class ArticleDatabaseManager {
 
     public void updateArticle(Article article) {
         try {
-            new UpdateTask(db).execute(article);
+            new UpdateArticleTask(db).execute(article);
 
         } catch (Exception e) {
             Log.d("Article Update", e.getMessage());
         }
     }
 
-    public void deleteArticle(Article article) {
+    public void updateData(ArticleData articleData) {
         try {
-            new DeleteTask(db).execute(article);
+            new UpdateDataTask(db).execute(articleData);
 
         } catch (Exception e) {
-            Log.d("Article Delete", e.getMessage());
+            Log.d("Article Data Update", e.getMessage());
         }
     }
 
@@ -88,7 +76,7 @@ public class ArticleDatabaseManager {
         new ClearAllTables(db, callback).execute();
     }
 
-    public void getAllArticle(GetAllTask.Callback callback) {
+    public void getAllArticle(ArticleWithDataCallback callback) {
         try {
             new GetAllTask(db, callback).execute();
 
@@ -97,7 +85,7 @@ public class ArticleDatabaseManager {
         }
     }
 
-    public void getArticleByName(String name, GetByNameTask.Callback callback) {
+    public void getArticleByName(String name, ArticleWithDataCallback callback) {
         try {
             new GetByNameTask(db, callback).execute(name);
 
@@ -106,7 +94,7 @@ public class ArticleDatabaseManager {
         }
     }
 
-    public void getArticleByPeriod(Date startDate, Date endDate, ArticleListCallback callback) {
+    public void getArticleByPeriod(Date startDate, Date endDate, ArticleWithDataCallback callback) {
         try {
             new GetByPeriodTask(db, callback).execute(startDate, endDate);
 
@@ -115,7 +103,7 @@ public class ArticleDatabaseManager {
         }
     }
 
-    public void getAllArticleFav(ArticleListCallback callback) {
+    public void getAllArticleFav(ArticleWithDataCallback callback) {
         try {
             new GetAllFavTask(db, callback).execute();
 
@@ -157,39 +145,7 @@ public class ArticleDatabaseManager {
         }
     }
 
-    private static class InsertTask extends AsyncTask<Article, Void, Long> {
-
-        private final ArticleDataBase db;
-
-        InsertTask(ArticleDataBase db) {
-            this.db = db;
-        }
-
-        @Override
-        protected Long doInBackground(Article... articles) {
-            if (articles[0] != null) {
-                return db.articleDao().insert(articles[0]);
-            }
-            return 0L;
-        }
-
-        @Override
-        protected void onPostExecute(Long result) {
-            super.onPostExecute(result);
-
-            if (result > 0) {
-                Toast.makeText(MyApplication.getInstance().getApplicationContext(),
-                        R.string.machine_add_one_success,
-                        Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(MyApplication.getInstance().getApplicationContext(),
-                        R.string.machine_add_one_error,
-                        Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    private static class InsertAllTask extends AsyncTask<Article, Void, List<Long>> {
+    private static class InsertAllTask extends AsyncTask<ArticleWithData, Void, Void> {
 
         private final ArticleDataBase db;
         private SimpleCallback callback;
@@ -202,47 +158,53 @@ public class ArticleDatabaseManager {
         }
 
         @Override
-        protected List<Long> doInBackground(Article... articles) {
+        protected Void doInBackground(ArticleWithData... articles) {
             try {
-                return db.articleDao().insertAll(Arrays.asList(articles));
+                ArrayList<Article> articleArrayList = new ArrayList<>();
+                for (ArticleWithData articleWithData : articles) {
+                    articleArrayList.add(articleWithData.getArticle());
+                }
+
+                List<Long> idList = db.articleDao().insertAllArticle(articleArrayList);
+
+                for (int i = 0; i < idList.size(); i++) {
+                    for (ArticleData articleData : articles[i].getDataList()) {
+                        articleData.setIdArticle(idList.get(i));
+                    }
+
+                    db.articleDao().insertAllData(articles[i].getDataList());
+                }
             } catch (Exception e) {
                 exception = e;
-                return null;
             }
+
+            return null;
         }
 
         @Override
-        protected void onPostExecute(List<Long> result) {
+        protected void onPostExecute(Void result) {
             super.onPostExecute(result);
 
-            if (result == null) {
-                callback.onFailed(exception);
-            } else if (result.size() > 0) {
+            if (exception == null) {
                 callback.onSuccess();
-                Toast.makeText(MyApplication.getInstance().getApplicationContext(),
-                        R.string.machine_add_all_success,
-                        Toast.LENGTH_SHORT).show();
             } else {
-                callback.onFailed(new Exception("Aucun article ajouté"));
-                Toast.makeText(MyApplication.getInstance().getApplicationContext(),
-                        R.string.machine_add_all_error,
-                        Toast.LENGTH_SHORT).show();
+                callback.onFailed(exception);
             }
         }
     }
 
-    private static class UpdateTask extends AsyncTask<Article, Void, Integer> {
+    private static class UpdateArticleTask extends AsyncTask<Article, Void, Integer> {
 
         private final ArticleDataBase db;
 
-        UpdateTask(ArticleDataBase db) {
+        UpdateArticleTask(ArticleDataBase db) {
             this.db = db;
         }
 
         @Override
         protected Integer doInBackground(Article... articles) {
             if (articles[0] != null) {
-                return db.articleDao().update(articles[0]);
+                return db.articleDao().updateArticle(articles[0]);
             }
             return 0;
         }
@@ -250,24 +212,21 @@ public class ArticleDatabaseManager {
         @Override
         protected void onPostExecute(Integer result) {
             super.onPostExecute(result);
-
-            //if (result > 0) {
-            //TODO Voir pour rajouter un callback
         }
     }
 
-    private static class DeleteTask extends AsyncTask<Article, Void, Integer> {
+    private static class UpdateDataTask extends AsyncTask<ArticleData, Void, Integer> {
 
         private final ArticleDataBase db;
 
-        DeleteTask(ArticleDataBase db) {
+        UpdateDataTask(ArticleDataBase db) {
             this.db = db;
         }
 
         @Override
-        protected Integer doInBackground(Article... articles) {
+        protected Integer doInBackground(ArticleData... articles) {
             if (articles[0] != null) {
-                return db.articleDao().delete(articles[0]);
+                return db.articleDao().updateData(articles[0]);
             }
             return 0;
         }
@@ -275,38 +234,22 @@ public class ArticleDatabaseManager {
         @Override
         protected void onPostExecute(Integer result) {
             super.onPostExecute(result);
-
-            if (result > 0) {
-                Toast.makeText(MyApplication.getInstance().getApplicationContext(),
-                        R.string.machine_del_one_success,
-                        Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(MyApplication.getInstance().getApplicationContext(),
-                        R.string.machine_del_one_error,
-                        Toast.LENGTH_SHORT).show();
-            }
         }
     }
 
-    public static class GetAllTask extends AsyncTask<Void, Void, List<Article>> {
+    public static class GetAllTask extends AsyncTask<Void, Void, List<ArticleWithData>> {
 
-        private final GetAllTask.Callback callback;
+        private final ArticleWithDataCallback callback;
         private final ArticleDataBase db;
         private Exception exception;
 
-        public interface Callback {
-            void onSuccess(List<Article> articleList);
-
-            void onFailed(Exception e);
-        }
-
-        GetAllTask(ArticleDataBase db, GetAllTask.Callback callback) {
+        GetAllTask(ArticleDataBase db, ArticleWithDataCallback callback) {
             this.db = db;
             this.callback = callback;
         }
 
         @Override
-        protected List<Article> doInBackground(Void... voids) {
+        protected List<ArticleWithData> doInBackground(Void... voids) {
             try {
                 return db.articleDao().getAll();
             } catch (Exception e) {
@@ -316,7 +259,7 @@ public class ArticleDatabaseManager {
         }
 
         @Override
-        protected void onPostExecute(List<Article> articleList) {
+        protected void onPostExecute(List<ArticleWithData> articleList) {
             super.onPostExecute(articleList);
 
             if (exception != null) {
@@ -327,25 +270,19 @@ public class ArticleDatabaseManager {
         }
     }
 
-    public static class GetByNameTask extends AsyncTask<String, Void, List<Article>> {
+    public static class GetByNameTask extends AsyncTask<String, Void, List<ArticleWithData>> {
 
-        private final GetByNameTask.Callback callback;
+        private final ArticleWithDataCallback callback;
         private final ArticleDataBase db;
         private Exception exception;
 
-        public interface Callback {
-            void onSuccess(List<Article> articleList);
-
-            void onFailed(Exception e);
-        }
-
-        GetByNameTask(ArticleDataBase db, GetByNameTask.Callback callback) {
+        GetByNameTask(ArticleDataBase db, ArticleWithDataCallback callback) {
             this.db = db;
             this.callback = callback;
         }
 
         @Override
-        protected List<Article> doInBackground(String... strings) {
+        protected List<ArticleWithData> doInBackground(String... strings) {
             try {
                 return db.articleDao().getByName(strings[0]);
             } catch (Exception e) {
@@ -355,7 +292,7 @@ public class ArticleDatabaseManager {
         }
 
         @Override
-        protected void onPostExecute(List<Article> articleList) {
+        protected void onPostExecute(List<ArticleWithData> articleList) {
             super.onPostExecute(articleList);
 
             if (exception != null) {
@@ -366,20 +303,21 @@ public class ArticleDatabaseManager {
         }
     }
 
-    public static class GetByPeriodTask extends AsyncTask<Date, Void, List<Article>> {
+    public static class GetByPeriodTask extends AsyncTask<Date, Void, List<ArticleWithData>> {
 
-        private final ArticleListCallback callback;
+        private final ArticleWithDataCallback callback;
         private final ArticleDataBase db;
         private Exception exception;
 
-        GetByPeriodTask(ArticleDataBase db, ArticleListCallback callback) {
+        GetByPeriodTask(ArticleDataBase db, ArticleWithDataCallback callback) {
             this.db = db;
             this.callback = callback;
         }
 
         @Override
-        protected List<Article> doInBackground(Date... dates) {
+        protected List<ArticleWithData> doInBackground(Date... dates) {
             try {
+
                 return db.articleDao().getByPeriod(dates[0], dates[1]);
             } catch (Exception e) {
                 exception = e;
@@ -388,7 +326,7 @@ public class ArticleDatabaseManager {
         }
 
         @Override
-        protected void onPostExecute(List<Article> articleList) {
+        protected void onPostExecute(List<ArticleWithData> articleList) {
             super.onPostExecute(articleList);
 
             if (exception != null) {
@@ -399,19 +337,19 @@ public class ArticleDatabaseManager {
         }
     }
 
-    public static class GetAllFavTask extends AsyncTask<Void, Void, List<Article>> {
+    public static class GetAllFavTask extends AsyncTask<Void, Void, List<ArticleWithData>> {
 
-        private final ArticleListCallback callback;
+        private final ArticleWithDataCallback callback;
         private final ArticleDataBase db;
         private Exception exception;
 
-        GetAllFavTask(ArticleDataBase db, ArticleListCallback callback) {
+        GetAllFavTask(ArticleDataBase db, ArticleWithDataCallback callback) {
             this.db = db;
             this.callback = callback;
         }
 
         @Override
-        protected List<Article> doInBackground(Void... voids) {
+        protected List<ArticleWithData> doInBackground(Void... voids) {
             try {
                 return db.articleDao().getAllFav();
             } catch (Exception e) {
@@ -421,7 +359,7 @@ public class ArticleDatabaseManager {
         }
 
         @Override
-        protected void onPostExecute(List<Article> articleList) {
+        protected void onPostExecute(List<ArticleWithData> articleList) {
             super.onPostExecute(articleList);
 
             if (exception != null) {

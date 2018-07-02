@@ -94,6 +94,11 @@
     <string name="splash_lib_step_1">Téléchargement…</string>
     <string name="splash_lib_step_2">Lecture…</string>
     <string name="splash_lib_step_3">Enregistrement…</string>
+    <string name="key_id_article">idArticle</string>
+    <string name="article_customer">Client</string>
+    <string name="article_type">Type</string>
+    <string name="article_quantity">Quantité produite</string>
+    <string name="article_total_quantity">Quantité total produite</string>
 
 
 </resources>

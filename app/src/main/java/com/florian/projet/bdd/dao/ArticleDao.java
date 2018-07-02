@@ -4,10 +4,13 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Transaction;
 import android.arch.persistence.room.Update;
 
 import com.florian.projet.bdd.entity.Article;
+import com.florian.projet.bdd.entity.ArticleData;
 import com.florian.projet.bdd.entity.Machine;
+import com.florian.projet.bdd.relation.ArticleWithData;
 
 import java.util.Date;
 import java.util.List;
@@ -16,26 +19,30 @@ import java.util.List;
 public interface ArticleDao {
 
     @Insert
-    long insert(Article article);
+    List<Long> insertAllArticle(List<Article> articleList);
 
     @Insert
-    List<Long> insertAll(List<Article> articleList);
+    List<Long> insertAllData(List<ArticleData> articleList);
 
     @Update
-    int update(Article article);
+    int updateArticle(Article article);
 
-    @Delete
-    int delete(Article article);
+    @Update
+    int updateData(ArticleData articleData);
 
+    @Transaction
     @Query("SELECT * FROM articles")
-    List<Article> getAll();
+    List<ArticleWithData> getAll();
 
+    @Transaction
     @Query("SELECT * FROM articles WHERE name LIKE :name")
-    List<Article> getByName(String name);
+    List<ArticleWithData> getByName(String name);
 
-    @Query("SELECT * FROM articles WHERE date BETWEEN :startDate AND :endDate")
-    List<Article> getByPeriod(Date startDate, Date endDate);
+    @Transaction
+    @Query("SELECT * FROM articles, articles_data WHERE date BETWEEN :startDate AND :endDate")
+    List<ArticleWithData> getByPeriod(Date startDate, Date endDate);
 
+    @Transaction
     @Query("SELECT * FROM articles WHERE favorite = 1")
-    List<Article> getAllFav();
+    List<ArticleWithData> getAllFav();
 }

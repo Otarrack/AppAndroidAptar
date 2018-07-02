@@ -4,31 +4,24 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.florian.projet.bdd.entity.Article;
+import com.florian.projet.model.ArticleLine;
+import com.florian.projet.tools.DateFormatter;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Date;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Date;
 
 
-public class ParseArticlePerfFileTask extends AsyncTask<File, Void, ArrayList<Article>> {
+public class ParseArticlePerfFileTask extends AsyncTask<File, Void, ArrayList<ArticleLine>> {
     private Callback callback;
     private Exception mException;
 
     public interface Callback {
-        void onSuccess(ArrayList<Article> dataLineList);
+        void onSuccess(ArrayList<ArticleLine> dataLineList);
         void onFailed(Exception e);
     }
 
@@ -37,78 +30,91 @@ public class ParseArticlePerfFileTask extends AsyncTask<File, Void, ArrayList<Ar
     }
 
     @Override
-    protected ArrayList<Article> doInBackground(File... files) {
-        ArrayList<Article> dataLineList = new ArrayList<>();
+    protected ArrayList<ArticleLine> doInBackground(File... files) {
+        ArrayList<ArticleLine> dataLineList = new ArrayList<>();
 
         try {
             InputStream excelFile;
 
             excelFile = new FileInputStream(files[0]);
-            XSSFWorkbook wb = new XSSFWorkbook(excelFile);
+            InputStreamReader streamReader = new InputStreamReader(excelFile);
+            BufferedReader br = new BufferedReader(streamReader);
+            String line;
+            String csvSplitBy = ";";
 
-            XSSFSheet sheet = wb.getSheet("Data");
-            XSSFRow row;
-            XSSFCell cell;
-
-            Iterator rows = sheet.rowIterator();
-            Article article;
+            br.readLine();
+            ArticleLine article;
 
             boolean hasData = true;
+            int index = 1;
 
-            while (rows.hasNext() && hasData) {
-                row = (XSSFRow) rows.next();
-                Iterator cells = row.cellIterator();
-                article = new Article();
+            while ((line = br.readLine()) != null && hasData) {
+                article = new ArticleLine();
 
-                if (row.getRowNum() >= 4) {
-                    while (cells.hasNext()) {
-                        cell = (XSSFCell) cells.next();
+                if (index > 4) {
+                    String[] row = line.split(csvSplitBy);
 
-                        switch (cell.getColumnIndex()) {
-                            case 1:
+                    if (row.length >= 24) {
 
-                                if (cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC) {
-                                    Log.d("Date -> ", cell.getDateCellValue() + " _");
-                                    article.setDate(cell.getDateCellValue());
-                                } else {
-                                    hasData = false;
-                                }
-                                break;
+                        if (row[3].equals("")) {
+                            hasData = false;
+                        }
 
-                            case 14:
-                                if (cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC) {
-                                    Log.d("Quantite -> ", cell.getNumericCellValue() + " _");
-                                    article.setQuantity(cell.getNumericCellValue());
-                                }
-                                break;
+                        if (!row[4].equals("")) {
+                            article.setType(row[4]);
+                        }
 
-                            case 24:
-                                cell.setCellType(XSSFCell.CELL_TYPE_STRING);
-                                Log.d("Nom -> ", cell.getStringCellValue() + " _ ");
-                                article.setName(cell.getStringCellValue());
-                                break;
+                        if (!row[5].equals("")) {
+                            article.setNumOf(row[5]);
+                        }
 
-                            default:
-                                break;
+                        if (!row[12].equals("")) {
+                            Log.d("Client -> ", row[12] + " _ ");
+                            article.setCustomer(row[12]);
+                        }
 
+                        if (!row[14].equals("")) {
+                            Double d = Double.valueOf(row[14].replaceAll(" ", ""));
+                            Log.d("Quantite -> ", d + " _");
+                            article.setQuantity(d);
+                        }
+
+                        if (!row[22].equals("")) {
+                            Log.d("Date -> ", row[22] + " _");
+                            Date date = DateFormatter.parseDate(row[22],"dd/MM/yyyy");
+                            if (date != null) {
+                                Log.d("Date -> ", date.toString() + " _");
+                                article.setDate(date);
+                            }
+                        }
+
+                        if (!row[24].equals("")) {
+                            Log.d("Nom -> ", row[24] + " _ ");
+                            article.setName(row[24]);
+                        }
+
+                        if (article.getName() != null && article.getDate() != null) {
+                            dataLineList.add(article);
+                        }
+                    } else {
+                        for (String s : row) {
+                            Log.d("ROW -> ", s + " _");
                         }
                     }
-
-                    if (article.getName() != null && article.getDate() != null) {
-                        dataLineList.add(article);
-                    }
                 }
+
+                index++;
             }
 
         } catch (Exception e) {
-            Log.d("Article Parse Error ", e.getMessage());
+            Log.d("Article Parse Error ", e.getMessage() + " ! ");
             mException = e;
         }
         return dataLineList;
     }
 
     @Override
-    protected void onPostExecute(ArrayList<Article> articleArrayList) {
+    protected void onPostExecute(ArrayList<ArticleLine> articleArrayList) {
         if (mException == null) {
             callback.onSuccess(articleArrayList);
         } else {

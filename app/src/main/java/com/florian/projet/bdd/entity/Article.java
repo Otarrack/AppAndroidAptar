@@ -3,6 +3,7 @@ package com.florian.projet.bdd.entity;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 import java.util.Date;
 
@@ -10,21 +11,21 @@ import java.util.Date;
 public class Article {
     @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long id;
     @ColumnInfo(name = "name")
     private String name;
-    @ColumnInfo(name = "date")
-    private Date date;
-    @ColumnInfo(name = "quantity")
-    private double quantity;
+    @ColumnInfo(name = "customer")
+    private String customer;
+    @ColumnInfo(name = "type")
+    private String type;
     @ColumnInfo(name = "favorite")
     private boolean favorite;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -36,20 +37,12 @@ public class Article {
         this.name = name;
     }
 
-    public Date getDate() {
-        return date;
+    public String getCustomer() {
+        return customer;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public double getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(double quantity) {
-        this.quantity = quantity;
+    public void setCustomer(String customer) {
+        this.customer = customer;
     }
 
     public boolean isFavorite() {
@@ -58,5 +51,13 @@ public class Article {
 
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

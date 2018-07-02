@@ -17,11 +17,14 @@ import com.florian.projet.asyncTasks.GetCurrentAccountTask;
 import com.florian.projet.asyncTasks.ParseArticlePerfFileTask;
 import com.florian.projet.asyncTasks.ParseMachinePerfFileTask;
 import com.florian.projet.bdd.entity.Article;
+import com.florian.projet.bdd.entity.ArticleData;
+import com.florian.projet.bdd.relation.ArticleWithData;
 import com.florian.projet.manager.ApplicationManager;
-import com.florian.projet.manager.ArticleDatabaseManager;
 import com.florian.projet.manager.MachineDatabaseManager;
 import com.florian.projet.bdd.entity.Machine;
+import com.florian.projet.model.ArticleLine;
 import com.florian.projet.model.SiteEnum;
+import com.florian.projet.tools.ArticleWithDataCallback;
 import com.florian.projet.tools.SimpleCallback;
 import com.florian.projet.viewModel.SplashScreenViewModel;
 
@@ -43,7 +46,8 @@ public class SplashScreenActivity extends AppCompatActivity {
     private SplashScreenViewModel splashScreenViewModel;
 
     private ArrayList<Machine> allMachineInDatabase;
-    private ArrayList<Article> allArticleInDatabase;
+    private ArrayList<ArticleWithData> allArticleWithDataInDatabase;
+    private ArrayList<ArticleWithData> allArticleWithDataInFile;
 
     private static FullAccount fullAccount;
 
@@ -89,17 +93,17 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
     private void getArticleLocalData() {
-        splashScreenViewModel.getArticleLocalData(new ArticleDatabaseManager.GetAllTask.Callback() {
+        splashScreenViewModel.getArticleLocalData(new ArticleWithDataCallback() {
             @Override
-            public void onSuccess(List<Article> articleList) {
-                allArticleInDatabase = new ArrayList<>(articleList);
+            public void onSuccess(List<ArticleWithData> articleList) {
+                allArticleWithDataInDatabase = new ArrayList<>(articleList);
                 initApp();
 
             }
 
             @Override
             public void onFailed(Exception e) {
-                Log.d("Get Local Article", e.getMessage());
+                Log.d("Get Local Article", e.getMessage() + "");
                 initApp();
 
             }
@@ -131,7 +135,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 .setNegativeButton("Local", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (allArticleInDatabase == null && allMachineInDatabase == null) {
+                        if (allArticleWithDataInDatabase == null && allMachineInDatabase == null) {
                             failLoadingData();
                         }
                         startFirstActivity();
@@ -227,10 +231,11 @@ public class SplashScreenActivity extends AppCompatActivity {
         refreshAllMachineInDatabase(finalMachineList);
     }
 
-    private void refreshAllMachineInDatabase(ArrayList<Machine> machineArrayList) {
+    private void refreshAllMachineInDatabase(final ArrayList<Machine> machineArrayList) {
         splashScreenViewModel.refreshAllMachineInDatabase(machineArrayList, new SimpleCallback() {
             @Override
             public void onSuccess() {
+                allMachineInDatabase = new ArrayList<>(machineArrayList);
                 machineStep3.setBackgroundColor(getColor(R.color.green));
                 articleStepTextView.setText(R.string.splash_lib_step_1);
                 articleStep1.setBackgroundColor(getColor(R.color.aptar_bh_light_blue));
@@ -284,14 +289,16 @@ public class SplashScreenActivity extends AppCompatActivity {
         try {
             splashScreenViewModel.parseArticlePerfXlsFile(file, new ParseArticlePerfFileTask.Callback() {
                 @Override
-                public void onSuccess(ArrayList<Article> articleArrayList) {
-                    if (articleArrayList.isEmpty()) {
+                public void onSuccess(ArrayList<ArticleLine> articleLineArrayList) {
+                    if (articleLineArrayList.isEmpty()) {
                         failLoadingArticlePerfFile();
                     } else {
+                        allArticleWithDataInFile = getAllArticleWithData(articleLineArrayList);
+
                         articleStep2.setBackgroundColor(getColor(R.color.green));
                         articleStepTextView.setText(R.string.splash_lib_step_3);
                         articleStep3.setBackgroundColor(getColor(R.color.aptar_bh_light_blue));
-                        getArticleListWithFav(articleArrayList);
+                        getArticleListWithFav(allArticleWithDataInFile);
                     }
                 }
 
@@ -306,16 +313,54 @@ public class SplashScreenActivity extends AppCompatActivity {
         }
     }
 
-    private void getArticleListWithFav(ArrayList<Article> allArticleInFile) {
-        ArrayList<Article> finalArticleList = splashScreenViewModel.initArticleListWithFav(allArticleInFile, allArticleInDatabase);
+    private ArrayList<ArticleWithData> getAllArticleWithData(ArrayList<ArticleLine> articleLines) {
+
+        ArrayList<ArticleWithData> articleWithDataArrayList = new ArrayList<>();
+        ArticleData articleData;
+        ArticleWithData articleWithData;
+
+        boolean articleExist = false;
+        for (ArticleLine articleLine : articleLines) {
+            articleData = new ArticleData();
+            articleData.setNumOf(articleLine.getNumOf());
+            articleData.setDate(articleLine.getDate());
+            articleData.setQuantity(articleLine.getQuantity());
+
+            for (ArticleWithData awd : articleWithDataArrayList) {
+                if (awd.getArticle().getName().equals(articleLine.getName())) {
+                    articleExist = true;
+                    awd.getDataList().add(articleData);
+                }
+            }
+
+            if (!articleExist) {
+                articleWithData = new ArticleWithData();
+                articleWithData.setArticle(new Article());
+                articleWithData.getArticle().setName(articleLine.getName());
+                articleWithData.getArticle().setCustomer(articleLine.getCustomer());
+                articleWithData.getArticle().setType(articleLine.getType());
+                articleWithData.setDataList(new ArrayList<ArticleData>());
+                articleWithData.getDataList().add(articleData);
+                articleWithDataArrayList.add(articleWithData);
+            }
+
+            articleExist = false;
+        }
+
+        return articleWithDataArrayList;
+    }
+
+    private void getArticleListWithFav(ArrayList<ArticleWithData> allArticleInFile) {
+        ArrayList<ArticleWithData> finalArticleList = splashScreenViewModel.initArticleListWithFav(allArticleInFile, allArticleWithDataInDatabase);
 
         refreshAllArticleInDatabase(finalArticleList);
     }
 
-    private void refreshAllArticleInDatabase(ArrayList<Article> articleArrayList) {
+    private void refreshAllArticleInDatabase(final ArrayList<ArticleWithData> articleArrayList) {
         splashScreenViewModel.refreshAllArticleInDatabase(articleArrayList, new SimpleCallback() {
             @Override
             public void onSuccess() {
+                allArticleWithDataInDatabase = new ArrayList<>(articleArrayList);
                 articleStep3.setBackgroundColor(getColor(R.color.green));
                 startFirstActivity();
             }
@@ -323,7 +368,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             @Override
             public void onFailed(Exception e) {
                 Log.d("Refresh Machine Data", e.getMessage());
-                allArticleInDatabase = null;
+                allArticleWithDataInDatabase = null;
                 failLoadingArticlePerfFile();
             }
         });
@@ -332,7 +377,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     private void failLoadingArticlePerfFile() {
         articleStepTextView.setText("");
 
-        if (allArticleInDatabase != null) {
+        if (allArticleWithDataInDatabase != null) {
             articleStep1.setBackgroundColor(getColor(R.color.yellow));
             articleStep2.setBackgroundColor(getColor(R.color.yellow));
             articleStep3.setBackgroundColor(getColor(R.color.yellow));
@@ -371,7 +416,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 });
         if (ApplicationManager.failLoadingArticle && ApplicationManager.failLoadingMachine) {
             failLoadingData();
-        } else if (allArticleInDatabase == null) {
+        } else if (allArticleWithDataInDatabase == null) {
             builder.setMessage("Aucune donnée trouvée pour la performance article, seule la performance machine sera disponible.").show();
         } else if (allMachineInDatabase == null) {
             builder.setMessage("Aucune donnée trouvée pour la performance machine, seule la performance article sera disponible.").show();

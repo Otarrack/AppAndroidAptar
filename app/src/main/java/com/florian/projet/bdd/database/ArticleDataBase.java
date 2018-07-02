@@ -10,8 +10,9 @@ import com.florian.projet.R;
 import com.florian.projet.bdd.converter.DateConverter;
 import com.florian.projet.bdd.dao.ArticleDao;
 import com.florian.projet.bdd.entity.Article;
+import com.florian.projet.bdd.entity.ArticleData;
 
-@Database(entities = {Article.class}, version = 2)
+@Database(entities = {Article.class, ArticleData.class}, version = 2)
 @TypeConverters(DateConverter.class)
 public abstract class ArticleDataBase extends RoomDatabase {
 

@@ -5,14 +5,14 @@
     android:layout_height="wrap_content" >
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/recycler_article_layout"
+        android:id="@+id/recycler_article_data_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="15dp"
         android:background="@drawable/border_bottom_grey_background">
 
         <TextView
-            android:id="@+id/recycler_article_num"
+            android:id="@+id/recycler_article_data_of_num"
             android:layout_width="wrap_content"
             android:layout_height="24dp"
             android:layout_marginStart="5dp"
@@ -23,69 +23,43 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <CheckBox
-            android:id="@+id/recycler_article_fav_check"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
         <TextView
-            android:id="@+id/recycler_article_customer_lib"
+            android:id="@+id/recycler_article_data_date_lib"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="25dp"
-            android:text="@string/article_customer"
+            android:text="Date de production"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recycler_article_num" />
+            app:layout_constraintTop_toBottomOf="@id/recycler_article_data_of_num" />
 
         <TextView
-            android:id="@+id/recycler_article_customer_res"
+            android:id="@+id/recycler_article_data_date_res"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_marginEnd="5dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/recycler_article_customer_lib" />
+            app:layout_constraintTop_toTopOf="@id/recycler_article_data_date_lib" />
 
         <TextView
-            android:id="@+id/recycler_article_type_lib"
+            android:id="@+id/recycler_article_data_qt_lib"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="10dp"
-            android:text="@string/article_type"
+            android:text="@string/article_quantity"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recycler_article_customer_lib" />
+            app:layout_constraintTop_toBottomOf="@id/recycler_article_data_date_lib" />
 
         <TextView
-            android:id="@+id/recycler_article_type_res"
+            android:id="@+id/recycler_article_data_qt_res"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_marginEnd="5dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/recycler_article_type_lib" />
-
-        <TextView
-            android:id="@+id/recycler_article_total_qt_lib"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
-            android:text="@string/article_total_quantity"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recycler_article_type_lib" />
-
-        <TextView
-            android:id="@+id/recycler_article_total_qt_res"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_marginEnd="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/recycler_article_total_qt_lib" />
+            app:layout_constraintTop_toTopOf="@id/recycler_article_data_qt_lib" />
 
     </android.support.constraint.ConstraintLayout>
 
