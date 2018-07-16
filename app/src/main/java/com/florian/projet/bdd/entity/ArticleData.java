@@ -9,6 +9,11 @@ import java.util.Date;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
+/**
+ * Classe entité des données d'article pour la base de données
+ *
+ * @author Florian
+ */
 @Entity(tableName = "articles_data")
 public class ArticleData {
     @ColumnInfo(name = "id")

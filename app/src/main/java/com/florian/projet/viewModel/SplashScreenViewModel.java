@@ -1,17 +1,16 @@
 package com.florian.projet.viewModel;
 
+import com.dropbox.core.DbxException;
+import com.dropbox.core.v2.users.FullAccount;
 import com.florian.projet.asyncTasks.DropboxDownloadFileTask;
-import com.florian.projet.asyncTasks.GetCurrentAccountTask;
 import com.florian.projet.asyncTasks.ParseArticlePerfFileTask;
 import com.florian.projet.asyncTasks.ParseMachinePerfFileTask;
-import com.florian.projet.bdd.entity.Article;
 import com.florian.projet.bdd.relation.ArticleWithData;
 import com.florian.projet.manager.ApplicationManager;
-import com.florian.projet.manager.ArticleDatabaseManager;
 import com.florian.projet.manager.MachineDatabaseManager;
 import com.florian.projet.bdd.entity.Machine;
-import com.florian.projet.model.ArticleLine;
 import com.florian.projet.tools.ArticleWithDataCallback;
+import com.florian.projet.tools.MachineCallback;
 import com.florian.projet.tools.SimpleCallback;
 
 import java.io.File;
@@ -33,8 +32,8 @@ public class SplashScreenViewModel {
         return instance;
     }
 
-    public void initApp(GetCurrentAccountTask.Callback callback) {
-        applicationManager.init(callback);
+    public void initApp() {
+        applicationManager.init();
     }
 
     public void downloadDataFile(File path, String fileName, DropboxDownloadFileTask.Callback callback) {
@@ -65,7 +64,7 @@ public class SplashScreenViewModel {
         applicationManager.refreshAllArticle(articleArrayList, callback);
     }
 
-    public void getMachineLocalData(MachineDatabaseManager.GetAllTask.Callback callback) {
+    public void getMachineLocalData(MachineCallback callback) {
         applicationManager.getAllMachine(callback);
     }
 

@@ -1,6 +1,6 @@
 <resources>
     /* Globals Strings */
-    <string name="app_name">Projet</string>
+    <string name="app_name">Data Management</string>
     <string name="app_desc">Description Application</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

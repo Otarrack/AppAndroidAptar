@@ -17,6 +17,7 @@ import com.florian.projet.bdd.entity.Machine;
 import com.florian.projet.manager.MachineDatabaseManager;
 import com.florian.projet.model.SiteEnum;
 import com.florian.projet.tools.CustomItemClickListener;
+import com.florian.projet.tools.MachineCallback;
 import com.florian.projet.view.adapter.MachineRecyclerAdapter;
 import com.florian.projet.viewModel.MachineViewModel;
 
@@ -46,7 +47,7 @@ public class MachineListActivity extends AppCompatActivity {
             siteList.add(i);
         }
 
-        machineViewModel.getMachineBySite(siteList, new MachineDatabaseManager.GetBySiteTask.Callback() {
+        machineViewModel.getMachineBySite(siteList, new MachineCallback() {
             @Override
             public void onSuccess(List<Machine> machineList) {
                 machineArrayList = new ArrayList<>(machineList);

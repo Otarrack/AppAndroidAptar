@@ -8,6 +8,7 @@ import com.florian.projet.MyApplication;
 import com.florian.projet.R;
 import com.florian.projet.bdd.database.MachineDataBase;
 import com.florian.projet.bdd.entity.Machine;
+import com.florian.projet.tools.MachineCallback;
 import com.florian.projet.tools.SimpleCallback;
 
 import java.util.ArrayList;
@@ -22,6 +23,11 @@ public class MachineDatabaseManager {
         this.db = MachineDataBase.getInstance();
     }
 
+    /**
+     * Singleton qui permet de récupérer l'instance en cours si elle a déjà été créée
+     *
+     * @return Instance du manager
+     */
     public static MachineDatabaseManager getInstance() {
         if (instance == null) {
             instance = new MachineDatabaseManager();
@@ -44,15 +50,6 @@ public class MachineDatabaseManager {
         });
     }
 
-    public void insertMachine(Machine machine) {
-        try {
-            new InsertTask(db).execute(machine);
-
-        } catch (Exception e) {
-            Log.d("Exception Insert", e.getMessage());
-        }
-    }
-
     public void insertAllMachine(List<Machine> machineList, SimpleCallback callback) {
         try {
             new InsertAllTask(db, callback).execute(machineList.toArray(new Machine[machineList.size()]));
@@ -72,20 +69,11 @@ public class MachineDatabaseManager {
         }
     }
 
-    public void deleteMachine(Machine machine) {
-        try {
-            new DeleteTask(db).execute(machine);
-
-        } catch (Exception e) {
-            Log.d("Exception Delete", e.getMessage());
-        }
-    }
-
     public void deleteAllData(SimpleCallback callback) {
         new ClearAllTables(db, callback).execute();
     }
 
-    public void getAllMachine(GetAllTask.Callback callback) {
+    public void getAllMachine(MachineCallback callback) {
         try {
             new GetAllTask(db, callback).execute();
 
@@ -94,16 +82,7 @@ public class MachineDatabaseManager {
         }
     }
 
-    public void getMachineByName(String name, GetByNameTask.Callback callback) {
-        try {
-            new GetByNameTask(db, callback).execute(name);
-
-        } catch (Exception e) {
-            Log.d("Exception Get All", e.getMessage());
-        }
-    }
-
-    public void getMachineBySite(List<Integer> siteList, GetBySiteTask.Callback callback) {
+    public void getMachineBySite(List<Integer> siteList, MachineCallback callback) {
         try {
             new GetBySiteTask(db, callback).execute(siteList.toArray(new Integer[siteList.size()]));
 
@@ -112,7 +91,7 @@ public class MachineDatabaseManager {
         }
     }
 
-    public void getAllMachineFav(GetAllFavTask.Callback callback) {
+    public void getAllMachineFav(MachineCallback callback) {
         try {
             new GetAllFavTask(db, callback).execute();
 
@@ -150,38 +129,6 @@ public class MachineDatabaseManager {
                 callback.onFailed(exception);
             } else {
                 callback.onSuccess();
-            }
-        }
-    }
-
-    private static class InsertTask extends AsyncTask<Machine, Void, Long> {
-
-        private final MachineDataBase db;
-
-        InsertTask(MachineDataBase db) {
-            this.db = db;
-        }
-
-        @Override
-        protected Long doInBackground(Machine... machines) {
-            if (machines[0] != null) {
-                return db.machineDao().insert(machines[0]);
-            }
-            return 0L;
-        }
-
-        @Override
-        protected void onPostExecute(Long result) {
-            super.onPostExecute(result);
-
-            if (result > 0) {
-                Toast.makeText(MyApplication.getInstance().getApplicationContext(),
-                        R.string.machine_add_one_success,
-                        Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(MyApplication.getInstance().getApplicationContext(),
-                        R.string.machine_add_one_error,
-                        Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -253,51 +200,13 @@ public class MachineDatabaseManager {
         }
     }
 
-    private static class DeleteTask extends AsyncTask<Machine, Void, Integer> {
-
-        private final MachineDataBase db;
-
-        DeleteTask(MachineDataBase db) {
-            this.db = db;
-        }
-
-        @Override
-        protected Integer doInBackground(Machine... machines) {
-            if (machines[0] != null) {
-                return db.machineDao().delete(machines[0]);
-            }
-            return 0;
-        }
-
-        @Override
-        protected void onPostExecute(Integer result) {
-            super.onPostExecute(result);
-
-            if (result > 0) {
-                Toast.makeText(MyApplication.getInstance().getApplicationContext(),
-                        R.string.machine_del_one_success,
-                        Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(MyApplication.getInstance().getApplicationContext(),
-                        R.string.machine_del_one_error,
-                        Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
     public static class GetAllTask extends AsyncTask<Void, Void, List<Machine>> {
 
-        private final GetAllTask.Callback callback;
+        private final MachineCallback callback;
         private final MachineDataBase db;
         private Exception exception;
 
-        public interface Callback {
-            void onSuccess(List<Machine> machineList);
-
-            void onFailed(Exception e);
-        }
-
-        GetAllTask(MachineDataBase db, GetAllTask.Callback callback) {
+        GetAllTask(MachineDataBase db, MachineCallback callback) {
             this.db = db;
             this.callback = callback;
         }
@@ -324,58 +233,13 @@ public class MachineDatabaseManager {
         }
     }
 
-    public static class GetByNameTask extends AsyncTask<String, Void, Machine> {
-
-        private final GetByNameTask.Callback callback;
-        private final MachineDataBase db;
-        private Exception exception;
-
-        public interface Callback {
-            void onSuccess(Machine machine);
-
-            void onFailed(Exception e);
-        }
-
-        GetByNameTask(MachineDataBase db, GetByNameTask.Callback callback) {
-            this.db = db;
-            this.callback = callback;
-        }
-
-        @Override
-        protected Machine doInBackground(String... strings) {
-            try {
-                return db.machineDao().getByName(strings[0]);
-            } catch (Exception e) {
-                exception = e;
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Machine machine) {
-            super.onPostExecute(machine);
-
-            if (exception != null) {
-                callback.onFailed(exception);
-            } else {
-                callback.onSuccess(machine);
-            }
-        }
-    }
-
     public static class GetBySiteTask extends AsyncTask<Integer, Void, List<Machine>> {
 
-        private final GetBySiteTask.Callback callback;
+        private final MachineCallback callback;
         private final MachineDataBase db;
         private Exception exception;
 
-        public interface Callback {
-            void onSuccess(List<Machine> machineList);
-
-            void onFailed(Exception e);
-        }
-
-        GetBySiteTask(MachineDataBase db, GetBySiteTask.Callback callback) {
+        GetBySiteTask(MachineDataBase db, MachineCallback callback) {
             this.db = db;
             this.callback = callback;
         }
@@ -405,17 +269,11 @@ public class MachineDatabaseManager {
 
     public static class GetAllFavTask extends AsyncTask<Void, Void, List<Machine>> {
 
-        private final GetAllFavTask.Callback callback;
+        private final MachineCallback callback;
         private final MachineDataBase db;
         private Exception exception;
 
-        public interface Callback {
-            void onSuccess(List<Machine> machineList);
-
-            void onFailed(Exception e);
-        }
-
-        GetAllFavTask(MachineDataBase db, GetAllFavTask.Callback callback) {
+        GetAllFavTask(MachineDataBase db, MachineCallback callback) {
             this.db = db;
             this.callback = callback;
         }

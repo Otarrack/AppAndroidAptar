@@ -7,6 +7,7 @@ import com.florian.projet.manager.ArticleDatabaseManager;
 import com.florian.projet.manager.MachineDatabaseManager;
 import com.florian.projet.bdd.entity.Machine;
 import com.florian.projet.tools.ArticleWithDataCallback;
+import com.florian.projet.tools.MachineCallback;
 
 public class FavorisViewModel {
     private static FavorisViewModel instance;
@@ -41,7 +42,7 @@ public class FavorisViewModel {
         }
     }
 
-    public void getAllFavMachine(MachineDatabaseManager.GetAllFavTask.Callback callback) {
+    public void getAllFavMachine(MachineCallback callback) {
         machineDatabaseManager.getAllMachineFav(callback);
     }
 

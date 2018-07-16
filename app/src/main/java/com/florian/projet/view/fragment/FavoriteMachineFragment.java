@@ -16,6 +16,7 @@ import com.florian.projet.R;
 import com.florian.projet.manager.MachineDatabaseManager;
 import com.florian.projet.bdd.entity.Machine;
 import com.florian.projet.tools.CustomItemClickListener;
+import com.florian.projet.tools.MachineCallback;
 import com.florian.projet.view.activity.MachineDetailActivity;
 import com.florian.projet.view.adapter.MachineRecyclerAdapter;
 import com.florian.projet.viewModel.FavorisViewModel;
@@ -53,7 +54,7 @@ public class FavoriteMachineFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_favorites_machine, container, false);
 
-        favorisViewModel.getAllFavMachine(new MachineDatabaseManager.GetAllFavTask.Callback() {
+        favorisViewModel.getAllFavMachine(new MachineCallback() {
             @Override
             public void onSuccess(List<Machine> machineList) {
                 setRecyclerViewMachine(view, new ArrayList<>(machineList));

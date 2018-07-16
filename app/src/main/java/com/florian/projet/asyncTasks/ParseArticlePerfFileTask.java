@@ -15,28 +15,56 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * Une classe qui lit en asynchrone le fichier de performance article.
+ *
+ * @author Florian
+ */
 
 public class ParseArticlePerfFileTask extends AsyncTask<File, Void, ArrayList<ArticleLine>> {
     private Callback callback;
     private Exception mException;
 
+    /**
+     * Une interface qui permet de signaler la fin de la lecture du fichier.
+     */
     public interface Callback {
+        /**
+         * Une méthode pour envoyer la liste des lignes articles en cas de réussite.
+         *
+         * @param dataLineList La liste des lignes récupérées
+         */
         void onSuccess(ArrayList<ArticleLine> dataLineList);
+
+        /**
+         * Une méthode pour envoyer les détails en cas d'erreur
+         *
+         * @param e L'exception générée lors du traitement
+         */
         void onFailed(Exception e);
     }
 
+    /**
+     * @param callback Le callback permettant de récupérer le résultat du traitement
+     */
     public ParseArticlePerfFileTask(Callback callback) {
         this.callback = callback;
     }
 
+    /**
+     * Méthode contenant le traitement de lecture du fichier
+     *
+     * @param files Le fichier à lire
+     *
+     * @return Renvoie les lignes du fichier en ArrayList de {@link ArticleLine}
+     */
     @Override
     protected ArrayList<ArticleLine> doInBackground(File... files) {
         ArrayList<ArticleLine> dataLineList = new ArrayList<>();
 
         try {
-            InputStream excelFile;
-
-            excelFile = new FileInputStream(files[0]);
+            //Récupère le fichier et initialise le lecteur
+            InputStream excelFile = new FileInputStream(files[0]);
             InputStreamReader streamReader = new InputStreamReader(excelFile);
             BufferedReader br = new BufferedReader(streamReader);
             String line;
@@ -48,6 +76,7 @@ public class ParseArticlePerfFileTask extends AsyncTask<File, Void, ArrayList<Ar
             boolean hasData = true;
             int index = 1;
 
+            //Execute la boucle tant qu'il y a des lignes de données
             while ((line = br.readLine()) != null && hasData) {
                 article = new ArticleLine();
 
@@ -56,43 +85,46 @@ public class ParseArticlePerfFileTask extends AsyncTask<File, Void, ArrayList<Ar
 
                     if (row.length >= 24) {
 
+                        //Colonne de vérification de données éxistantes
                         if (row[3].equals("")) {
                             hasData = false;
                         }
 
+                        //Colonne concernant le type
                         if (!row[4].equals("")) {
                             article.setType(row[4]);
                         }
 
+                        //Colonne concernant le numéro d'OF
                         if (!row[5].equals("")) {
                             article.setNumOf(row[5]);
                         }
 
+                        //Colonne concernant le client
                         if (!row[12].equals("")) {
-                            Log.d("Client -> ", row[12] + " _ ");
                             article.setCustomer(row[12]);
                         }
 
+                        //Colonne concernant la quantité
                         if (!row[14].equals("")) {
                             Double d = Double.valueOf(row[14].replaceAll(" ", ""));
-                            Log.d("Quantite -> ", d + " _");
                             article.setQuantity(d);
                         }
 
+                        //Colonne concernant la date
                         if (!row[22].equals("")) {
-                            Log.d("Date -> ", row[22] + " _");
                             Date date = DateFormatter.parseDate(row[22],"dd/MM/yyyy");
                             if (date != null) {
-                                Log.d("Date -> ", date.toString() + " _");
                                 article.setDate(date);
                             }
                         }
 
+                        //Colonne concernant le nom de l'article
                         if (!row[24].equals("")) {
-                            Log.d("Nom -> ", row[24] + " _ ");
                             article.setName(row[24]);
                         }
 
+                        //Vérifie qu'il s'agit bien d'un article pour l'ajouter à la liste
                         if (article.getName() != null && article.getDate() != null) {
                             dataLineList.add(article);
                         }
@@ -113,6 +145,11 @@ public class ParseArticlePerfFileTask extends AsyncTask<File, Void, ArrayList<Ar
         return dataLineList;
     }
 
+    /**
+     * Méthode appelée automatiquement après doInBackgroud qui gère le callback
+     *
+     * @param articleArrayList La liste des lignes renvoyée par le traitement
+     */
     @Override
     protected void onPostExecute(ArrayList<ArticleLine> articleArrayList) {
         if (mException == null) {

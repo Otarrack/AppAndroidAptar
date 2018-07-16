@@ -12,19 +12,34 @@ import com.florian.projet.bdd.dao.ArticleDao;
 import com.florian.projet.bdd.entity.Article;
 import com.florian.projet.bdd.entity.ArticleData;
 
-@Database(entities = {Article.class, ArticleData.class}, version = 2)
+/**
+ * Base de données des articles
+ *
+ * @author Florian
+ */
+@Database(entities = {Article.class, ArticleData.class}, version = 3)
 @TypeConverters(DateConverter.class)
 public abstract class ArticleDataBase extends RoomDatabase {
 
     private static ArticleDataBase instance;
     public abstract ArticleDao articleDao();
 
+    /**
+     * Méthode pour créer l'instance de la base de données
+     *
+     * @param context Context de l'application pour récupérer le string dans la classe R
+     */
     public static void setInstance(Context context) {
         instance = Room.databaseBuilder(context, ArticleDataBase.class, context.getString(R.string.article_database_name))
                 .fallbackToDestructiveMigration()
                 .build();
     }
 
+    /**
+     * Méthode pour récupérer l'instance de la base de données
+     *
+     * @return Liste des machines avec les données associées
+     */
     public static ArticleDataBase getInstance() {
         return instance;
     }

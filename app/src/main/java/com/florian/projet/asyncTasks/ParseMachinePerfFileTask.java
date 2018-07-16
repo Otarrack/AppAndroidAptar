@@ -17,30 +17,57 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * Une classe qui lit en asynchrone le fichier de performance machine.
+ *
+ * @author Florian
+ */
 
 public class ParseMachinePerfFileTask extends AsyncTask<File, Void, ArrayList<Machine>> {
     private Callback callback;
     private Exception mException;
 
+    /**
+     * Une interface qui permet de signaler la fin de la lecture du fichier.
+     */
     public interface Callback {
+        /**
+         * Une méthode pour envoyer la liste des lignes machines en cas de réussite.
+         *
+         * @param dataLineList La liste des lignes récupérées
+         */
         void onSuccess(ArrayList<Machine> dataLineList);
+
+        /**
+         * Une méthode pour envoyer les détails en cas d'erreur
+         *
+         * @param e L'exception générée lors du traitement
+         */
         void onFailed(Exception e);
     }
 
+    /**
+     * @param callback Le callback permettant de récupérer le résultat du traitement
+     */
     public ParseMachinePerfFileTask(Callback callback) {
         this.callback = callback;
     }
 
+    /**
+     * Méthode contenant le traitement de lecture du fichier
+     *
+     * @param files Le fichier à lire
+     *
+     * @return Renvoie les lignes du fichier en ArrayList de {@link Machine}
+     */
     @Override
     protected ArrayList<Machine> doInBackground(File... files) {
         ArrayList<Machine> dataLineList = new ArrayList<>();
 
         try {
-            InputStream excelFile;
-
-            excelFile = new FileInputStream(files[0]);
+            //Récupère le fichier et initialise le lecteur
+            InputStream excelFile = new FileInputStream(files[0]);
             HSSFWorkbook wb = new HSSFWorkbook(excelFile);
-
             HSSFSheet sheet = wb.getSheetAt(0);
             HSSFRow row;
             HSSFCell cell;
@@ -48,6 +75,7 @@ public class ParseMachinePerfFileTask extends AsyncTask<File, Void, ArrayList<Ma
             Iterator rows = sheet.rowIterator();
             Machine machine;
 
+            //Execute la boucle tant qu'il y a des lignes de données
             while (rows.hasNext()) {
                 row = (HSSFRow) rows.next();
                 Iterator cells = row.cellIterator();
@@ -57,14 +85,15 @@ public class ParseMachinePerfFileTask extends AsyncTask<File, Void, ArrayList<Ma
                     while (cells.hasNext()) {
                         cell = (HSSFCell) cells.next();
 
+                        //On vérifie les types de valeurs pour éviter les exceptions
                         if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
+                            //Si il s'agit d'une valeur de type texte
                             addStringValue(cell, machine);
 
                         } else if (cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) {
+                            //Si il s'agit d'une valeur de type numérique
                             addNumericalValue(cell, machine);
 
-                        } else {
-                            //U Can Handel Boolean, Formula, Errors
                         }
                     }
 
@@ -75,12 +104,17 @@ public class ParseMachinePerfFileTask extends AsyncTask<File, Void, ArrayList<Ma
             }
 
         } catch (IOException e) {
-            Log.d("ERREUR ", e.getMessage());
+            Log.d("Parse Machine", e.getMessage());
             mException = e;
         }
         return dataLineList;
     }
 
+    /**
+     * Méthode appelée automatiquement après doInBackgroud qui gère le callback
+     *
+     * @param machines La liste des lignes renvoyée par le traitement
+     */
     @Override
     protected void onPostExecute(ArrayList<Machine> machines) {
         if (mException == null) {
@@ -90,6 +124,12 @@ public class ParseMachinePerfFileTask extends AsyncTask<File, Void, ArrayList<Ma
         }
     }
 
+    /**
+     * Méthode gérant l'ajout dans la machine des données de type texte
+     *
+     * @param cell Cellule en cours de lecture
+     * @param machine Machine en cours de récupération
+     */
     private void addStringValue(HSSFCell cell, Machine machine) {
         switch (cell.getColumnIndex()) {
             case 0: // COLUMN_MACHINE_NAME;
@@ -169,6 +209,12 @@ public class ParseMachinePerfFileTask extends AsyncTask<File, Void, ArrayList<Ma
         }
     }
 
+    /**
+     * Méthode gérant l'ajout dans la machine des données de type numérique
+     *
+     * @param cell Cellule en cours de lecture
+     * @param machine Machine en cours de récupération
+     */
     private void addNumericalValue(HSSFCell cell, Machine machine) {
         switch (cell.getColumnIndex()) {
 

@@ -2,6 +2,7 @@ package com.florian.projet.viewModel;
 
 import com.florian.projet.bdd.entity.Machine;
 import com.florian.projet.manager.MachineDatabaseManager;
+import com.florian.projet.tools.MachineCallback;
 
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class MachineViewModel {
         return currentMachine;
     }
 
-    public void getMachineBySite(List<Integer> siteList, MachineDatabaseManager.GetBySiteTask.Callback callback) {
+    public void getMachineBySite(List<Integer> siteList, MachineCallback callback) {
         machineDatabaseManager.getMachineBySite(siteList, callback);
     }
 }

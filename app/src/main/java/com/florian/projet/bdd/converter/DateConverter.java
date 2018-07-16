@@ -4,6 +4,11 @@ import android.arch.persistence.room.TypeConverter;
 
 import java.util.Date;
 
+/**
+ * Classe qui permet de convertir les dates pour les enregistrer en base de données
+ *
+ * @author Florian
+ */
 public class DateConverter {
     @TypeConverter
     public static Date toDate(Long timestamp) {

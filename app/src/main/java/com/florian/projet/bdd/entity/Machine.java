@@ -4,6 +4,11 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+/**
+ * Classe entité des machines pour la base de données
+ *
+ * @author Florian
+ */
 @Entity(tableName = "machines")
 public class Machine {
     @ColumnInfo(name = "id")

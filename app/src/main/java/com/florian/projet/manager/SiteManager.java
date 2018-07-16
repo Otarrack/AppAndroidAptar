@@ -13,6 +13,11 @@ public class SiteManager {
         siteList = new ArrayList<>(Arrays.asList(SiteEnum.values()));
     }
 
+    /**
+     * Singleton qui permet de récupérer l'instance en cours si elle a déjà été créée
+     *
+     * @return Instance du manager
+     */
     public static SiteManager getInstance() {
         if(instance == null) {
             instance = new SiteManager();

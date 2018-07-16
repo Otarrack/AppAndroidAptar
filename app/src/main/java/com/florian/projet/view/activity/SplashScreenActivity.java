@@ -10,10 +10,10 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dropbox.core.DbxException;
 import com.dropbox.core.v2.users.FullAccount;
 import com.florian.projet.R;
 import com.florian.projet.asyncTasks.DropboxDownloadFileTask;
-import com.florian.projet.asyncTasks.GetCurrentAccountTask;
 import com.florian.projet.asyncTasks.ParseArticlePerfFileTask;
 import com.florian.projet.asyncTasks.ParseMachinePerfFileTask;
 import com.florian.projet.bdd.entity.Article;
@@ -25,6 +25,7 @@ import com.florian.projet.bdd.entity.Machine;
 import com.florian.projet.model.ArticleLine;
 import com.florian.projet.model.SiteEnum;
 import com.florian.projet.tools.ArticleWithDataCallback;
+import com.florian.projet.tools.MachineCallback;
 import com.florian.projet.tools.SimpleCallback;
 import com.florian.projet.viewModel.SplashScreenViewModel;
 
@@ -48,9 +49,6 @@ public class SplashScreenActivity extends AppCompatActivity {
     private ArrayList<Machine> allMachineInDatabase;
     private ArrayList<ArticleWithData> allArticleWithDataInDatabase;
     private ArrayList<ArticleWithData> allArticleWithDataInFile;
-
-    private static FullAccount fullAccount;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +75,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
     private void getMachineLocalData() {
-        splashScreenViewModel.getMachineLocalData(new MachineDatabaseManager.GetAllTask.Callback() {
+        splashScreenViewModel.getMachineLocalData(new MachineCallback() {
             @Override
             public void onSuccess(List<Machine> machineList) {
                 allMachineInDatabase = new ArrayList<>(machineList);
@@ -113,23 +111,13 @@ public class SplashScreenActivity extends AppCompatActivity {
     private void initApp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false)
-                .setMessage("Voulez-vous télécharger les données en ligne ? (Le traitement peut prendre quelques minutes)")
+                .setMessage("Voulez-vous télécharger les données en ligne ? (Le traitement peut prendre quelques secondes)")
                 .setPositiveButton("Télécharger", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        splashScreenViewModel.initApp(new GetCurrentAccountTask.Callback() {
-                            @Override
-                            public void onComplete(FullAccount fullAccount) {
-                                SplashScreenActivity.fullAccount = fullAccount;
-                                downloadFile(ApplicationManager.FILE_PERF_MACHINE_NAME);
-                            }
+                        splashScreenViewModel.initApp();
 
-                            @Override
-                            public void onError(Exception e) {
-                                Log.d("GetFullAccount -> ", e.getMessage());
-                                failLoadingMachinePerfFile();
-                            }
-                        });
+                        downloadFile(ApplicationManager.FILE_PERF_MACHINE_NAME);
                     }
                 })
                 .setNegativeButton("Local", new DialogInterface.OnClickListener() {
@@ -265,11 +253,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                     .setPositiveButton("Continuer", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            if (fullAccount == null) {
-                                failLoadingArticlePerfFile();
-                            } else {
-                                downloadFile(ApplicationManager.FILE_PERF_ARTICLE_NAME);
-                            }
+                            downloadFile(ApplicationManager.FILE_PERF_ARTICLE_NAME);
                         }
                     }).show();
         } else {
@@ -277,11 +261,8 @@ public class SplashScreenActivity extends AppCompatActivity {
             machineStep2.setBackgroundColor(getColor(R.color.red));
             machineStep3.setBackgroundColor(getColor(R.color.red));
             ApplicationManager.failLoadingMachine = true;
-            if (fullAccount == null) {
-                failLoadingArticlePerfFile();
-            } else {
-                downloadFile(ApplicationManager.FILE_PERF_ARTICLE_NAME);
-            }
+
+            downloadFile(ApplicationManager.FILE_PERF_ARTICLE_NAME);
         }
     }
 

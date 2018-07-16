@@ -1,7 +1,6 @@
 package com.florian.projet.bdd.dao;
 
 import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Transaction;
@@ -9,39 +8,60 @@ import android.arch.persistence.room.Update;
 
 import com.florian.projet.bdd.entity.Article;
 import com.florian.projet.bdd.entity.ArticleData;
-import com.florian.projet.bdd.entity.Machine;
 import com.florian.projet.bdd.relation.ArticleWithData;
 
-import java.util.Date;
 import java.util.List;
 
+/**
+ * Interface qui regroupe les requêtes et appels à la base de données des articles
+ *
+ * @author Florian
+ */
 @Dao
 public interface ArticleDao {
 
+    /**
+     * Inserer tout les articles de la liste
+     *
+     * @param articleList Liste d'article à ajouter
+     *
+     * @return Liste des Id des articles ajoutés
+     */
     @Insert
     List<Long> insertAllArticle(List<Article> articleList);
 
+    /**
+     * Inserer tous les articles de la liste
+     *
+     * @param articleList Liste des données d'article à ajouter
+     */
     @Insert
-    List<Long> insertAllData(List<ArticleData> articleList);
+    void insertAllData(List<ArticleData> articleList);
 
+    /**
+     * Modifie l'article
+     *
+     * @param article Article à modifier
+     *
+     * @return Id de l'article ajouté
+     */
     @Update
     int updateArticle(Article article);
 
-    @Update
-    int updateData(ArticleData articleData);
-
+    /**
+     * Sélectionne tous les articles
+     *
+     * @return Liste des articles avec les données associées ({@link ArticleWithData})
+     */
     @Transaction
     @Query("SELECT * FROM articles")
     List<ArticleWithData> getAll();
 
-    @Transaction
-    @Query("SELECT * FROM articles WHERE name LIKE :name")
-    List<ArticleWithData> getByName(String name);
-
-    @Transaction
-    @Query("SELECT * FROM articles, articles_data WHERE date BETWEEN :startDate AND :endDate")
-    List<ArticleWithData> getByPeriod(Date startDate, Date endDate);
-
+    /**
+     * Sélectionne tous les articles en favoris
+     *
+     * @return Liste des articles en favoris avec les données associées ({@link ArticleWithData})
+     */
     @Transaction
     @Query("SELECT * FROM articles WHERE favorite = 1")
     List<ArticleWithData> getAllFav();

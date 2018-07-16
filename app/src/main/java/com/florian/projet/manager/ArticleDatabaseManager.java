@@ -14,6 +14,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Manager de la base de données liée aux articles
+ *
+ * @author Florian
+ */
 public class ArticleDatabaseManager {
     private static ArticleDatabaseManager instance;
     ArticleDataBase db;
@@ -22,6 +27,11 @@ public class ArticleDatabaseManager {
         this.db = ArticleDataBase.getInstance();
     }
 
+    /**
+     * Singleton qui permet de récupérer l'instance en cours si elle a déjà été créée
+     *
+     * @return Instance du manager
+     */
     public static ArticleDatabaseManager getInstance() {
         if (instance == null) {
             instance = new ArticleDatabaseManager();
@@ -30,20 +40,32 @@ public class ArticleDatabaseManager {
         return instance;
     }
 
-    public void refreshAllArticle(final ArrayList<ArticleWithData> articleWithDataArrayList, final SimpleCallback insertCallback) {
-        deleteAllData(new SimpleCallback() {
+    /**
+     * Remplace les données par la liste renseignée
+     *
+     * @param articleWithDataArrayList Liste des données à sauvegarder
+     * @param callback Callback pour récupérer la réponse
+     */
+    public void refreshAllArticle(final ArrayList<ArticleWithData> articleWithDataArrayList, final SimpleCallback callback) {
+        new ClearAllTables(db, new SimpleCallback() {
             @Override
             public void onSuccess() {
-                insertAllArticle(articleWithDataArrayList, insertCallback);
+                insertAllArticle(articleWithDataArrayList, callback);
             }
 
             @Override
             public void onFailed(Exception e) {
-                insertCallback.onFailed(e);
+                callback.onFailed(e);
             }
-        });
+        }).execute();
     }
 
+    /**
+     * Ajoute tous les article de la liste à la base de données
+     *
+     * @param articleList Liste d'article à ajouter
+     * @param callback Callback pour récupérer la réponse
+     */
     public void insertAllArticle(List<ArticleWithData> articleList, SimpleCallback callback) {
         try {
             Log.d("NOAOPMEAPKEA", articleList.size() + "");
@@ -54,6 +76,11 @@ public class ArticleDatabaseManager {
         }
     }
 
+    /**
+     * Modifie l'article dans la base de données
+     *
+     * @param article Article à modifier
+     */
     public void updateArticle(Article article) {
         try {
             new UpdateArticleTask(db).execute(article);
@@ -63,19 +90,11 @@ public class ArticleDatabaseManager {
         }
     }
 
-    public void updateData(ArticleData articleData) {
-        try {
-            new UpdateDataTask(db).execute(articleData);
-
-        } catch (Exception e) {
-            Log.d("Article Data Update", e.getMessage());
-        }
-    }
-
-    public void deleteAllData(SimpleCallback callback) {
-        new ClearAllTables(db, callback).execute();
-    }
-
+    /**
+     * Récupère tous les articles de la base de données
+     *
+     * @param callback Callback pour récupérer la réponse
+     */
     public void getAllArticle(ArticleWithDataCallback callback) {
         try {
             new GetAllTask(db, callback).execute();
@@ -85,24 +104,11 @@ public class ArticleDatabaseManager {
         }
     }
 
-    public void getArticleByName(String name, ArticleWithDataCallback callback) {
-        try {
-            new GetByNameTask(db, callback).execute(name);
-
-        } catch (Exception e) {
-            Log.d("Article Get Name", e.getMessage());
-        }
-    }
-
-    public void getArticleByPeriod(Date startDate, Date endDate, ArticleWithDataCallback callback) {
-        try {
-            new GetByPeriodTask(db, callback).execute(startDate, endDate);
-
-        } catch (Exception e) {
-            Log.d("Article Get Name", e.getMessage());
-        }
-    }
-
+    /**
+     * Récupère tous les articles en favoris de la base de données
+     *
+     * @param callback Callback pour récupérer la réponse
+     */
     public void getAllArticleFav(ArticleWithDataCallback callback) {
         try {
             new GetAllFavTask(db, callback).execute();
@@ -112,17 +118,27 @@ public class ArticleDatabaseManager {
         }
     }
 
+    /**
+     * Asynctask qui gère la suppression de toutes les données de la base de données
+     */
     private static class ClearAllTables extends AsyncTask<Void, Void, Void> {
 
         private final SimpleCallback callback;
         private final ArticleDataBase db;
         private Exception exception;
 
+        /**
+         * @param db Instance de la base de données
+         * @param callback Callback pour récupérer la réponse
+         */
         ClearAllTables(ArticleDataBase db, SimpleCallback callback) {
             this.db = db;
             this.callback = callback;
         }
 
+        /**
+         * Traitement de suppression des données de la base
+         */
         @Override
         protected Void doInBackground(Void... voids) {
             try {
@@ -145,6 +161,9 @@ public class ArticleDatabaseManager {
         }
     }
 
+    /**
+     * Asynctask qui gère l'insertion dans la base de données d'une liste d'article et de données
+     */
     private static class InsertAllTask extends AsyncTask<ArticleWithData, Void, Void> {
 
         private final ArticleDataBase db;
@@ -193,6 +212,9 @@ public class ArticleDatabaseManager {
         }
     }
 
+    /**
+     * Asynctask qui gère la modification d'un article de la base de données
+     */
     private static class UpdateArticleTask extends AsyncTask<Article, Void, Integer> {
 
         private final ArticleDataBase db;
@@ -215,28 +237,9 @@ public class ArticleDatabaseManager {
         }
     }
 
-    private static class UpdateDataTask extends AsyncTask<ArticleData, Void, Integer> {
-
-        private final ArticleDataBase db;
-
-        UpdateDataTask(ArticleDataBase db) {
-            this.db = db;
-        }
-
-        @Override
-        protected Integer doInBackground(ArticleData... articles) {
-            if (articles[0] != null) {
-                return db.articleDao().updateData(articles[0]);
-            }
-            return 0;
-        }
-
-        @Override
-        protected void onPostExecute(Integer result) {
-            super.onPostExecute(result);
-        }
-    }
-
+    /**
+     * Asynctask qui gère la récupération de tous les articles de la base de données
+     */
     public static class GetAllTask extends AsyncTask<Void, Void, List<ArticleWithData>> {
 
         private final ArticleWithDataCallback callback;
@@ -270,73 +273,9 @@ public class ArticleDatabaseManager {
         }
     }
 
-    public static class GetByNameTask extends AsyncTask<String, Void, List<ArticleWithData>> {
-
-        private final ArticleWithDataCallback callback;
-        private final ArticleDataBase db;
-        private Exception exception;
-
-        GetByNameTask(ArticleDataBase db, ArticleWithDataCallback callback) {
-            this.db = db;
-            this.callback = callback;
-        }
-
-        @Override
-        protected List<ArticleWithData> doInBackground(String... strings) {
-            try {
-                return db.articleDao().getByName(strings[0]);
-            } catch (Exception e) {
-                exception = e;
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(List<ArticleWithData> articleList) {
-            super.onPostExecute(articleList);
-
-            if (exception != null) {
-                callback.onFailed(exception);
-            } else {
-                callback.onSuccess(articleList);
-            }
-        }
-    }
-
-    public static class GetByPeriodTask extends AsyncTask<Date, Void, List<ArticleWithData>> {
-
-        private final ArticleWithDataCallback callback;
-        private final ArticleDataBase db;
-        private Exception exception;
-
-        GetByPeriodTask(ArticleDataBase db, ArticleWithDataCallback callback) {
-            this.db = db;
-            this.callback = callback;
-        }
-
-        @Override
-        protected List<ArticleWithData> doInBackground(Date... dates) {
-            try {
-
-                return db.articleDao().getByPeriod(dates[0], dates[1]);
-            } catch (Exception e) {
-                exception = e;
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(List<ArticleWithData> articleList) {
-            super.onPostExecute(articleList);
-
-            if (exception != null) {
-                callback.onFailed(exception);
-            } else {
-                callback.onSuccess(articleList);
-            }
-        }
-    }
-
+    /**
+     * Asynctask qui gère la récupération de tous les articles en favoris de la base de données
+     */
     public static class GetAllFavTask extends AsyncTask<Void, Void, List<ArticleWithData>> {
 
         private final ArticleWithDataCallback callback;

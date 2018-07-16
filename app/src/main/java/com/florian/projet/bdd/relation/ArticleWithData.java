@@ -8,6 +8,11 @@ import com.florian.projet.bdd.entity.ArticleData;
 
 import java.util.List;
 
+/**
+ * Classe de relation entre les articles et ses données
+ *
+ * @author Florian
+ */
 public class ArticleWithData {
 
     @Embedded
@@ -32,6 +37,11 @@ public class ArticleWithData {
         this.dataList = dataList;
     }
 
+    /**
+     * Methode qui retourne la quantité total de l'article
+     *
+     * @return Quantité
+     */
     public double getTotalQuantity() {
         Double totalQuantity = 0.0;
 

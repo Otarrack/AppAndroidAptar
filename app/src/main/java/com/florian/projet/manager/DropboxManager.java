@@ -3,11 +3,11 @@ package com.florian.projet.manager;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.users.FullAccount;
 import com.florian.projet.asyncTasks.DropboxDownloadFileTask;
-import com.florian.projet.asyncTasks.GetCurrentAccountTask;
 
 import java.io.File;
 
@@ -25,6 +25,11 @@ public class DropboxManager {
 
     }
 
+    /**
+     * Singleton qui permet de récupérer l'instance en cours si elle a déjà été créée
+     *
+     * @return Instance du manager
+     */
     public static DropboxManager getInstance() {
         if(instance == null) {
             instance = new DropboxManager();
@@ -33,18 +38,11 @@ public class DropboxManager {
 
     }
 
-    void init(GetCurrentAccountTask.Callback callback) {
+    void init() {
         DbxRequestConfig requestConfig = new DbxRequestConfig("dropbox/sebastien");
         clientV2 = new DbxClientV2(requestConfig, ACCESS_TOKEN);
-        Log.d("INIT", "Client créé");
-        initFullAccount(callback);
-        Log.d("INIT", "Compte récupéré");
+        Log.d("Created Account", "Client créé");
     }
-
-    private void initFullAccount(final GetCurrentAccountTask.Callback callback) {
-        new GetCurrentAccountTask(clientV2, callback).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-    }
-
 
     public void downloadFile(File path, String fileName, DropboxDownloadFileTask.Callback callback) {
         new DropboxDownloadFileTask(clientV2, path, callback).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, fileName);

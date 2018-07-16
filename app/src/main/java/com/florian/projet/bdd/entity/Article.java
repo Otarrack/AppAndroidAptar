@@ -7,6 +7,11 @@ import android.support.annotation.NonNull;
 
 import java.util.Date;
 
+/**
+ * Classe entité des articles pour la base de données
+ *
+ * @author Florian
+ */
 @Entity(tableName = "articles")
 public class Article {
     @ColumnInfo(name = "id")
