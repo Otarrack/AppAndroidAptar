@@ -50,17 +50,7 @@ public class QuantityDatabaseManager {
      * @param callback Callback pour récupérer la réponse
      */
     public void refreshAllFromFile(final ArrayList<QuantityFileLine> quantityFileLineArrayList, final SimpleCallback callback) {
-        new ClearAllTables(db, new SimpleCallback() {
-            @Override
-            public void onSuccess() {
-                insertAllFromFile(quantityFileLineArrayList, callback);
-            }
-
-            @Override
-            public void onFailed(Exception e) {
-                callback.onFailed(e);
-            }
-        }).execute();
+        insertAllFromFile(quantityFileLineArrayList, callback);
     }
 
     /**
@@ -71,7 +61,7 @@ public class QuantityDatabaseManager {
      */
     public void insertAllFromFile(List<QuantityFileLine> quantityFileLineList, SimpleCallback callback) {
         try {
-            new InsertAllFromFileTask(db, callback).execute(quantityFileLineList.toArray(new QuantityFileLine[quantityFileLineList.size()]));
+            new RefreshAllFromFileTask(db, callback).execute(quantityFileLineList.toArray(new QuantityFileLine[quantityFileLineList.size()]));
 
         } catch (Exception e) {
             Log.d("Article Insert All", e.getMessage());
@@ -163,59 +153,16 @@ public class QuantityDatabaseManager {
     }
 
     /**
-     * Asynctask qui gère la suppression de toutes les données de la base de données
+     * Asynctask qui gère le remplacement de la base de données par une liste de données
      */
-    private static class ClearAllTables extends AsyncTask<Void, Void, Void> {
-
-        private final SimpleCallback callback;
-        private final QuantityDataBase db;
-        private Exception exception;
-
-        /**
-         * @param db Instance de la base de données
-         * @param callback Callback pour récupérer la réponse
-         */
-        ClearAllTables(QuantityDataBase db, SimpleCallback callback) {
-            this.db = db;
-            this.callback = callback;
-        }
-
-        /**
-         * Traitement de suppression des données de la base
-         */
-        @Override
-        protected Void doInBackground(Void... voids) {
-            try {
-                db.clearAllTables();
-            } catch (Exception e) {
-                exception = e;
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-
-            if (exception != null) {
-                callback.onFailed(exception);
-            } else {
-                callback.onSuccess();
-            }
-        }
-    }
-
-    /**
-     * Asynctask qui gère l'insertion dans la base de données d'une liste d'article et de données
-     */
-    private static class InsertAllFromFileTask extends AsyncTask<QuantityFileLine, Void, Void> {
+    private static class RefreshAllFromFileTask extends AsyncTask<QuantityFileLine, Void, Void> {
 
         private final QuantityDataBase db;
         private SimpleCallback callback;
         private Exception exception;
 
 
-        InsertAllFromFileTask(QuantityDataBase db, SimpleCallback callback) {
+        RefreshAllFromFileTask(QuantityDataBase db, SimpleCallback callback) {
             this.db = db;
             this.callback = callback;
         }
@@ -225,8 +172,13 @@ public class QuantityDatabaseManager {
             try {
                 OFData ofData;
 
-                ArrayList<Article> articleArrayList = insertAllArticle(quantityFileLines);
-                ArrayList<Presse> presseArrayList = insertAllPresse(quantityFileLines);
+                List<Article> favArticleList = db.articleDao().getAllArticleFav();
+                List<Presse> favPresseList = db.presseDao().getAllPresseFav();
+
+                db.clearAllTables();
+
+                ArrayList<Article> articleArrayList = insertAllArticle(quantityFileLines, favArticleList);
+                ArrayList<Presse> presseArrayList = insertAllPresse(quantityFileLines, favPresseList);
 
                 ArrayList<OFData> ofDataArrayList = new ArrayList<>();
 
@@ -260,8 +212,7 @@ public class QuantityDatabaseManager {
             return null;
         }
 
-        private ArrayList<Article> insertAllArticle(QuantityFileLine[] quantityFileLines) {
-            List<Article> favArticleList = db.articleDao().getAllArticleFav();
+        private ArrayList<Article> insertAllArticle(QuantityFileLine[] quantityFileLines, List<Article> favArticleList) {
             ArrayList<Article> articleArrayList = new ArrayList<>();
 
             boolean exist;
@@ -300,8 +251,7 @@ public class QuantityDatabaseManager {
             return articleArrayList;
         }
 
-        private ArrayList<Presse> insertAllPresse(QuantityFileLine[] quantityFileLines) {
-            List<Presse> favPresseList = db.presseDao().getAllPresseFav();
+        private ArrayList<Presse> insertAllPresse(QuantityFileLine[] quantityFileLines, List<Presse> favPresseList) {
             ArrayList<Presse> presseArrayList = new ArrayList<>();
 
             boolean exist;

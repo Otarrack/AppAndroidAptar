@@ -124,7 +124,7 @@ public class FavoriteArticleFragment extends Fragment {
         ArticleRecyclerAdapter articleRecyclerAdapter = new ArticleRecyclerAdapter(articleList, true, new CustomItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-            if (articleList.get(position).getDataList() == null) {
+            if (articleList.get(position).getDataList() == null || articleList.get(position).getDataList().size() == 0) {
                 Toast.makeText(getActivity(), getString(R.string.data_not_found_in_period), Toast.LENGTH_LONG).show();
             } else {
                 articleViewModel.setCurrentArticle(articleList.get(position));

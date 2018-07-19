@@ -125,7 +125,7 @@ public class FavoritePresseFragment extends Fragment {
         PresseRecyclerAdapter presseRecyclerAdapter = new PresseRecyclerAdapter(presseWithDataArrayList, true, new CustomItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-                if (presseWithDataArrayList.get(position).getDataList() == null) {
+                if (presseWithDataArrayList.get(position).getDataList() == null || presseWithDataArrayList.get(position).getDataList().size() == 0) {
                     Toast.makeText(getActivity(), getString(R.string.data_not_found_in_period), Toast.LENGTH_LONG).show();
                 } else {
                     presseViewModel.setCurrentPresse(presseWithDataArrayList.get(position));
