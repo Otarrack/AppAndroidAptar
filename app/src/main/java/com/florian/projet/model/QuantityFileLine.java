@@ -2,24 +2,33 @@ package com.florian.projet.model;
 
 import java.util.Date;
 
-public class ArticleLine {
-    private String name;
+public class QuantityFileLine {
+    private String nameArticle;
+    private String namePresse;
     private Date date;
     private String customer;
     private double quantity;
     private String type;
     private String numOf;
 
-    public ArticleLine() {
+    public QuantityFileLine() {
 
     }
 
-    public String getName() {
-        return name;
+    public String getNameArticle() {
+        return nameArticle;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNameArticle(String nameArticle) {
+        this.nameArticle = nameArticle;
+    }
+
+    public String getNamePresse() {
+        return namePresse;
+    }
+
+    public void setNamePresse(String namePresse) {
+        this.namePresse = namePresse;
     }
 
     public Date getDate() {

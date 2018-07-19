@@ -7,25 +7,24 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.florian.projet.R;
-import com.florian.projet.bdd.entity.ArticleData;
-import com.florian.projet.tools.CustomItemClickListener;
+import com.florian.projet.bdd.entity.OFData;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class ArticleDataRecyclerAdapter extends RecyclerView.Adapter<ArticleDataRecyclerAdapter.MyHolder> {
-    private ArrayList<ArticleData> articleDataArrayList;
+public class OFDataRecyclerAdapter extends RecyclerView.Adapter<OFDataRecyclerAdapter.MyHolder> {
+    private ArrayList<OFData> OFDataArrayList;
 
-    public ArticleDataRecyclerAdapter(ArrayList<ArticleData> articleDataArrayList) {
-        this.articleDataArrayList = articleDataArrayList;
+    public OFDataRecyclerAdapter(ArrayList<OFData> OFDataArrayList) {
+        this.OFDataArrayList = OFDataArrayList;
     }
 
     @Override
     public MyHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         // create a new view
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.recycler_item_article_data, viewGroup, false);
+                .inflate(R.layout.recycler_item_of_data, viewGroup, false);
 
         return new MyHolder(view);
     }
@@ -34,9 +33,9 @@ public class ArticleDataRecyclerAdapter extends RecyclerView.Adapter<ArticleData
     public void onBindViewHolder(final MyHolder holder, int position) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
 
-        String numOf = articleDataArrayList.get(position).getNumOf();
-        String date = formatter.format(articleDataArrayList.get(position).getDate());
-        String quantity = Double.toString(articleDataArrayList.get(position).getQuantity()) + "";
+        String numOf = OFDataArrayList.get(position).getNumOf();
+        String date = formatter.format(OFDataArrayList.get(position).getDate());
+        String quantity = Double.toString(OFDataArrayList.get(position).getQuantity()) + "";
 
         holder.ofNumTextView.setText(numOf);
         holder.dateTextView.setText(date);
@@ -45,7 +44,7 @@ public class ArticleDataRecyclerAdapter extends RecyclerView.Adapter<ArticleData
 
     @Override
     public int getItemCount() {
-        return articleDataArrayList.size();
+        return OFDataArrayList.size();
     }
 
     class MyHolder extends RecyclerView.ViewHolder {
@@ -56,9 +55,9 @@ public class ArticleDataRecyclerAdapter extends RecyclerView.Adapter<ArticleData
 
         MyHolder(View itemView) {
             super(itemView);
-            ofNumTextView = itemView.findViewById(R.id.recycler_article_data_of_num);
-            dateTextView = itemView.findViewById(R.id.recycler_article_data_date_res);
-            qtProducedTextView = itemView.findViewById(R.id.recycler_article_data_qt_res);
+            ofNumTextView = itemView.findViewById(R.id.recycler_of_data_of_num);
+            dateTextView = itemView.findViewById(R.id.recycler_of_data_date_res);
+            qtProducedTextView = itemView.findViewById(R.id.recycler_of_data_qt_res);
         }
     }
 }

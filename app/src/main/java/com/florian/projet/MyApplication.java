@@ -2,16 +2,16 @@ package com.florian.projet;
 
 import android.app.Application;
 
-import com.florian.projet.bdd.database.ArticleDataBase;
-import com.florian.projet.bdd.database.MachineDataBase;
-import com.florian.projet.manager.ArticleDatabaseManager;
-import com.florian.projet.manager.MachineDatabaseManager;
+import com.florian.projet.bdd.database.QuantityDataBase;
+import com.florian.projet.bdd.database.PourcentagePerformanceDataBase;
+import com.florian.projet.manager.PourcentagePerfDatabaseManager;
+import com.florian.projet.manager.QuantityDatabaseManager;
 
 
 public class MyApplication extends Application {
     private static MyApplication instance;
-    private MachineDatabaseManager machineDatabaseManager;
-    private ArticleDatabaseManager articleDatabaseManager;
+    private PourcentagePerfDatabaseManager pourcentagePerfDatabaseManager;
+    private QuantityDatabaseManager quantityDatabaseManager;
 
     public static MyApplication getInstance() {
         return instance;
@@ -22,14 +22,14 @@ public class MyApplication extends Application {
         super.onCreate();
         instance = this;
 
-        MachineDataBase.setInstance(getApplicationContext());
-        ArticleDataBase.setInstance(getApplicationContext());
+        PourcentagePerformanceDataBase.setInstance(getApplicationContext());
+        QuantityDataBase.setInstance(getApplicationContext());
 
-        machineDatabaseManager = MachineDatabaseManager.getInstance();
-        articleDatabaseManager = ArticleDatabaseManager.getInstance();
+        pourcentagePerfDatabaseManager = PourcentagePerfDatabaseManager.getInstance();
+        quantityDatabaseManager = QuantityDatabaseManager.getInstance();
 
         /* //RESET DATABASE
-        machineDatabaseManager.deleteAllData(new SimpleCallback() {
+        pourcentagePerfDatabaseManager.deleteAllData(new SimpleCallback() {
             @Override
             public void onSuccess() {
 

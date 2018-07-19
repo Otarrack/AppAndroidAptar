@@ -1,16 +1,14 @@
 package com.florian.projet.viewModel;
 
-import com.dropbox.core.DbxException;
-import com.dropbox.core.v2.users.FullAccount;
 import com.florian.projet.asyncTasks.DropboxDownloadFileTask;
-import com.florian.projet.asyncTasks.ParseArticlePerfFileTask;
+import com.florian.projet.asyncTasks.ParseQuantityFileTask;
 import com.florian.projet.asyncTasks.ParseMachinePerfFileTask;
-import com.florian.projet.bdd.relation.ArticleWithData;
 import com.florian.projet.manager.ApplicationManager;
-import com.florian.projet.manager.MachineDatabaseManager;
 import com.florian.projet.bdd.entity.Machine;
+import com.florian.projet.model.QuantityFileLine;
 import com.florian.projet.tools.ArticleWithDataCallback;
 import com.florian.projet.tools.MachineCallback;
+import com.florian.projet.tools.PresseWithDataCallback;
 import com.florian.projet.tools.SimpleCallback;
 
 import java.io.File;
@@ -44,31 +42,46 @@ public class SplashScreenViewModel {
         applicationManager.parseMachinePerfXlsFile(file, callback);
     }
 
-    public void parseArticlePerfXlsFile(File file, ParseArticlePerfFileTask.Callback callback) throws IOException{
+    public void parseArticlePerfXlsFile(File file, ParseQuantityFileTask.Callback callback) throws IOException{
         applicationManager.parseArticlePerfXlsFile(file, callback);
     }
 
-    public ArrayList<Machine> initMachineListWithFav(ArrayList<Machine> allMachineInMESFile, ArrayList<Machine> allMachineInDatabase) {
-        return applicationManager.getMachineListWithFavAndSite(allMachineInMESFile, allMachineInDatabase);
-    }
-
-    public ArrayList<ArticleWithData> initArticleListWithFav(ArrayList<ArticleWithData> allArticleInFile, ArrayList<ArticleWithData> allArticleInDatabase) {
-        return applicationManager.getArticleListWithFav(allArticleInFile, allArticleInDatabase);
+    public ArrayList<Machine> initMachineListWithSite(ArrayList<Machine> allMachineInMESFile) {
+        return applicationManager.getMachineListWithSite(allMachineInMESFile);
     }
 
     public void refreshAllMachineInDatabase(ArrayList<Machine> machineArrayList, SimpleCallback callback) {
         applicationManager.refreshAllMachine(machineArrayList, callback);
     }
 
-    public void refreshAllArticleInDatabase(ArrayList<ArticleWithData> articleArrayList, SimpleCallback callback) {
-        applicationManager.refreshAllArticle(articleArrayList, callback);
+    public void refreshAllArticleInDatabase(ArrayList<QuantityFileLine> quantityFileLineArrayList, SimpleCallback callback) {
+        applicationManager.refreshAllArticle(quantityFileLineArrayList, callback);
     }
 
+    /**
+     * @param callback Callback pour récupérer la réponse
+     *
+     * @see ApplicationManager
+     */
     public void getMachineLocalData(MachineCallback callback) {
         applicationManager.getAllMachine(callback);
     }
 
+    /**
+     * @param callback Callback pour récupérer la réponse
+     *
+     * @see ApplicationManager
+     */
     public void getArticleLocalData(ArticleWithDataCallback callback) {
-        applicationManager.getAllArticle(callback);
+        applicationManager.getAllArticleWithData(callback);
+    }
+
+    /**
+     * @param callback Callback pour récupérer la réponse
+     *
+     * @see ApplicationManager
+     */
+    public void getPresseLocalData(PresseWithDataCallback callback) {
+        applicationManager.getAllPresseWithData(callback);
     }
 }

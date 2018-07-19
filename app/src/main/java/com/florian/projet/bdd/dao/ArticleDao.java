@@ -7,9 +7,12 @@ import android.arch.persistence.room.Transaction;
 import android.arch.persistence.room.Update;
 
 import com.florian.projet.bdd.entity.Article;
-import com.florian.projet.bdd.entity.ArticleData;
+import com.florian.projet.bdd.entity.OFData;
+import com.florian.projet.bdd.entity.Presse;
 import com.florian.projet.bdd.relation.ArticleWithData;
+import com.florian.projet.bdd.relation.PresseWithData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,29 +24,21 @@ import java.util.List;
 public interface ArticleDao {
 
     /**
-     * Inserer tout les articles de la liste
+     * Inserer les articles dans la base
      *
-     * @param articleList Liste d'article à ajouter
+     * @param articleList Articles à ajouter
      *
-     * @return Liste des Id des articles ajoutés
+     * @return Id des articles ajoutés
      */
     @Insert
-    List<Long> insertAllArticle(List<Article> articleList);
-
-    /**
-     * Inserer tous les articles de la liste
-     *
-     * @param articleList Liste des données d'article à ajouter
-     */
-    @Insert
-    void insertAllData(List<ArticleData> articleList);
+    List<Long> insertAllArticle(ArrayList<Article> articleList);
 
     /**
      * Modifie l'article
      *
      * @param article Article à modifier
      *
-     * @return Id de l'article ajouté
+     * @return Id de l'article modifié
      */
     @Update
     int updateArticle(Article article);
@@ -55,14 +50,23 @@ public interface ArticleDao {
      */
     @Transaction
     @Query("SELECT * FROM articles")
-    List<ArticleWithData> getAll();
+    List<ArticleWithData> getAllArticleWithData();
 
     /**
      * Sélectionne tous les articles en favoris
+     *
+     * @return Liste des articles en favoris
+     */
+    @Transaction
+    @Query("SELECT * FROM articles WHERE favorite = 1")
+    List<Article> getAllArticleFav();
+
+    /**
+     * Sélectionne tous les articles en favoris avec les données associées
      *
      * @return Liste des articles en favoris avec les données associées ({@link ArticleWithData})
      */
     @Transaction
     @Query("SELECT * FROM articles WHERE favorite = 1")
-    List<ArticleWithData> getAllFav();
+    List<ArticleWithData> getAllArticleFavWithData();
 }

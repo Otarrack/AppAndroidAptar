@@ -9,20 +9,25 @@ import android.content.Context;
 import com.florian.projet.R;
 import com.florian.projet.bdd.converter.DateConverter;
 import com.florian.projet.bdd.dao.ArticleDao;
+import com.florian.projet.bdd.dao.OFDataDao;
+import com.florian.projet.bdd.dao.PresseDao;
 import com.florian.projet.bdd.entity.Article;
-import com.florian.projet.bdd.entity.ArticleData;
+import com.florian.projet.bdd.entity.OFData;
+import com.florian.projet.bdd.entity.Presse;
 
 /**
  * Base de données des articles
  *
  * @author Florian
  */
-@Database(entities = {Article.class, ArticleData.class}, version = 3)
+@Database(entities = {Article.class, Presse.class, OFData.class}, version = 2)
 @TypeConverters(DateConverter.class)
-public abstract class ArticleDataBase extends RoomDatabase {
+public abstract class QuantityDataBase extends RoomDatabase {
 
-    private static ArticleDataBase instance;
+    private static QuantityDataBase instance;
     public abstract ArticleDao articleDao();
+    public abstract PresseDao presseDao();
+    public abstract OFDataDao ofDataDao();
 
     /**
      * Méthode pour créer l'instance de la base de données
@@ -30,7 +35,7 @@ public abstract class ArticleDataBase extends RoomDatabase {
      * @param context Context de l'application pour récupérer le string dans la classe R
      */
     public static void setInstance(Context context) {
-        instance = Room.databaseBuilder(context, ArticleDataBase.class, context.getString(R.string.article_database_name))
+        instance = Room.databaseBuilder(context, QuantityDataBase.class, context.getString(R.string.quantity_database_name))
                 .fallbackToDestructiveMigration()
                 .build();
     }
@@ -40,7 +45,7 @@ public abstract class ArticleDataBase extends RoomDatabase {
      *
      * @return Liste des machines avec les données associées
      */
-    public static ArticleDataBase getInstance() {
+    public static QuantityDataBase getInstance() {
         return instance;
     }
 

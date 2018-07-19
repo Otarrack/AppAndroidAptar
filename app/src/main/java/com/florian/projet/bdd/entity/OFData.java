@@ -7,20 +7,28 @@ import android.arch.persistence.room.PrimaryKey;
 
 import java.util.Date;
 
-import static android.arch.persistence.room.ForeignKey.CASCADE;
-
 /**
  * Classe entité des données d'article pour la base de données
  *
  * @author Florian
  */
-@Entity(tableName = "articles_data")
-public class ArticleData {
+@Entity(tableName = "of_data",
+        foreignKeys = {
+                @ForeignKey(entity = Article.class,
+                        parentColumns = "id",
+                        childColumns = "idArticle"),
+                @ForeignKey(entity = Presse.class,
+                        parentColumns = "id",
+                        childColumns = "idPresse")
+        })
+public class OFData {
     @ColumnInfo(name = "id")
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = true )
     private long id;
     @ColumnInfo(name = "idArticle")
     private long idArticle;
+    @ColumnInfo(name = "idPresse")
+    private long idPresse;
     @ColumnInfo(name = "numOf")
     private String numOf;
     @ColumnInfo(name = "date")
@@ -42,6 +50,14 @@ public class ArticleData {
 
     public void setIdArticle(long idArticle) {
         this.idArticle = idArticle;
+    }
+
+    public long getIdPresse() {
+        return idPresse;
+    }
+
+    public void setIdPresse(long idPresse) {
+        this.idPresse = idPresse;
     }
 
     public String getNumOf() {

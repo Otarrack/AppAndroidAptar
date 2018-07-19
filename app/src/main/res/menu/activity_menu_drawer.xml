@@ -4,9 +4,9 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/nav_favorites_machine"
+            android:id="@+id/nav_favorites_presse"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_favorite_machine_title" />
+            android:title="@string/menu_favorite_presse_title" />
 
         <item
             android:id="@+id/nav_favorites_article"
@@ -14,14 +14,19 @@
             android:title="@string/menu_favorite_article_title" />
 
         <item
-            android:id="@+id/nav_perf_machine"
+            android:id="@+id/nav_perf_percent"
             android:icon="@drawable/ic_menu_location"
-            android:title="@string/menu_perf_machine_title" />
+            android:title="@string/menu_perf_percent_title" />
 
         <item
             android:id="@+id/nav_perf_article"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_perf_article_title" />
+
+        <item
+            android:id="@+id/nav_perf_presse"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/menu_perf_presse_title" />
 
     </group>
 

@@ -5,21 +5,17 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
 /**
- * Classe entité des articles pour la base de données
+ * Classe entité des presses pour la base de données
  *
  * @author Florian
  */
-@Entity(tableName = "articles")
-public class Article {
+@Entity(tableName = "presses")
+public class Presse {
     @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = true)
     private long id;
     @ColumnInfo(name = "name")
     private String name;
-    @ColumnInfo(name = "customer")
-    private String customer;
-    @ColumnInfo(name = "type")
-    private String type;
     @ColumnInfo(name = "favorite")
     private boolean favorite;
 
@@ -39,27 +35,11 @@ public class Article {
         this.name = name;
     }
 
-    public String getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(String customer) {
-        this.customer = customer;
-    }
-
     public boolean isFavorite() {
         return favorite;
     }
 
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 }

@@ -12,8 +12,9 @@ import android.view.MenuItem;
 import com.florian.projet.R;
 import com.florian.projet.view.fragment.ArticlePerformanceFragment;
 import com.florian.projet.view.fragment.FavoriteArticleFragment;
-import com.florian.projet.view.fragment.FavoriteMachineFragment;
+import com.florian.projet.view.fragment.FavoritePresseFragment;
 import com.florian.projet.view.fragment.MachinePerformanceFragment;
+import com.florian.projet.view.fragment.PressePerformanceFragment;
 
 public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedListener {
     private AppCompatActivity activity;
@@ -29,10 +30,9 @@ public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedList
     private void initMenu() {
         NavigationView navigationView = activity.findViewById(R.id.main_nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_favorites_machine));
+        onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_favorites_presse));
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -41,21 +41,25 @@ public class MyDrawerMenu implements NavigationView.OnNavigationItemSelectedList
         Fragment fragment = new Fragment();
 
 
-        if (id == R.id.nav_favorites_machine) {
-            fragment = FavoriteMachineFragment.newInstance();
-            activity.setTitle(R.string.menu_favorite_machine_title);
+        if (id == R.id.nav_favorites_presse) {
+            fragment = FavoritePresseFragment.newInstance();
+            activity.setTitle(R.string.menu_favorite_presse_title);
 
         } else if (id == R.id.nav_favorites_article) {
             fragment = FavoriteArticleFragment.newInstance();
             activity.setTitle(R.string.menu_favorite_article_title);
 
-        } else if (id == R.id.nav_perf_machine) {
+        } else if (id == R.id.nav_perf_percent) {
             fragment = MachinePerformanceFragment.newInstance();
-            activity.setTitle(R.string.menu_perf_machine_title);
+            activity.setTitle(R.string.menu_perf_percent_title);
 
         } else if (id == R.id.nav_perf_article) {
             fragment = ArticlePerformanceFragment.newInstance();
             activity.setTitle(R.string.menu_perf_article_title);
+
+        } else if (id == R.id.nav_perf_presse) {
+            fragment = PressePerformanceFragment.newInstance();
+            activity.setTitle(R.string.menu_perf_presse_title);
         }
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

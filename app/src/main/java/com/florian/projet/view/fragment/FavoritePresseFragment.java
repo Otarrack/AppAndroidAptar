@@ -16,28 +16,29 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.florian.projet.R;
-import com.florian.projet.bdd.relation.ArticleWithData;
-import com.florian.projet.tools.ArticleWithDataCallback;
+import com.florian.projet.bdd.relation.PresseWithData;
 import com.florian.projet.tools.CustomItemClickListener;
+import com.florian.projet.tools.PresseWithDataCallback;
 import com.florian.projet.view.activity.ArticleDetailActivity;
 import com.florian.projet.view.activity.PeriodActivity;
-import com.florian.projet.view.adapter.ArticleRecyclerAdapter;
-import com.florian.projet.viewModel.ArticleViewModel;
+import com.florian.projet.view.activity.PresseDetailActivity;
+import com.florian.projet.view.adapter.PresseRecyclerAdapter;
+import com.florian.projet.viewModel.PresseViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavoriteArticleFragment extends Fragment {
-    private ArticleViewModel articleViewModel;
-    RecyclerView recyclerViewArticle;
+public class FavoritePresseFragment extends Fragment {
+    private PresseViewModel presseViewModel;
+    RecyclerView recyclerViewPresse;
 
     private Context context;
 
-    public FavoriteArticleFragment() {
+    public FavoritePresseFragment() {
     }
 
-    public static FavoriteArticleFragment newInstance() {
-        FavoriteArticleFragment fragment = new FavoriteArticleFragment();
+    public static FavoritePresseFragment newInstance() {
+        FavoritePresseFragment fragment = new FavoritePresseFragment();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
@@ -48,16 +49,16 @@ public class FavoriteArticleFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        articleViewModel = ArticleViewModel.getInstance();
+        presseViewModel = PresseViewModel.getInstance();
 
         setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_favorites_article, container, false);
+        final View view = inflater.inflate(R.layout.fragment_favorites_presse, container, false);
 
-        setRecyclerViewArticle(view);
+        setRecyclerViewPresse(view);
 
         return view;
     }
@@ -97,10 +98,10 @@ public class FavoriteArticleFragment extends Fragment {
     }
 
     private void refreshData() {
-        articleViewModel.getAllFavArticleByPeriod(new ArticleWithDataCallback() {
+        presseViewModel.getAllFavPresseByPeriod(new PresseWithDataCallback() {
             @Override
-            public void onSuccess(List<ArticleWithData> articleList) {
-                setNewRecyclerAdapterArticle(new ArrayList<>(articleList));
+            public void onSuccess(List<PresseWithData> presseWithDataList) {
+                setNewRecyclerAdapterPresse(new ArrayList<>(presseWithDataList));
             }
 
             @Override
@@ -112,30 +113,30 @@ public class FavoriteArticleFragment extends Fragment {
         });
     }
 
-    private void setRecyclerViewArticle(View view) {
-        recyclerViewArticle = view.findViewById(R.id.favorites_article_recycler);
-        recyclerViewArticle.setNestedScrollingEnabled(true);
+    private void setRecyclerViewPresse(View view) {
+        recyclerViewPresse = view.findViewById(R.id.favorites_presse_recycler);
+        recyclerViewPresse.setNestedScrollingEnabled(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-        recyclerViewArticle.setLayoutManager(layoutManager);
+        recyclerViewPresse.setLayoutManager(layoutManager);
 
     }
 
-    private void setNewRecyclerAdapterArticle(final ArrayList<ArticleWithData> articleList) {
-        ArticleRecyclerAdapter articleRecyclerAdapter = new ArticleRecyclerAdapter(articleList, true, new CustomItemClickListener() {
+    private void setNewRecyclerAdapterPresse(final ArrayList<PresseWithData> presseWithDataArrayList) {
+        PresseRecyclerAdapter presseRecyclerAdapter = new PresseRecyclerAdapter(presseWithDataArrayList, true, new CustomItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-            if (articleList.get(position).getDataList() == null) {
-                Toast.makeText(getActivity(), getString(R.string.data_not_found_in_period), Toast.LENGTH_LONG).show();
-            } else {
-                articleViewModel.setCurrentArticle(articleList.get(position));
+                if (presseWithDataArrayList.get(position).getDataList() == null) {
+                    Toast.makeText(getActivity(), getString(R.string.data_not_found_in_period), Toast.LENGTH_LONG).show();
+                } else {
+                    presseViewModel.setCurrentPresse(presseWithDataArrayList.get(position));
 
-                Intent intent = new Intent(context, ArticleDetailActivity.class);
-                startActivity(intent);
-            }
+                    Intent intent = new Intent(context, PresseDetailActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
-        recyclerViewArticle.setAdapter(articleRecyclerAdapter);
-        recyclerViewArticle.requestFocus();
+        recyclerViewPresse.setAdapter(presseRecyclerAdapter);
+        recyclerViewPresse.requestFocus();
     }
 }

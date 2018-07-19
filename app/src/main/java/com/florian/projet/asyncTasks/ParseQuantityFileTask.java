@@ -3,8 +3,7 @@ package com.florian.projet.asyncTasks;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.florian.projet.bdd.entity.Article;
-import com.florian.projet.model.ArticleLine;
+import com.florian.projet.model.QuantityFileLine;
 import com.florian.projet.tools.DateFormatter;
 
 import java.io.BufferedReader;
@@ -21,7 +20,7 @@ import java.util.Date;
  * @author Florian
  */
 
-public class ParseArticlePerfFileTask extends AsyncTask<File, Void, ArrayList<ArticleLine>> {
+public class ParseQuantityFileTask extends AsyncTask<File, Void, ArrayList<QuantityFileLine>> {
     private Callback callback;
     private Exception mException;
 
@@ -34,7 +33,7 @@ public class ParseArticlePerfFileTask extends AsyncTask<File, Void, ArrayList<Ar
          *
          * @param dataLineList La liste des lignes récupérées
          */
-        void onSuccess(ArrayList<ArticleLine> dataLineList);
+        void onSuccess(ArrayList<QuantityFileLine> dataLineList);
 
         /**
          * Une méthode pour envoyer les détails en cas d'erreur
@@ -47,7 +46,7 @@ public class ParseArticlePerfFileTask extends AsyncTask<File, Void, ArrayList<Ar
     /**
      * @param callback Le callback permettant de récupérer le résultat du traitement
      */
-    public ParseArticlePerfFileTask(Callback callback) {
+    public ParseQuantityFileTask(Callback callback) {
         this.callback = callback;
     }
 
@@ -56,11 +55,11 @@ public class ParseArticlePerfFileTask extends AsyncTask<File, Void, ArrayList<Ar
      *
      * @param files Le fichier à lire
      *
-     * @return Renvoie les lignes du fichier en ArrayList de {@link ArticleLine}
+     * @return Renvoie les lignes du fichier en ArrayList de {@link QuantityFileLine}
      */
     @Override
-    protected ArrayList<ArticleLine> doInBackground(File... files) {
-        ArrayList<ArticleLine> dataLineList = new ArrayList<>();
+    protected ArrayList<QuantityFileLine> doInBackground(File... files) {
+        ArrayList<QuantityFileLine> quantityFileLineList = new ArrayList<>();
 
         try {
             //Récupère le fichier et initialise le lecteur
@@ -71,14 +70,14 @@ public class ParseArticlePerfFileTask extends AsyncTask<File, Void, ArrayList<Ar
             String csvSplitBy = ";";
 
             br.readLine();
-            ArticleLine article;
+            QuantityFileLine quantityFileLine;
 
             boolean hasData = true;
             int index = 1;
 
             //Execute la boucle tant qu'il y a des lignes de données
             while ((line = br.readLine()) != null && hasData) {
-                article = new ArticleLine();
+                quantityFileLine = new QuantityFileLine();
 
                 if (index > 4) {
                     String[] row = line.split(csvSplitBy);
@@ -92,41 +91,46 @@ public class ParseArticlePerfFileTask extends AsyncTask<File, Void, ArrayList<Ar
 
                         //Colonne concernant le type
                         if (!row[4].equals("")) {
-                            article.setType(row[4]);
+                            quantityFileLine.setType(row[4]);
                         }
 
                         //Colonne concernant le numéro d'OF
                         if (!row[5].equals("")) {
-                            article.setNumOf(row[5]);
+                            quantityFileLine.setNumOf(row[5]);
                         }
 
                         //Colonne concernant le client
                         if (!row[12].equals("")) {
-                            article.setCustomer(row[12]);
+                            quantityFileLine.setCustomer(row[12]);
                         }
 
                         //Colonne concernant la quantité
                         if (!row[14].equals("")) {
                             Double d = Double.valueOf(row[14].replaceAll(" ", ""));
-                            article.setQuantity(d);
+                            quantityFileLine.setQuantity(d);
                         }
 
                         //Colonne concernant la date
                         if (!row[22].equals("")) {
                             Date date = DateFormatter.parseDate(row[22],"dd/MM/yyyy");
                             if (date != null) {
-                                article.setDate(date);
+                                quantityFileLine.setDate(date);
                             }
+                        }
+
+                        //Colonne concernant le nom de la presse
+                        if (!row[23].equals("")) {
+                            quantityFileLine.setNamePresse(row[23]);
                         }
 
                         //Colonne concernant le nom de l'article
                         if (!row[24].equals("")) {
-                            article.setName(row[24]);
+                            quantityFileLine.setNameArticle(row[24]);
                         }
 
                         //Vérifie qu'il s'agit bien d'un article pour l'ajouter à la liste
-                        if (article.getName() != null && article.getDate() != null) {
-                            dataLineList.add(article);
+                        if (quantityFileLine.getNameArticle() != null && quantityFileLine.getDate() != null) {
+                            quantityFileLineList.add(quantityFileLine);
                         }
                     } else {
                         for (String s : row) {
@@ -139,10 +143,10 @@ public class ParseArticlePerfFileTask extends AsyncTask<File, Void, ArrayList<Ar
             }
 
         } catch (Exception e) {
-            Log.d("Article Parse Error ", e.getMessage() + " ! ");
+            Log.d("Quantity File Parse", e.getMessage() + " ! ");
             mException = e;
         }
-        return dataLineList;
+        return quantityFileLineList;
     }
 
     /**
@@ -151,7 +155,7 @@ public class ParseArticlePerfFileTask extends AsyncTask<File, Void, ArrayList<Ar
      * @param articleArrayList La liste des lignes renvoyée par le traitement
      */
     @Override
-    protected void onPostExecute(ArrayList<ArticleLine> articleArrayList) {
+    protected void onPostExecute(ArrayList<QuantityFileLine> articleArrayList) {
         if (mException == null) {
             callback.onSuccess(articleArrayList);
         } else {

@@ -3,15 +3,13 @@ package com.florian.projet.viewModel;
 import android.util.Log;
 
 import com.florian.projet.bdd.entity.Article;
-import com.florian.projet.bdd.entity.ArticleData;
+import com.florian.projet.bdd.entity.OFData;
 import com.florian.projet.bdd.relation.ArticleWithData;
 import com.florian.projet.manager.ApplicationManager;
-import com.florian.projet.manager.ArticleDatabaseManager;
+import com.florian.projet.manager.QuantityDatabaseManager;
 import com.florian.projet.tools.ArticleWithDataCallback;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.ConcurrentModificationException;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -19,7 +17,7 @@ import java.util.List;
 public class ArticleViewModel {
     private static ArticleViewModel instance;
 
-    private ArticleDatabaseManager articleDatabaseManager;
+    private QuantityDatabaseManager quantityDatabaseManager;
     private ApplicationManager applicationManager;
 
     private ArticleWithData currentArticle;
@@ -32,13 +30,13 @@ public class ArticleViewModel {
     }
 
     private ArticleViewModel() {
-        articleDatabaseManager = ArticleDatabaseManager.getInstance();
+        quantityDatabaseManager = QuantityDatabaseManager.getInstance();
         applicationManager = ApplicationManager.getInstance();
     }
 
     public void getAllFavArticleByPeriod(final ArticleWithDataCallback callback) {
 
-        articleDatabaseManager.getAllArticleFav(new ArticleWithDataCallback() {
+        quantityDatabaseManager.getAllArticleFavWithData(new ArticleWithDataCallback() {
             @Override
             public void onSuccess(List<ArticleWithData> articleList) {
 
@@ -54,8 +52,7 @@ public class ArticleViewModel {
 
     public void getAllArticleByPeriod(final ArticleWithDataCallback callback) {
 
-
-        articleDatabaseManager.getAllArticle(new ArticleWithDataCallback() {
+        quantityDatabaseManager.getAllArticleWithData(new ArticleWithDataCallback() {
             @Override
             public void onSuccess(List<ArticleWithData> articleList) {
 
@@ -83,10 +80,10 @@ public class ArticleViewModel {
         for (Iterator<ArticleWithData> iteratorAWD = articleList.iterator(); iteratorAWD.hasNext();) {
             ArticleWithData articleWithData = iteratorAWD.next();
 
-            for (Iterator<ArticleData> iteratorArticleData = articleWithData.getDataList().iterator(); iteratorArticleData.hasNext();) {
-                ArticleData articleData = iteratorArticleData.next();
+            for (Iterator<OFData> iteratorArticleData = articleWithData.getDataList().iterator(); iteratorArticleData.hasNext();) {
+                OFData OFData = iteratorArticleData.next();
 
-                if (!(articleData.getDate().compareTo(fromDate) >= 0 && articleData.getDate().compareTo(toDate) <= 0)) {
+                if (!(OFData.getDate().compareTo(fromDate) >= 0 && OFData.getDate().compareTo(toDate) <= 0)) {
                     iteratorArticleData.remove();
                 }
             }
@@ -97,6 +94,15 @@ public class ArticleViewModel {
         }
 
         return articleList;
+    }
+
+
+    public void updateFavArticle(Article article) {
+        try {
+            quantityDatabaseManager.updateArticle(article);
+        } catch (Exception e) {
+            Log.d("Fav Article View Model", e.getMessage());
+        }
     }
 
     public ArticleWithData getCurrentArticle() {

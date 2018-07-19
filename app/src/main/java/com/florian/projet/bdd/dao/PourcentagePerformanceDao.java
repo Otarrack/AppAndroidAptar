@@ -16,7 +16,7 @@ import java.util.List;
  * @author Florian
  */
 @Dao
-public interface MachineDao {
+public interface PourcentagePerformanceDao {
 
     /**
      * Insère toutes les machines de la liste dans la base
@@ -27,16 +27,6 @@ public interface MachineDao {
      */
     @Insert
     List<Long> insertAll(List<Machine> machineList);
-
-    /**
-     * Modifie la machine
-     *
-     * @param machine Machine à modifier
-     *
-     * @return Id de l'article ajouté
-     */
-    @Update
-    int update(Machine machine);
 
     /**
      * Sélectionne tous les machines
@@ -55,12 +45,4 @@ public interface MachineDao {
      */
     @Query("SELECT * FROM machines WHERE site IN(:siteList)")
     List<Machine> getBySite(List<Integer> siteList);
-
-    /**
-     * Sélectionne tous les machines en favoris
-     *
-     * @return Liste des machines en favoris avec les données associées
-     */
-    @Query("SELECT * FROM machines WHERE favorite = 1")
-    List<Machine> getAllFav();
 }

@@ -1,7 +1,7 @@
 package com.florian.projet.viewModel;
 
 import com.florian.projet.bdd.entity.Machine;
-import com.florian.projet.manager.MachineDatabaseManager;
+import com.florian.projet.manager.PourcentagePerfDatabaseManager;
 import com.florian.projet.tools.MachineCallback;
 
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
 public class MachineViewModel {
     private static MachineViewModel instance;
 
-    private MachineDatabaseManager machineDatabaseManager;
+    private PourcentagePerfDatabaseManager pourcentagePerfDatabaseManager;
     private Machine currentMachine;
 
     public static MachineViewModel getInstance() {
@@ -20,7 +20,7 @@ public class MachineViewModel {
     }
 
     private MachineViewModel() {
-        machineDatabaseManager = MachineDatabaseManager.getInstance();
+        pourcentagePerfDatabaseManager = PourcentagePerfDatabaseManager.getInstance();
     }
 
     public void setCurrentMachine(Machine machine) {
@@ -36,6 +36,6 @@ public class MachineViewModel {
     }
 
     public void getMachineBySite(List<Integer> siteList, MachineCallback callback) {
-        machineDatabaseManager.getMachineBySite(siteList, callback);
+        pourcentagePerfDatabaseManager.getMachineBySite(siteList, callback);
     }
 }

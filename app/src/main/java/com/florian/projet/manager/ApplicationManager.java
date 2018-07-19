@@ -2,16 +2,17 @@ package com.florian.projet.manager;
 
 import com.florian.projet.MyApplication;
 import com.florian.projet.asyncTasks.DropboxDownloadFileTask;
-import com.florian.projet.asyncTasks.ParseArticlePerfFileTask;
+import com.florian.projet.asyncTasks.ParseQuantityFileTask;
 import com.florian.projet.asyncTasks.ParseMachinePerfFileTask;
 import com.florian.projet.bdd.entity.Machine;
 import com.florian.projet.bdd.relation.ArticleWithData;
+import com.florian.projet.model.QuantityFileLine;
 import com.florian.projet.tools.ArticleWithDataCallback;
 import com.florian.projet.tools.MachineCallback;
+import com.florian.projet.tools.PresseWithDataCallback;
 import com.florian.projet.tools.SimpleCallback;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -33,8 +34,8 @@ public class ApplicationManager {
 
     private DropboxManager dropboxManager;
     private XlsFileManager xlsFileManager;
-    private MachineDatabaseManager machineDatabaseManager;
-    private ArticleDatabaseManager articleDatabaseManager;
+    private PourcentagePerfDatabaseManager pourcentagePerfDatabaseManager;
+    private QuantityDatabaseManager quantityDatabaseManager;
 
     private Calendar calendar;
     private Date defaultDate;
@@ -45,8 +46,8 @@ public class ApplicationManager {
         MyApplication.getInstance();
         calendar = Calendar.getInstance();
         xlsFileManager = XlsFileManager.getInstance();
-        machineDatabaseManager = MachineDatabaseManager.getInstance();
-        articleDatabaseManager = ArticleDatabaseManager.getInstance();
+        pourcentagePerfDatabaseManager = PourcentagePerfDatabaseManager.getInstance();
+        quantityDatabaseManager = QuantityDatabaseManager.getInstance();
 
         setDefaultDate();
     }
@@ -160,19 +161,28 @@ public class ApplicationManager {
     /**
      * @param callback Callback pour récupérer la réponse
      *
-     * @see MachineDatabaseManager
+     * @see PourcentagePerfDatabaseManager
      */
     public void getAllMachine(MachineCallback callback) {
-        machineDatabaseManager.getAllMachine(callback);
+        pourcentagePerfDatabaseManager.getAllMachine(callback);
     }
 
     /**
      * @param callback Callback pour récupérer la réponse
      *
-     * @see ArticleDatabaseManager
+     * @see QuantityDatabaseManager
      */
-    public void getAllArticle(ArticleWithDataCallback callback) {
-        articleDatabaseManager.getAllArticle(callback);
+    public void getAllArticleWithData(ArticleWithDataCallback callback) {
+        quantityDatabaseManager.getAllArticleWithData(callback);
+    }
+
+    /**
+     * @param callback Callback pour récupérer la réponse
+     *
+     * @see QuantityDatabaseManager
+     */
+    public void getAllPresseWithData(PresseWithDataCallback callback) {
+        quantityDatabaseManager.getAllPresseWithData(callback);
     }
 
     /**
@@ -196,7 +206,7 @@ public class ApplicationManager {
      * @param file Fichier à lire
      * @param callback Callback pour récupérer la réponse
      */
-    public void parseArticlePerfXlsFile(File file, final ParseArticlePerfFileTask.Callback callback) {
+    public void parseArticlePerfXlsFile(File file, final ParseQuantityFileTask.Callback callback) {
         xlsFileManager.parseArticlePerfXlsFile(file, callback);
     }
 
@@ -204,24 +214,16 @@ public class ApplicationManager {
      * Initialise les favoris et le site pour la mise à jour des données
      *
      * @param allMachineInFile Données venant du fichier
-     * @param allMachineInDatabase Données dans la base
      *
      * @return La liste des machines initialisées
      */
-    public ArrayList<Machine> getMachineListWithFavAndSite(ArrayList<Machine> allMachineInFile, ArrayList<Machine> allMachineInDatabase) {
+    public ArrayList<Machine> getMachineListWithSite(ArrayList<Machine> allMachineInFile) {
 
-        ArrayList<String> machineFavNameList = getMachineFavNameList(allMachineInDatabase);
         ArrayList<Machine> finalMachineList = new ArrayList<>();
 
         for (Machine machine : allMachineInFile) {
-            if (machineFavNameList.contains(machine.getMachineName())) {
-                machine.setFavorite(true);
-            }
-
             //Récupère le numéro du site sur le nom de la machine
-            char siteChar = machine.getMachineName().charAt(0);
-
-            machine.setSite(Integer.parseInt(String.valueOf(siteChar)));
+            machine.setSite(Integer.parseInt(String.valueOf(machine.getMachineName().charAt(0))));
 
             finalMachineList.add(machine);
         }
@@ -231,89 +233,27 @@ public class ApplicationManager {
     }
 
     /**
-     * Récupère la liste des machines en favoris
-     *
-     * @param machineList Liste des machines dans la bdd
-     *
-     * @return Liste contenant le nom de toutes les machines en favoris
-     */
-    private ArrayList<String> getMachineFavNameList(List<Machine> machineList) {
-        ArrayList<String> machineFavNameList = new ArrayList<>();
-
-        if (machineList != null) {
-            for (Machine machine : machineList) {
-                if (machine.isFavorite()) {
-                    machineFavNameList.add(machine.getMachineName());
-                }
-            }
-        }
-
-        return machineFavNameList;
-    }
-
-    /**
-     * Initialise les favoris pour la mise à jour des données
-     *
-     * @param allArticleInFile Données venant du fichier
-     * @param allArticleInDatabase Données dans la base
-     *
-     * @return La liste des articles initialisés
-     */
-    public ArrayList<ArticleWithData> getArticleListWithFav(ArrayList<ArticleWithData> allArticleInFile, ArrayList<ArticleWithData> allArticleInDatabase) {
-        ArrayList<String> articleFavNameList = getArticleFavNameList(allArticleInDatabase);
-
-        for (ArticleWithData articleWithData : allArticleInFile) {
-            if (articleFavNameList.contains(articleWithData.getArticle().getName())) {
-                articleWithData.getArticle().setFavorite(true);
-            }
-        }
-
-        return allArticleInFile;
-    }
-
-    /**
-     * Récupère la liste des articles en favoris
-     *
-     * @param articleList Liste des articles dans la bdd
-     *
-     * @return Liste contenant le nom de tous les articles en favoris
-     */
-    private ArrayList<String> getArticleFavNameList(List<ArticleWithData> articleList) {
-        ArrayList<String> articleFavNameList = new ArrayList<>();
-
-        if (articleList != null) {
-            for (ArticleWithData articleWithData : articleList) {
-                if (articleWithData.getArticle().isFavorite()) {
-                    articleFavNameList.add(articleWithData.getArticle().getName());
-                }
-            }
-        }
-
-        return articleFavNameList;
-    }
-
-    /**
      * Remplace la base de données par la la liste passée en paramètre
      *
      * @param machineArrayList Liste de machines à mettre dans la base
      * @param callback Callback pour récupérer la réponse
      *
-     * @see MachineDatabaseManager
+     * @see PourcentagePerfDatabaseManager
      */
     public void refreshAllMachine(ArrayList<Machine> machineArrayList, SimpleCallback callback) {
-        machineDatabaseManager.refreshAllMachine(machineArrayList, callback);
+        pourcentagePerfDatabaseManager.refreshAllMachine(machineArrayList, callback);
     }
 
     /**
      * Remplace la base de données par la la liste passée en paramètre
      *
-     * @param articleArrayList Liste de machines à mettre dans la base
+     * @param quantityFileLineArrayList Liste de données à mettre dans la base
      * @param callback Callback pour récupérer la réponse
      *
-     * @see ArticleDatabaseManager
+     * @see QuantityDatabaseManager
      */
-    public void refreshAllArticle(ArrayList<ArticleWithData> articleArrayList, SimpleCallback callback) {
-        articleDatabaseManager.refreshAllArticle(articleArrayList, callback);
+    public void refreshAllArticle(ArrayList<QuantityFileLine> quantityFileLineArrayList, SimpleCallback callback) {
+        quantityDatabaseManager.refreshAllFromFile(quantityFileLineArrayList, callback);
     }
 
 }

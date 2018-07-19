@@ -4,9 +4,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.florian.projet.R;
-import com.florian.projet.view.adapter.ArticleDataRecyclerAdapter;
+import com.florian.projet.view.adapter.OFDataRecyclerAdapter;
 import com.florian.projet.viewModel.ArticleViewModel;
 
 import java.util.ArrayList;
@@ -35,9 +36,9 @@ public class ArticleDetailActivity extends AppCompatActivity {
     }
 
     private void setNewRecyclerAdapterArticle() {
-        ArticleDataRecyclerAdapter articleDataRecyclerAdapter = new ArticleDataRecyclerAdapter(new ArrayList<>(articleViewModel.getCurrentArticle().getDataList()));
+        OFDataRecyclerAdapter OFDataRecyclerAdapter = new OFDataRecyclerAdapter(new ArrayList<>(articleViewModel.getCurrentArticle().getDataList()));
 
-        recyclerViewArticle.setAdapter(articleDataRecyclerAdapter);
+        recyclerViewArticle.setAdapter(OFDataRecyclerAdapter);
         recyclerViewArticle.requestFocus();
     }
 }

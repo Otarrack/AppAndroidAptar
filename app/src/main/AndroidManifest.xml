@@ -26,7 +26,8 @@
         <activity android:name=".view.activity.MachineListActivity" />
         <activity android:name=".view.activity.MachineDetailActivity" />
         <activity android:name=".view.activity.PeriodActivity" />
-        <activity android:name=".view.activity.ArticleDetailActivity"></activity>
+        <activity android:name=".view.activity.ArticleDetailActivity" />
+        <activity android:name=".view.activity.PresseDetailActivity" />
     </application>
 
 </manifest>

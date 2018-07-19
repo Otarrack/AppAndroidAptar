@@ -14,7 +14,6 @@ import android.view.View;
 
 import com.florian.projet.R;
 import com.florian.projet.bdd.entity.Machine;
-import com.florian.projet.manager.MachineDatabaseManager;
 import com.florian.projet.model.SiteEnum;
 import com.florian.projet.tools.CustomItemClickListener;
 import com.florian.projet.tools.MachineCallback;
@@ -126,7 +125,7 @@ public class MachineListActivity extends AppCompatActivity {
     }
 
     private void setNewRecyclerViewMachine(final ArrayList<Machine> machineList) {
-        MachineRecyclerAdapter machineRecyclerAdapter = new MachineRecyclerAdapter(machineList, false, new CustomItemClickListener() {
+        MachineRecyclerAdapter machineRecyclerAdapter = new MachineRecyclerAdapter(machineList, new CustomItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
                 machineViewModel.setCurrentMachine(machineList.get(position));

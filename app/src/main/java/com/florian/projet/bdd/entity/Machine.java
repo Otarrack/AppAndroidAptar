@@ -62,11 +62,8 @@ public class Machine {
     private double qme;
     @ColumnInfo(name = "average_ome")
     private double averageOME;
-    @ColumnInfo(name = "favorite")
-    private boolean favorite;
 
     public Machine() {
-        setFavorite(false);
     }
 
     public int getId() {
@@ -269,11 +266,4 @@ public class Machine {
         this.averageOME = averageOME;
     }
 
-    public boolean isFavorite() {
-        return favorite;
-    }
-
-    public void setFavorite(boolean favorite) {
-        this.favorite = favorite;
-    }
 }

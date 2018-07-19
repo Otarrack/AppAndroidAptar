@@ -6,7 +6,7 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 import com.florian.projet.R;
-import com.florian.projet.bdd.dao.MachineDao;
+import com.florian.projet.bdd.dao.PourcentagePerformanceDao;
 import com.florian.projet.bdd.entity.Machine;
 
 /**
@@ -14,11 +14,11 @@ import com.florian.projet.bdd.entity.Machine;
  *
  * @author Florian
  */
-@Database(entities = {Machine.class}, version = 3)
-public abstract class MachineDataBase extends RoomDatabase {
+@Database(entities = {Machine.class}, version = 1)
+public abstract class PourcentagePerformanceDataBase extends RoomDatabase {
 
-    private static MachineDataBase instance;
-    public abstract MachineDao machineDao();
+    private static PourcentagePerformanceDataBase instance;
+    public abstract PourcentagePerformanceDao machineDao();
 
     /**
      * Méthode pour créer l'instance de la base de données
@@ -26,7 +26,7 @@ public abstract class MachineDataBase extends RoomDatabase {
      * @param context Context de l'application pour récupérer le string dans la classe R
      */
     public static void setInstance(Context context) {
-        instance = Room.databaseBuilder(context, MachineDataBase.class, context.getString(R.string.machine_database_name))
+        instance = Room.databaseBuilder(context, PourcentagePerformanceDataBase.class, context.getString(R.string.pourcentage_perf_database_name))
                 .fallbackToDestructiveMigration()
                 .build();
     }
@@ -36,7 +36,7 @@ public abstract class MachineDataBase extends RoomDatabase {
      *
      * @return Liste des machines avec les données associées
      */
-    public static MachineDataBase getInstance() {
+    public static PourcentagePerformanceDataBase getInstance() {
         return instance;
     }
 

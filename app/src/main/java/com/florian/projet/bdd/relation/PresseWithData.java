@@ -5,28 +5,29 @@ import android.arch.persistence.room.Relation;
 
 import com.florian.projet.bdd.entity.Article;
 import com.florian.projet.bdd.entity.OFData;
+import com.florian.projet.bdd.entity.Presse;
 
 import java.util.List;
 
 /**
- * Classe de relation entre les articles et leurs données
+ * Classe de relation entre les presses et leurs données
  *
  * @author Florian
  */
-public class ArticleWithData {
+public class PresseWithData {
 
     @Embedded
-    private Article article;
+    private Presse presse;
 
-    @Relation(parentColumn = "id", entityColumn = "idArticle")
+    @Relation(parentColumn = "id", entityColumn = "idPresse")
     private List<OFData> dataList;
 
-    public Article getArticle() {
-        return article;
+    public Presse getPresse() {
+        return presse;
     }
 
-    public void setArticle(Article article) {
-        this.article = article;
+    public void setPresse(Presse presse) {
+        this.presse = presse;
     }
 
     public List<OFData> getDataList() {
@@ -38,9 +39,9 @@ public class ArticleWithData {
     }
 
     /**
-     * Methode qui retourne la quantité total de l'article
+     * Methode qui retourne la quantité total des données de la presse
      *
-     * @return Quantité
+     * @return Quantité totale
      */
     public double getTotalQuantity() {
         Double totalQuantity = 0.0;

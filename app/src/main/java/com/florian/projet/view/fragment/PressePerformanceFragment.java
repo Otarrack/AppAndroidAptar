@@ -19,30 +19,33 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.florian.projet.R;
-import com.florian.projet.bdd.entity.Article;
 import com.florian.projet.bdd.relation.ArticleWithData;
+import com.florian.projet.bdd.relation.PresseWithData;
 import com.florian.projet.tools.ArticleWithDataCallback;
 import com.florian.projet.tools.CustomItemClickListener;
+import com.florian.projet.tools.PresseWithDataCallback;
 import com.florian.projet.view.activity.ArticleDetailActivity;
 import com.florian.projet.view.activity.PeriodActivity;
+import com.florian.projet.view.activity.PresseDetailActivity;
 import com.florian.projet.view.adapter.ArticleRecyclerAdapter;
+import com.florian.projet.view.adapter.PresseRecyclerAdapter;
 import com.florian.projet.viewModel.ArticleViewModel;
+import com.florian.projet.viewModel.PresseViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArticlePerformanceFragment extends Fragment {
-    private ArticleViewModel articleViewModel;
-    private RecyclerView recyclerViewArticle;
-
-    private ArrayList<ArticleWithData> articleWithDataArrayList;
+public class PressePerformanceFragment extends Fragment {
+    private PresseViewModel presseViewModel;
+    private RecyclerView recyclerViewPresse;
+    private ArrayList<PresseWithData> presseWithDataArrayList;
     private Context context;
 
-    public ArticlePerformanceFragment() {
+    public PressePerformanceFragment() {
     }
 
-    public static ArticlePerformanceFragment newInstance() {
-        ArticlePerformanceFragment fragment = new ArticlePerformanceFragment();
+    public static PressePerformanceFragment newInstance() {
+        PressePerformanceFragment fragment = new PressePerformanceFragment();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
@@ -53,16 +56,16 @@ public class ArticlePerformanceFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        articleViewModel = ArticleViewModel.getInstance();
+        presseViewModel = PresseViewModel.getInstance();
 
         setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_article_perf, container, false);
+        final View view = inflater.inflate(R.layout.fragment_presse_perf, container, false);
 
-        setRecyclerViewArticle(view);
+        setRecyclerViewPresse(view);
         initSearchView(view);
 
         return view;
@@ -95,16 +98,16 @@ public class ArticlePerformanceFragment extends Fragment {
     }
 
     private void refreshData() {
-        articleViewModel.getAllArticleByPeriod(new ArticleWithDataCallback() {
+        presseViewModel.getAllPresseByPeriod(new PresseWithDataCallback() {
             @Override
-            public void onSuccess(List<ArticleWithData> articleList) {
-                articleWithDataArrayList = new ArrayList<>(articleList);
-                setNewRecyclerAdapterArticle(new ArrayList<>(articleList));
+            public void onSuccess(List<PresseWithData> presseWithDataList) {
+                presseWithDataArrayList = new ArrayList<>(presseWithDataList);
+                setNewRecyclerAdapterPresse(new ArrayList<>(presseWithDataList));
             }
 
             @Override
             public void onFailed(Exception e) {
-                Log.d("Get Article Fragment", "Msg -> " + e.getMessage());
+                Log.d("Get Presse Fragment", "Msg -> " + e.getMessage());
             }
         });
     }
@@ -120,7 +123,7 @@ public class ArticlePerformanceFragment extends Fragment {
         // Get the SearchView and set the searchable configuration
         if (getActivity() != null) {
             SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-            final SearchView searchView = view.findViewById(R.id.article_perf_list_search);
+            final SearchView searchView = view.findViewById(R.id.presse_perf_list_search);
             // Assumes current activity is the searchable activity
             if (searchManager != null) {
                 searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
@@ -134,7 +137,7 @@ public class ArticlePerformanceFragment extends Fragment {
                     @Override
                     public boolean onQueryTextChange(String newText) {
                         if (newText.isEmpty()) {
-                            setNewRecyclerAdapterArticle(articleWithDataArrayList);
+                            setNewRecyclerAdapterPresse(presseWithDataArrayList);
                         } else {
                             doMySearch(newText);
                         }
@@ -149,36 +152,40 @@ public class ArticlePerformanceFragment extends Fragment {
     }
 
     private void doMySearch(String query) {
-        ArrayList<ArticleWithData> searchArticleWithDataList = new ArrayList<>();
-        for (ArticleWithData articleWithData : articleWithDataArrayList) {
-            if (articleWithData.getArticle().getName().toLowerCase().contains(query.toLowerCase()) || articleWithData.getArticle().getCustomer().toLowerCase().contains(query.toLowerCase())) {
-                searchArticleWithDataList.add(articleWithData);
+        ArrayList<PresseWithData> searchPresseWithDataList = new ArrayList<>();
+        for (PresseWithData presseWithData : presseWithDataArrayList) {
+            if (presseWithData.getPresse().getName().toLowerCase().contains(query.toLowerCase())) {
+                searchPresseWithDataList.add(presseWithData);
             }
         }
 
-        setNewRecyclerAdapterArticle(searchArticleWithDataList);
+        setNewRecyclerAdapterPresse(searchPresseWithDataList);
     }
 
-    private void setRecyclerViewArticle(View view) {
-        recyclerViewArticle = view.findViewById(R.id.article_perf_recycler);
-        recyclerViewArticle.setNestedScrollingEnabled(true);
+    private void setRecyclerViewPresse(View view) {
+        recyclerViewPresse = view.findViewById(R.id.presse_perf_recycler);
+        recyclerViewPresse.setNestedScrollingEnabled(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-        recyclerViewArticle.setLayoutManager(layoutManager);
+        recyclerViewPresse.setLayoutManager(layoutManager);
 
     }
 
-    private void setNewRecyclerAdapterArticle(final ArrayList<ArticleWithData> articleList) {
-        ArticleRecyclerAdapter articleRecyclerAdapter = new ArticleRecyclerAdapter(articleList, false, new CustomItemClickListener() {
+    private void setNewRecyclerAdapterPresse(final ArrayList<PresseWithData> presseWithDataArrayList) {
+        PresseRecyclerAdapter presseRecyclerAdapter = new PresseRecyclerAdapter(presseWithDataArrayList, false, new CustomItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-                articleViewModel.setCurrentArticle(articleList.get(position));
+            if (presseWithDataArrayList.get(position).getDataList() == null) {
+                Toast.makeText(getActivity(), getString(R.string.data_not_found_in_period), Toast.LENGTH_LONG).show();
+            } else {
+                presseViewModel.setCurrentPresse(presseWithDataArrayList.get(position));
 
-                Intent intent = new Intent(context, ArticleDetailActivity.class);
+                Intent intent = new Intent(context, PresseDetailActivity.class);
                 startActivity(intent);
+            }
             }
         });
 
-        recyclerViewArticle.setAdapter(articleRecyclerAdapter);
-        recyclerViewArticle.requestFocus();
+        recyclerViewPresse.setAdapter(presseRecyclerAdapter);
+        recyclerViewPresse.requestFocus();
     }
 }

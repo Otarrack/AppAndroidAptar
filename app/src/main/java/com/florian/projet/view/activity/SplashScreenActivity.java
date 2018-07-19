@@ -10,19 +10,14 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dropbox.core.DbxException;
-import com.dropbox.core.v2.users.FullAccount;
 import com.florian.projet.R;
 import com.florian.projet.asyncTasks.DropboxDownloadFileTask;
-import com.florian.projet.asyncTasks.ParseArticlePerfFileTask;
+import com.florian.projet.asyncTasks.ParseQuantityFileTask;
 import com.florian.projet.asyncTasks.ParseMachinePerfFileTask;
-import com.florian.projet.bdd.entity.Article;
-import com.florian.projet.bdd.entity.ArticleData;
 import com.florian.projet.bdd.relation.ArticleWithData;
 import com.florian.projet.manager.ApplicationManager;
-import com.florian.projet.manager.MachineDatabaseManager;
 import com.florian.projet.bdd.entity.Machine;
-import com.florian.projet.model.ArticleLine;
+import com.florian.projet.model.QuantityFileLine;
 import com.florian.projet.model.SiteEnum;
 import com.florian.projet.tools.ArticleWithDataCallback;
 import com.florian.projet.tools.MachineCallback;
@@ -48,7 +43,6 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private ArrayList<Machine> allMachineInDatabase;
     private ArrayList<ArticleWithData> allArticleWithDataInDatabase;
-    private ArrayList<ArticleWithData> allArticleWithDataInFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -198,7 +192,8 @@ public class SplashScreenActivity extends AppCompatActivity {
                         machineStep2.setBackgroundColor(getColor(R.color.green));
                         machineStepTextView.setText(R.string.splash_lib_step_3);
                         machineStep3.setBackgroundColor(getColor(R.color.aptar_bh_light_blue));
-                        getMachineListWithFavAndSite(dataLineList);
+
+                        refreshAllMachineInDatabase(splashScreenViewModel.initMachineListWithSite(dataLineList));
                     }
                 }
 
@@ -211,12 +206,6 @@ public class SplashScreenActivity extends AppCompatActivity {
             Log.d("Read Machine File", e.getMessage());
             failLoadingMachinePerfFile();
         }
-    }
-
-    private void getMachineListWithFavAndSite(ArrayList<Machine> allMachineInFile) {
-        ArrayList<Machine> finalMachineList = splashScreenViewModel.initMachineListWithFav(allMachineInFile, allMachineInDatabase);
-
-        refreshAllMachineInDatabase(finalMachineList);
     }
 
     private void refreshAllMachineInDatabase(final ArrayList<Machine> machineArrayList) {
@@ -268,18 +257,17 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private void readArticlePerformanceFile(File file) {
         try {
-            splashScreenViewModel.parseArticlePerfXlsFile(file, new ParseArticlePerfFileTask.Callback() {
+            splashScreenViewModel.parseArticlePerfXlsFile(file, new ParseQuantityFileTask.Callback() {
                 @Override
-                public void onSuccess(ArrayList<ArticleLine> articleLineArrayList) {
-                    if (articleLineArrayList.isEmpty()) {
+                public void onSuccess(ArrayList<QuantityFileLine> quantityFileLineArrayList) {
+                    if (quantityFileLineArrayList.isEmpty()) {
                         failLoadingArticlePerfFile();
                     } else {
-                        allArticleWithDataInFile = getAllArticleWithData(articleLineArrayList);
-
                         articleStep2.setBackgroundColor(getColor(R.color.green));
                         articleStepTextView.setText(R.string.splash_lib_step_3);
                         articleStep3.setBackgroundColor(getColor(R.color.aptar_bh_light_blue));
-                        getArticleListWithFav(allArticleWithDataInFile);
+
+                        refreshAllArticleInDatabase(quantityFileLineArrayList);
                     }
                 }
 
@@ -294,61 +282,19 @@ public class SplashScreenActivity extends AppCompatActivity {
         }
     }
 
-    private ArrayList<ArticleWithData> getAllArticleWithData(ArrayList<ArticleLine> articleLines) {
-
-        ArrayList<ArticleWithData> articleWithDataArrayList = new ArrayList<>();
-        ArticleData articleData;
-        ArticleWithData articleWithData;
-
-        boolean articleExist = false;
-        for (ArticleLine articleLine : articleLines) {
-            articleData = new ArticleData();
-            articleData.setNumOf(articleLine.getNumOf());
-            articleData.setDate(articleLine.getDate());
-            articleData.setQuantity(articleLine.getQuantity());
-
-            for (ArticleWithData awd : articleWithDataArrayList) {
-                if (awd.getArticle().getName().equals(articleLine.getName())) {
-                    articleExist = true;
-                    awd.getDataList().add(articleData);
-                }
-            }
-
-            if (!articleExist) {
-                articleWithData = new ArticleWithData();
-                articleWithData.setArticle(new Article());
-                articleWithData.getArticle().setName(articleLine.getName());
-                articleWithData.getArticle().setCustomer(articleLine.getCustomer());
-                articleWithData.getArticle().setType(articleLine.getType());
-                articleWithData.setDataList(new ArrayList<ArticleData>());
-                articleWithData.getDataList().add(articleData);
-                articleWithDataArrayList.add(articleWithData);
-            }
-
-            articleExist = false;
-        }
-
-        return articleWithDataArrayList;
-    }
-
-    private void getArticleListWithFav(ArrayList<ArticleWithData> allArticleInFile) {
-        ArrayList<ArticleWithData> finalArticleList = splashScreenViewModel.initArticleListWithFav(allArticleInFile, allArticleWithDataInDatabase);
-
-        refreshAllArticleInDatabase(finalArticleList);
-    }
-
-    private void refreshAllArticleInDatabase(final ArrayList<ArticleWithData> articleArrayList) {
-        splashScreenViewModel.refreshAllArticleInDatabase(articleArrayList, new SimpleCallback() {
+    private void refreshAllArticleInDatabase(final ArrayList<QuantityFileLine> quantityFileLineArrayList) {
+        splashScreenViewModel.refreshAllArticleInDatabase(quantityFileLineArrayList, new SimpleCallback() {
             @Override
             public void onSuccess() {
-                allArticleWithDataInDatabase = new ArrayList<>(articleArrayList);
+                //Init la liste pour qu'elle ne soit pas Null et ne renvoie une erreur
+                allArticleWithDataInDatabase = new ArrayList<>();
                 articleStep3.setBackgroundColor(getColor(R.color.green));
                 startFirstActivity();
             }
 
             @Override
             public void onFailed(Exception e) {
-                Log.d("Refresh Machine Data", e.getMessage());
+                Log.d("Refresh Article Data", e.getMessage());
                 allArticleWithDataInDatabase = null;
                 failLoadingArticlePerfFile();
             }

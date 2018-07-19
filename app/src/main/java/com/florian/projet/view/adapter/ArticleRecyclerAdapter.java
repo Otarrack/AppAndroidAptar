@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.florian.projet.R;
 import com.florian.projet.bdd.relation.ArticleWithData;
 import com.florian.projet.tools.CustomItemClickListener;
-import com.florian.projet.viewModel.FavorisViewModel;
+import com.florian.projet.viewModel.ArticleViewModel;
 
 import java.util.ArrayList;
 
@@ -62,10 +62,10 @@ public class ArticleRecyclerAdapter extends RecyclerView.Adapter<ArticleRecycler
             holder.favCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    FavorisViewModel favorisViewModel = FavorisViewModel.getInstance();
+                    ArticleViewModel articleViewModel = ArticleViewModel.getInstance();
                     ArticleWithData articleWithData = articleArrayList.get(holder.getAdapterPosition());
                     articleWithData.getArticle().setFavorite(b);
-                    favorisViewModel.updateFavArticle(articleWithData.getArticle());
+                    articleViewModel.updateFavArticle(articleWithData.getArticle());
                 }
             });
         }

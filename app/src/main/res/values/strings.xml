@@ -76,7 +76,7 @@
     <string name="app_key">epzhp1cvwybijfw</string>
 
     /* Room Machine Database */
-    <string name="machine_database_name">MachineDatabase</string>
+    <string name="pourcentage_perf_database_name">MachineDatabase</string>
     <string name="machine_add_one_success">Impossible d\'ajouter la machine</string>
     <string name="machine_add_one_error">La machine a été ajoutée</string>
     <string name="machine_add_all_success">Les machines ont été ajoutées</string>
@@ -90,7 +90,7 @@
     <string name="machine_get_fav_error">Impossible de récupérer les favoris</string>
 
     /* Room Article Database */
-    <string name="article_database_name">article_database</string>
+    <string name="quantity_database_name">quantity_database</string>
     <string name="splash_lib_step_1">Téléchargement…</string>
     <string name="splash_lib_step_2">Lecture…</string>
     <string name="splash_lib_step_3">Enregistrement…</string>
@@ -99,6 +99,10 @@
     <string name="article_type">Type</string>
     <string name="article_quantity">Quantité produite</string>
     <string name="article_total_quantity">Quantité total produite</string>
+    <string name="menu_perf_percent_title">Pourcentage Performance</string>
+    <string name="menu_perf_presse_title">Performance Presse</string>
+    <string name="menu_favorite_presse_title">Favoris Presse</string>
+    <string name="data_not_found_in_period">Aucune données trouvées sur la période</string>
 
 
 </resources>
