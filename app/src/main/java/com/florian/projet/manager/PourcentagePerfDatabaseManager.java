@@ -144,14 +144,8 @@ public class PourcentagePerfDatabaseManager {
                 callback.onFailed(exception);
             } else if (result.size() > 0) {
                 callback.onSuccess();
-                Toast.makeText(MyApplication.getInstance().getApplicationContext(),
-                        R.string.machine_add_all_success,
-                        Toast.LENGTH_SHORT).show();
             } else {
                 callback.onFailed(new Exception("Aucune machine ajoutée"));
-                Toast.makeText(MyApplication.getInstance().getApplicationContext(),
-                        R.string.machine_add_all_error,
-                        Toast.LENGTH_SHORT).show();
             }
         }
     }

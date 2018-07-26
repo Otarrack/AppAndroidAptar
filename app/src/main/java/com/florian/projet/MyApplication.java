@@ -10,8 +10,6 @@ import com.florian.projet.manager.QuantityDatabaseManager;
 
 public class MyApplication extends Application {
     private static MyApplication instance;
-    private PourcentagePerfDatabaseManager pourcentagePerfDatabaseManager;
-    private QuantityDatabaseManager quantityDatabaseManager;
 
     public static MyApplication getInstance() {
         return instance;
@@ -24,22 +22,6 @@ public class MyApplication extends Application {
 
         PourcentagePerformanceDataBase.setInstance(getApplicationContext());
         QuantityDataBase.setInstance(getApplicationContext());
-
-        pourcentagePerfDatabaseManager = PourcentagePerfDatabaseManager.getInstance();
-        quantityDatabaseManager = QuantityDatabaseManager.getInstance();
-
-        /* //RESET DATABASE
-        pourcentagePerfDatabaseManager.deleteAllData(new SimpleCallback() {
-            @Override
-            public void onSuccess() {
-
-            }
-
-            @Override
-            public void onFailed(Exception e) {
-
-            }
-        });*/
     }
 
 }

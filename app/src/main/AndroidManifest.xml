@@ -28,6 +28,8 @@
         <activity android:name=".view.activity.PeriodActivity" />
         <activity android:name=".view.activity.ArticleDetailActivity" />
         <activity android:name=".view.activity.PresseDetailActivity" />
+
+        <service android:name=".view.service.DownloadService" />
     </application>
 
 </manifest>

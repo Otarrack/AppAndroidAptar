@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
         initDrawerMenu();
     }
 
-
     private void initDrawerMenu() {
         myDrawerMenu = new MyDrawerMenu(this);
 
